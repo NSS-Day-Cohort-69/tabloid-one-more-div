@@ -41,4 +41,11 @@ public class UserProfile
             return $"{FirstName} {LastName}";
         }
     }
+
+    public bool IsActive { get; set; }
+    public List<Post> Posts { get; set; }
+    public List<UserProfile> Subscriptions { get; set; }
+    public List<UserProfile> Subscribers { get; set; }
+    public List<Reaction> Reactions { get; set; }
+    public List<Comment> Comments { get; set; }
 }
