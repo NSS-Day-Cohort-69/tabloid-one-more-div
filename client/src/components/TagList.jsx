@@ -13,7 +13,7 @@ export default function TagList()
         <>
         <h4 style={{display: 'flex', justifyContent: 'center'}}>Available Tags</h4>
         {tags.map((t) => (
-        <Card className="mt-4 w-25 m-auto">
+        <Card key={t.id} className="mt-4 w-25 m-auto">
             <CardBody className="d-flex align-items-center justify-content-between">
                 <CardTitle className="fw-bold">
                 {t.name}
