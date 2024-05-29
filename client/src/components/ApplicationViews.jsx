@@ -4,7 +4,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
-import TagList from "./TagsList.jsx";
+import TagList from "./TagList.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
