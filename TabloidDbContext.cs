@@ -32,7 +32,37 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<PostTag>().HasKey(pt => new {pt.PostId, pt.TagId});
         modelBuilder.Entity<Subscription>().HasKey(s => new {s.FollowerId, s.CreatorId});
 
-        
+        modelBuilder.Entity<PostReaction>()
+            .HasOne(pr => pr.Post)
+            .WithMany(p => p.PostReactions)
+            .HasForeignKey(pr => pr.PostId);
+        modelBuilder.Entity<PostReaction>()
+            .HasOne(pr => pr.Reaction)
+            .WithMany(r => r.PostReactions)
+            .HasForeignKey(pr => pr.ReactionId);
+        modelBuilder.Entity<PostReaction>()
+            .HasOne(pr => pr.UserProfile)
+            .WithMany(p => p.PostReactions)
+            .HasForeignKey(pr => pr.UserProfileId);
+
+        modelBuilder.Entity<PostTag>()
+            .HasOne(pt => pt.Post)
+            .WithMany(p => p.PostTags)
+            .HasForeignKey(pt => pt.PostId);
+        modelBuilder.Entity<PostTag>()
+            .HasOne(pt => pt.Tag)
+            .WithMany(t => t.PostTags)
+            .HasForeignKey(pt => pt.TagId);
+
+        modelBuilder.Entity<Subscription>()
+            .HasOne(s => s.Creator)
+            .WithMany(c => c.Subscribers)
+            .HasForeignKey(s => s.CreatorId);
+        modelBuilder.Entity<Subscription>()
+            .HasOne(s => s.Follower)
+            .WithMany(f => f.Subscriptions)
+            .HasForeignKey(s => s.FollowerId);
+
         modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
         {
             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
