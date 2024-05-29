@@ -4,15 +4,15 @@ import { Button, ButtonToolbar, Card, CardBody, CardTitle } from "reactstrap"
 
 export default function TagList()
 {
-    const [tag, setTag]= useState([])
+    const [tags, setTags]= useState([])
 
     useEffect(() => {
-        getAllTags().then(setTag)
+        getAllTags().then(setTags)
     },[])
     return(
         <>
         <h4 style={{display: 'flex', justifyContent: 'center'}}>Available Tags</h4>
-        {tag.map((t) => (
+        {tags.map((t) => (
         <Card className="mt-4 w-25 m-auto">
             <CardBody className="d-flex align-items-center justify-content-between">
                 <CardTitle className="fw-bold">
