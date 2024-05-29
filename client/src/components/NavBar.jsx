@@ -32,6 +32,9 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                   <NavItem>
                     <NavLink tag={RRNavLink} to="/userprofiles">
                       User Profiles
+                  </NavLink>
+                    <NavLink tag={RRNavLink} to="/categories">
+                      Category Management
                     </NavLink>
                   </NavItem>
                 )}
