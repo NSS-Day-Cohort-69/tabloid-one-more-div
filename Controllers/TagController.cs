@@ -25,7 +25,7 @@ public class TagController : ControllerBase
     {
         return Ok(_dbContext.Tags
         .OrderBy(t => t.Name)
-        .Select(t => new TagDTO
+        .Select(t => new TagNoNavDTO
         {
             Id = t.Id,
             Name = t.Name
