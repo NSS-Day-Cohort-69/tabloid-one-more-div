@@ -25,7 +25,7 @@ public class PostDTO
 
     public UserProfileForPostDTO UserProfile { get; set; }
     public CategoryNoNavDTO Category { get; set; }
-    public List<PostTagForPostDTO> PostTags { get; set; }
+    public List<TagNoNavDTO> Tags { get; set; }
     public List<PostReactionForPostDTO> PostReactions { get; set; }
     public List<CommentForPostDTO> Comments { get; set; }
 }
