@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../../managers/CategoryManager";
+import { getAllCategories } from "../../managers/CategoryManager";
 import { Button, ButtonToolbar, Card, CardBody, CardTitle, Table } from "reactstrap";
 
 export default function CategoryList() {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        getCategories().then(setCategories);
+        getAllCategories().then(setCategories);
     }, []);
 
     return (
