@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { getAllTags } from "../managers/tagManager.js"
 import { Button, ButtonToolbar, Card, CardBody, CardTitle } from "reactstrap"
 
-export default function AllTags()
+export default function TagList()
 {
     const [tag, setTag]= useState([])
 

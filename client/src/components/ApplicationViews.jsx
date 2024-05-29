@@ -4,7 +4,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
-import AllTags from "./TagsList.jsx";
+import TagList from "./TagsList.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -37,8 +37,8 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           />
           
         </Route>
-        <Route path="taglist">
-            <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><AllTags/></AuthorizedRoute>}/>
+        <Route path="tag">
+            <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><TagList/></AuthorizedRoute>}/>
           </Route>
         <Route
           path="login"
