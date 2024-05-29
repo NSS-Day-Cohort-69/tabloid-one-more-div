@@ -44,8 +44,8 @@ public class UserProfile
 
     public bool IsActive { get; set; }
     public List<Post> Posts { get; set; }
-    public List<UserProfile> Subscriptions { get; set; }
-    public List<UserProfile> Subscribers { get; set; }
-    public List<Reaction> Reactions { get; set; }
+    public List<Subscription> Subscriptions { get; set; }
+    public List<Subscription> Subscribers { get; set; }
+    public List<PostReaction> PostReactions { get; set; }
     public List<Comment> Comments { get; set; }
 }

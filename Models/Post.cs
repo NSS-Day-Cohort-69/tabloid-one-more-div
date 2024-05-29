@@ -25,7 +25,7 @@ public class Post
 
     public UserProfile UserProfile { get; set; }
     public Category Category { get; set; }
-    public List<Tag> Tags { get; set; }
-    public List<Reaction> Reactions { get; set; }
+    public List<PostTag> PostTags { get; set; }
+    public List<PostReaction> PostReactions { get; set; }
     public List<Comment> Comments { get; set; }
 }
