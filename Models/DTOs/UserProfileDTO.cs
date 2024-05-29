@@ -2,8 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace Tabloid.Models;
-public class UserProfile
+namespace Tabloid.Models.DTOs;
+public class UserProfileDTO
 {
     public int Id { get; set; }
 
@@ -43,9 +43,9 @@ public class UserProfile
     }
 
     public bool IsActive { get; set; }
-    public List<Post> Posts { get; set; }
-    public List<Subscription> Subscriptions { get; set; }
-    public List<Subscription> Subscribers { get; set; }
-    public List<PostReaction> PostReactions { get; set; }
-    public List<Comment> Comments { get; set; }
+    public List<PostDTO> Posts { get; set; }
+    public List<SubscriptionDTO> Subscriptions { get; set; }
+    public List<SubscriptionDTO> Subscribers { get; set; }
+    public List<PostReactionDTO> PostReactions { get; set; }
+    public List<CommentDTO> Comments { get; set; }
 }
