@@ -4,6 +4,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
+import AllTags from "./TagsList.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -34,7 +35,11 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
+          
         </Route>
+        <Route path="taglist">
+            <Route index element={<AllTags/>}/>
+          </Route>
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}
