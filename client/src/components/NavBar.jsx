@@ -36,6 +36,13 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                   </NavItem>
                 )}
               </Nav>
+              <Nav navbar>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/taglist">
+                    Tag Management
+                  </NavLink>
+                </NavItem>
+              </Nav>
             </Collapse>
             <Button
               color="primary"
