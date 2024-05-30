@@ -6,7 +6,7 @@ import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import PostList from "./posts/PostList";
 import CategoryList from "./categories/CategoryList";
-import TagList from "./TagList.jsx";
+import TagList from "./tags/TagList.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
