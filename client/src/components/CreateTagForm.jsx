@@ -19,6 +19,7 @@ export default function CreateTagForm()
         <div>
             <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Create a New Tag</h4>
         <Form className="w-50 m-auto" 
+        style={{maxWidth: "20rem"}}
         onSubmit={handleSubmit}>
             <FormGroup>
                 <Label>
