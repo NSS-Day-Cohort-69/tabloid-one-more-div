@@ -35,7 +35,7 @@ public class TagController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public IActionResult CreateTag(Tag newTag)
+    public IActionResult CreateTag(TagCreateDTO newTag)
     {
         _dbContext.Add(newTag);
         _dbContext.SaveChanges();
