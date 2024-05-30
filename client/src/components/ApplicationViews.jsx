@@ -7,6 +7,7 @@ import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import PostList from "./posts/PostList";
 import CategoryList from "./categories/CategoryList";
 import TagList from "./tags/TagList.jsx";
+import CreateTagForm from "./tags/CreateTagForm.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -59,14 +60,8 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           />    
           </Route>
         <Route path="tags">
-            <Route 
-              index 
-              element={
-                <AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}>
-                  <TagList/>
-                </AuthorizedRoute>
-              }
-            />
+            <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><TagList/></AuthorizedRoute>}/>
+            <Route path="create" element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><CreateTagForm/></AuthorizedRoute>}/>
           </Route>
         <Route
           path="login"
