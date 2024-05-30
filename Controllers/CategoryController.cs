@@ -47,4 +47,8 @@ public class CategoryController : ControllerBase
         return Created($"/api/category/{categoryToCreate.Id}", categoryToCreate);
     }
 
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult 
+
 }
