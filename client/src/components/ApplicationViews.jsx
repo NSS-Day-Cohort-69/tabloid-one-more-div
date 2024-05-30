@@ -6,6 +6,7 @@ import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import CategoryList from "./categories/CategoryList";
 import TagList from "./TagList.jsx";
+import CategoryCreate from "./categories/CategoryCreate.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -43,6 +44,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
                 <CategoryList/>
+              </AuthorizedRoute>
+            }
+          />
+          <Route 
+            path="create"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CategoryCreate/>
               </AuthorizedRoute>
             }
           />    

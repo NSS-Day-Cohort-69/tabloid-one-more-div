@@ -34,4 +34,17 @@ public class CategoryController : ControllerBase
         }));
     }
 
+    [HttpPost("create")]
+    [Authorize]
+    public IActionResult CategoryCreate(CategoryCreateDTO newCategory)
+    {
+        Category categoryToCreate = new Category()
+        {
+            Name = newCategory.Name
+        };
+        _dbContext.Categories.Add(categoryToCreate);
+        _dbContext.SaveChanges();
+        return Created($"/api/category/{categoryToCreate.Id}", categoryToCreate);
+    }
+
 }
