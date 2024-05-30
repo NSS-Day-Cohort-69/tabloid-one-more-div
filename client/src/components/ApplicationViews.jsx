@@ -8,6 +8,7 @@ import PostList from "./posts/PostList";
 import CategoryList from "./categories/CategoryList";
 import TagList from "./tags/TagList.jsx";
 import CreateTagForm from "./tags/CreateTagForm.jsx";
+import CategoryCreate from "./categories/CategoryCreate.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
