@@ -11,5 +11,5 @@ export const createTag = (newTag) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(newTag)
-    }).then((res) => res.json())
+    })
 }

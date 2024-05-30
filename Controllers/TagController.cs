@@ -37,8 +37,12 @@ public class TagController : ControllerBase
     [Authorize]
     public IActionResult CreateTag(TagCreateDTO newTag)
     {
-        _dbContext.Add(newTag);
+        Tag createdTag = new Tag()
+        {
+            Name = newTag.Name
+        };
+        _dbContext.Tags.Add(createdTag);
         _dbContext.SaveChanges();
-        return Ok();
+        return Created($"/api/tag/{createdTag.Id}", createdTag);
     }
 }
