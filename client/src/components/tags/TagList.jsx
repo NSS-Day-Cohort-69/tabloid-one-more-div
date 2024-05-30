@@ -16,8 +16,11 @@ export default function TagList()
     return(
         <>
             <h4 style={{display: 'flex', justifyContent: 'center'}}>Available Tags</h4>
-            <Button className="ms-3" color="success"
-            onClick={() => {navigate('/tags/create')}}>Create a Tag</Button>
+            <div className="w-25 m-auto ">
+                <Button  color="success" 
+                onClick={() => {navigate('/tags/create')}}>Create a Tag</Button>
+                
+            </div>
             {tags.map((t) => (
                 <Card key={t.id} className="mt-4 w-25 m-auto">
                     <CardBody className="d-flex align-items-center justify-content-between">
