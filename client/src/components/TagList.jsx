@@ -9,6 +9,8 @@ export default function TagList()
     useEffect(() => {
         getAllTags().then(setTags)
     },[])
+
+    
     return(
         <>
         <h4 style={{display: 'flex', justifyContent: 'center'}}>Available Tags</h4>
