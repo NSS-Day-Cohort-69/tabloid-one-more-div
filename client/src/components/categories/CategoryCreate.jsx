@@ -23,10 +23,13 @@ export default function CategoryCreate() {
     return (
         <>
         <h4 style={{display: 'flex', justifyContent: 'center'}}>Create a Category</h4>
-        <Form>
-            <FormGroup>
-                <Label>Name</Label>
+        <Form className="w-50 m-auto"
+            style={{maxWidth:"20rem"}}
+        >
+            <FormGroup >
+                
                     <Input
+                        placeholder="Enter Name For A Category"
                         type="text"
                         value={name}
                         onChange={(e) => {
