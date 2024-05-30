@@ -2,11 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tabloid.Models.DTOs;
 
-public class TagNoNavDTO
+public class TagCreateDTO
 {
-    public int Id { get; set; }
     [Required]
     public string Name { get; set; }
-
-
 }
