@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { createTag } from "../managers/tagManager.js";
+import { createTag } from "../../managers/tagManager.js";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateTagForm()

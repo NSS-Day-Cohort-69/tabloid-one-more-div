@@ -4,9 +4,10 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
+import PostList from "./posts/PostList";
 import CategoryList from "./categories/CategoryList";
-import TagList from "./TagList.jsx";
-import CreateTagForm from "./CreateTagForm.jsx";
+import TagList from "./tags/TagList.jsx";
+import CreateTagForm from "./tags/CreateTagForm.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -37,7 +38,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
-          </Route>
+        </Route>
+        <Route path="posts">
+          <Route 
+            index
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <PostList loggedInUser={loggedInUser} />
+              </AuthorizedRoute>
+            }
+          />
+        </Route>
         <Route path="/categories">
           <Route
             index
