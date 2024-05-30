@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllCategories } from "../../managers/CategoryManager";
+import { getAllCategories } from "../../managers/categoryManager";
 import { Button, ButtonToolbar, Card, CardBody, CardTitle, Table } from "reactstrap";
 
 export default function CategoryList() {
@@ -12,7 +12,7 @@ export default function CategoryList() {
     return (
         <div>
         {categories.map((c) => (
-        <Card className="mt-3 w-25 m-auto">
+        <Card key={c.Id} className="mt-3 w-25 m-auto">
             <CardBody className="d-flex align-items-center justify-content-between">
                 
                 <CardTitle>
@@ -21,7 +21,7 @@ export default function CategoryList() {
                 
                 <ButtonToolbar className="gap-2 ">
                     <Button color="primary">Edit</Button>
-                    <Button className="btn-danger">Delete</Button>
+                    <Button color="danger">Delete</Button>
                 </ButtonToolbar>
             </CardBody>
         </Card>
