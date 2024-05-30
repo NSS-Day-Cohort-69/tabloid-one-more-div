@@ -12,7 +12,7 @@ export default function CategoryList() {
     return (
         <div>
         {categories.map((c) => (
-        <Card key={c.Id} className="mt-3 w-25 m-auto">
+        <Card key={c.id} className="mt-3 w-25 m-auto">
             <CardBody className="d-flex align-items-center justify-content-between">
                 
                 <CardTitle>

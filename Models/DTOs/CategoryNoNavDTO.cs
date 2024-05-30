@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tabloid.Models.DTOs;
 
-public class AllCategoryDTO
+public class CategoryNoNavDTO
 {
     public int Id { get; set; }
     

@@ -26,7 +26,7 @@ public class CategoryController : ControllerBase
     {
         return Ok(_dbContext.Categories
         .OrderBy(c => c.Name)
-        .Select(c => new AllCategoryDTO
+        .Select(c => new CategoryNoNavDTO
         {
             Id = c.Id,
             Name = c.Name,
