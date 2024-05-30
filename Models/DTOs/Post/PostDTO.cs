@@ -23,9 +23,9 @@ public class PostDTO
     public string HeaderImageURL { get; set; }
     public DateTime? PublicationDate { get; set; }
 
-    public UserProfileDTO UserProfile { get; set; }
-    public CategoryDTO Category { get; set; }
-    public List<PostTagDTO> PostTags { get; set; }
-    public List<PostReactionDTO> PostReactions { get; set; }
-    public List<CommentDTO> Comments { get; set; }
+    public UserProfileForPostDTO UserProfile { get; set; }
+    public CategoryNoNavDTO Category { get; set; }
+    public List<TagNoNavDTO> Tags { get; set; }
+    public List<PostReactionForPostDTO> PostReactions { get; set; }
+    public List<CommentForPostDTO> Comments { get; set; }
 }

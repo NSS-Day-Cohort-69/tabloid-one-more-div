@@ -30,27 +30,28 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
               <Nav navbar>
                 {loggedInUser.roles.includes("Admin") && (
                   <>
-                  <NavItem>
-                    <NavLink tag={RRNavLink} to="/userprofiles">
-                      User Profiles
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink tag={RRNavLink} to="/categories">
-                      Category Management
-                    </NavLink>
-                  </NavItem>
+                    <NavItem>
+                      <NavLink tag={RRNavLink} to="/userprofiles">
+                        User Profiles
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={RRNavLink} to="/categories">
+                        Category Management
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={RRNavLink} to="/tags">
+                        Tag Management
+                      </NavLink>
+                    </NavItem>
                   </>
                 )}
-              </Nav>
-              <Nav navbar>
-                {loggedInUser.roles.includes("Admin") && (
                 <NavItem>
-                  <NavLink tag={RRNavLink} to="/tags">
-                    Tag Management
+                  <NavLink tag={RRNavLink} to="/posts">
+                    Posts
                   </NavLink>
                 </NavItem>
-                )}
               </Nav>
             </Collapse>
             <Button
