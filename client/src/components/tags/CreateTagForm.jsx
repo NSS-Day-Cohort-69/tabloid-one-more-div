@@ -32,6 +32,7 @@ export default function CreateTagForm()
                 </Label>
                 <Input 
                 name="Name"
+                value={tagName}
                 placeholder="Enter a name for your tag"
                 onChange={(e) => {setTagName(e.target.value)}}/>
             </FormGroup>
