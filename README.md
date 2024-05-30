@@ -18,3 +18,6 @@
 1. You should see the login view when the UI opens. 
 1. Attempt to login with `admina@strator.comx` and the password you set the value of `AdminPassword` to in the user-secrets
 1. If the setup succeeded, you should see a welcome message, and a `User Profiles` menu option along with a logout button. 
+
+## WireFrame
+https://miro.com/app/board/uXjVKCQQbpk=/?share_link_id=509977173845
