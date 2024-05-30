@@ -31,4 +31,14 @@ public class TagController : ControllerBase
             Name = t.Name
         }));
     }
+
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult CreateTag(Tag newTag)
+    {
+        _dbContext.Add(newTag);
+        _dbContext.SaveChanges();
+        return Ok();
+    }
 }
