@@ -56,6 +56,6 @@ public class TagController : ControllerBase
         {
             Id = t.Id,
             Name = t.Name
-        }));
+        }).SingleOrDefault());
     }
 }

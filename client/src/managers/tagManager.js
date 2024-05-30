@@ -13,3 +13,7 @@ export const createTag = (newTag) => {
         body: JSON.stringify(newTag)
     })
 }
+
+export const getTagById = (Id) => {
+    return fetch(`${_api}/${Id}`).then((res) => res.json())
+}

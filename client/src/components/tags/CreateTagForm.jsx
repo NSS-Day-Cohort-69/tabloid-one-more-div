@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { createTag } from "../../managers/tagManager.js";
+import { createTag, getTagById } from "../../managers/tagManager.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function CreateTagForm()
 {
     const [tagName, setTagName] = useState("")
+    const [editTag, setEditTag] = useState({})
     const navigate = useNavigate()
     const {tagid} = useParams()
+
+    useEffect(() => {
+        if(tagid)
+            {
+                getTagById(tagid).then((tagObj) => {
+                    setEditTag(tagObj)
+                    setTagName(tagObj.name)
+                })
+            }
+    },[])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -33,7 +44,7 @@ export default function CreateTagForm()
                 <Input 
                 name="Name"
                 value={tagName}
-                placeholder="Enter a name for your tag"
+                placeholder=""
                 onChange={(e) => {setTagName(e.target.value)}}/>
             </FormGroup>
             <FormGroup>
