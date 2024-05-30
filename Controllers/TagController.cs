@@ -45,4 +45,17 @@ public class TagController : ControllerBase
         _dbContext.SaveChanges();
         return Created($"/api/tag/{createdTag.Id}", createdTag);
     }
+
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetTagById(int id)
+    {
+        return Ok(_dbContext.Tags
+        .Where(t => t.Id == id)
+        .Select(t => new TagNoNavDTO
+        {
+            Id = t.Id,
+            Name = t.Name
+        }));
+    }
 }
