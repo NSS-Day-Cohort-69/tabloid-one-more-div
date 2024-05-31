@@ -48,10 +48,15 @@ console.log(defaultPic)
         <CardText className="fs-3">
           {userProfile.createdOnDate}
         </CardText>
+        {userProfile.roles.length > 0 ? (
+          <>
         <Label className="fw-bold fs-3">Roles:</Label>
         <CardText className="fs-3">
           {userProfile.roles}
         </CardText>
+          </>
+
+        ) : (null)}
       </CardBody>
     </Card>
   );
