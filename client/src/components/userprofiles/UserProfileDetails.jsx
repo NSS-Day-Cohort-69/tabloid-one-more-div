@@ -39,7 +39,7 @@ export default function UserProfileDetails() {
         <CardText>
           {userProfile.createDateTime}
         </CardText>
-        <Label className="fw-bold">FullName:</Label>
+        <Label className="fw-bold">Roles:</Label>
         <CardText>
           {userProfile.roles}
         </CardText>
