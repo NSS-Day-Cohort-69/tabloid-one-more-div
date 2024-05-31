@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, ButtonToolbar, Form, FormGroup, Input, Label } from "reactstrap";
 import { createTag, getTagById, updateTag } from "../../managers/tagManager.js";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -60,9 +60,12 @@ export default function CreateTagForm()
                 onChange={(e) => {setTagName(e.target.value)}}/>
             </FormGroup>
             <FormGroup>
-                <Button type="submit" color="success" style={{float: "right"}}>
+              <ButtonToolbar  className="gap-2 "style={{float: "right"}}>
+              <Button type="submit" color="success" style={{float: "right"}}>
                     Save
                 </Button>
+                <Button onClick={() => {navigate("/tags")}}>Cancel</Button>
+              </ButtonToolbar>
             </FormGroup>
         </Form>
         
