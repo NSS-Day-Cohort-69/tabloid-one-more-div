@@ -4,10 +4,9 @@ import { getProfileWithRolesById } from "../../managers/userProfileManager";
 import { Card, CardBody, CardText, Label } from "reactstrap";
 import defaultPic from "../../resources/defaultPic.png";
 export default function UserProfileDetails() {
-  const [userProfile, setUserProfile] = useState();
+  const [userProfile, setUserProfile] = useState(null);
 
   const { id } = useParams();
-console.log(defaultPic)
   useEffect(() => {
     getProfileWithRolesById(id).then(setUserProfile);
   }, [id]);
