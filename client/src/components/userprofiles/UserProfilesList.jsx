@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProfiles } from "../../managers/userProfileManager";
+import { Button, ButtonToolbar, Card, CardBody, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 
 export default function UserProfileList() {
@@ -13,12 +14,32 @@ export default function UserProfileList() {
   }, []);
   return (
     <>
-      <p>User Profile List</p>
+      <h1 className="text-center mt-3 mb-3">User Profiles</h1>
+      <div className="d-flex justify-content-end" style={{ width: "90%" }}>
+        <Button>View Deactivated</Button>
+      </div>
+
       {userprofiles.map((p) => (
-        <p key={p.id}>
-          {p.firstName} {p.lastName} {p.userName}{" "}
-          <Link to={`/userprofiles/${p.id}`}>Details</Link>
-        </p>
+        <Card className="w-50 mx-auto md-2 mt-2 " key={p.id}>
+          <CardBody className="d-flex align-items-center justify-content-around flex-column">
+            {p.userName}
+            <Link
+              style={{ textDecoration: "none", color: "inherit" }}
+              to={`/userprofiles/${p.id}`}
+            >
+              <CardTitle className="m-0" style={{ fontSize: "25px" }}>
+                {p.fullName}{" "}
+              </CardTitle>
+            </Link>
+            {p.roles.map((p) => p)}
+            <div className="d-flex gap-2">
+              <Button style={{ paddingLeft: "37px", paddingRight: "37px" }}>
+                Edit
+              </Button>
+              <Button>Deactivate</Button>
+            </div>
+          </CardBody>
+        </Card>
       ))}
     </>
   );
