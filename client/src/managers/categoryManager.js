@@ -13,3 +13,13 @@ export const createCategory = (category) => {
         body: JSON.stringify(category)
     });
 }
+
+export const deleteCategory = (id) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(id)
+    });
+}
