@@ -61,7 +61,7 @@ public class TagController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize]
-    public IActionResult UpdateATag(TagUpdateDTO newTag, int id)
+    public IActionResult UpdateATag(TagUpdateDTO updateTag, int id)
     {
         Tag tagToUpdate = _dbContext.Tags.FirstOrDefault(t => t.Id == id);
         if (tagToUpdate == null)
@@ -69,7 +69,7 @@ public class TagController : ControllerBase
             return NotFound();
         }
 
-        tagToUpdate.Name = newTag.Name;
+        tagToUpdate.Name = updateTag.Name;
         _dbContext.SaveChanges();
         return NoContent();
     }
