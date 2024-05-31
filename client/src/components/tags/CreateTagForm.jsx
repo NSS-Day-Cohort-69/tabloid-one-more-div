@@ -25,6 +25,10 @@ export default function CreateTagForm()
         const tag = {
             name: tagName
         };
+        if(tagid)
+            {
+                
+            }
         createTag(tag).then(() => {navigate("/tags")})
     }
     return(
