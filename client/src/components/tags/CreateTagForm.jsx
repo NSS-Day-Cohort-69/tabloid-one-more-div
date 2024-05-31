@@ -25,13 +25,9 @@ export default function CreateTagForm()
         const tag = {
             name: tagName
         };
-        const tagToUpdate = {
-           
-            name: tagName
-        }
         if(tagid)
             {
-                updateTag(editTag.id,tagToUpdate).then(() => {navigate("/tags")})
+                updateTag(editTag.id,tag).then(() => {navigate("/tags")})
             }
             else
             {
