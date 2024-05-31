@@ -56,7 +56,7 @@ export default function CreateTagForm()
                 <Input 
                 name="Name"
                 value={tagName}
-                placeholder=""
+                placeholder="Enter a Tag name"
                 onChange={(e) => {setTagName(e.target.value)}}/>
             </FormGroup>
             <FormGroup>
