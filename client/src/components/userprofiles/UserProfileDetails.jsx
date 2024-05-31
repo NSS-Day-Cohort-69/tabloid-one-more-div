@@ -16,31 +16,40 @@ export default function UserProfileDetails() {
     return null;
   }
   return (
-    <Card className="w-50 m-auto mt-3">
-       <div className="">
-      <img alt="user profile image" className="w-50"
-      src={userProfile.imageLocation} style={{height: 200, borderRadius: "50%"}}/>
-
-      </div>
-      <CardBody>
-        <Label className="fw-bold">FullName:</Label>
-        <CardText>
-        {userProfile.fullName}
-        </CardText>
-        <Label className="fw-bold">UserName:</Label>
-        <CardText>
+    <Card className="w-25 m-auto mt-3 shadow">
+      <CardText className="fs-3 m-auto fw-bold">
           {userProfile.userName}
         </CardText>
-        <Label className="fw-bold">Email:</Label>
-        <CardText>
+        <div className="d-flex flex-row-reverse me-2">
+          <div className="d-flex">
+            <Label className="me-1 fw-bold" >User Since:</Label>
+            <CardText className="fst-italic">
+              {userProfile.createdOnDate}
+            </CardText>
+          </div>
+        </div>
+       <div className="">
+      <img alt="user profile image" className="w-25 m-auto"
+      src={userProfile.imageLocation  ? (userProfile.imageLocation) : ("../../../resources/defaultPic.png") } style={{ borderRadius: "50%"}}/>
+      
+      </div>
+      <CardBody className="m-auto ">
+        {/* <Label className="fw-bold">FullName:</Label> */}
+        <Label className="fw-bold fs-3">FullName:</Label>
+       
+    <CardText className="fs-3  ">
+          {userProfile.fullName}
+        </CardText>
+        <Label className="fw-bold fs-3">Email:</Label>
+        <CardText className="fs-3">
           {userProfile.email}
         </CardText>
-        <Label className="fw-bold">Creation Date:</Label>
-        <CardText>
+        <Label className="fw-bold fs-3">Creation Date:</Label>
+        <CardText className="fs-3">
           {userProfile.createdOnDate}
         </CardText>
-        <Label className="fw-bold">Roles:</Label>
-        <CardText>
+        <Label className="fw-bold fs-3">Roles:</Label>
+        <CardText className="fs-3">
           {userProfile.roles}
         </CardText>
       </CardBody>
