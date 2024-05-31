@@ -45,8 +45,8 @@ public class PostController : ControllerBase
                     LastName = p.UserProfile.LastName,
                     ImageLocation = p.UserProfile.ImageLocation,
                     IsActive = p.UserProfile.IsActive
-                },
-                Category = new CategoryNoNavDTO()
+                }, 
+                Category = p.Category == null ? null : new CategoryNoNavDTO()
                 {
                     Id = p.Category.Id,
                     Name = p.Category.Name

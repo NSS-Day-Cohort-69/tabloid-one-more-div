@@ -44,7 +44,7 @@ public class UserProfileController : ControllerBase
             .Where(ur => ur.UserId == up.IdentityUserId)
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
             .ToList()
-        }));
+        }).OrderBy(up => up.UserName));
     }
 
     [HttpPost("promote/{id}")]

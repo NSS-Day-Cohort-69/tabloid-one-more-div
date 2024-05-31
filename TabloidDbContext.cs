@@ -63,6 +63,11 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
             .WithMany(f => f.Subscriptions)
             .HasForeignKey(s => s.FollowerId);
 
+        modelBuilder.Entity<Category>()
+            .HasMany(c => c.Posts)
+            .WithOne(p => p.Category)
+            .OnDelete(DeleteBehavior.SetNull);
+
         modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
         {
             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",

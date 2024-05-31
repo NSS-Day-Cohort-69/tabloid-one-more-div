@@ -35,7 +35,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost("create")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public IActionResult CategoryCreate(CategoryCreateDTO newCategory)
     {
         Category categoryToCreate = new Category()
@@ -47,7 +47,36 @@ public class CategoryController : ControllerBase
         return Created($"/api/category/{categoryToCreate.Id}", categoryToCreate);
     }
 
+    [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult CategoryDelete(int id)
+    {
+        Category category = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
+        _dbContext.Categories.Remove(category);
+        _dbContext.SaveChanges();
+
+        if(category == null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
     [HttpPut("edit")]
     [Authorize()]
+    public IActionResult CategoryEdit(int id, Category updatedCategory)
+    {
+        Category category = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
+        
+        if(category == null)
+        {
+            return NotFound();
+        }
+
+        category.Name = updatedCategory.Name;
+
+        return NoContent();
+    }
 
 }
