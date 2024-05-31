@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { createTag, getTagById } from "../../managers/tagManager.js";
+import { createTag, getTagById, updateTag } from "../../managers/tagManager.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function CreateTagForm()
@@ -25,11 +25,19 @@ export default function CreateTagForm()
         const tag = {
             name: tagName
         };
+        const tagToUpdate = {
+           
+            name: tagName
+        }
         if(tagid)
             {
-                
+                updateTag(editTag.id,tagToUpdate).then(() => {navigate("/tags")})
             }
-        createTag(tag).then(() => {navigate("/tags")})
+            else
+            {
+
+                createTag(tag).then(() => {navigate("/tags")})
+            }
     }
     return(
         <div>
