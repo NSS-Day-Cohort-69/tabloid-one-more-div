@@ -60,10 +60,7 @@ export default function CreateTagForm()
               <Button type="submit" color="primary" style={{float: "right"}}>
                     Save
                 </Button>
-                {tagid ? (
-
-                    <Button color="danger" onClick={() => {navigate("/tags")}}>Cancel</Button>
-                ) : (null)}
+                {tagid &&  <Button color="danger" onClick={() => {navigate("/tags")}}>Cancel</Button>}
               </ButtonToolbar>
             </FormGroup>
         </Form>
