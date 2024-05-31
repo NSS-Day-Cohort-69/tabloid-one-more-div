@@ -61,7 +61,7 @@ public class TagController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize]
-    public IActionResult UpdateATag(Tag newTag, int id)
+    public IActionResult UpdateATag(TagUpdateDTO newTag, int id)
     {
         Tag tagToUpdate = _dbContext.Tags.FirstOrDefault(t => t.Id == id);
 
