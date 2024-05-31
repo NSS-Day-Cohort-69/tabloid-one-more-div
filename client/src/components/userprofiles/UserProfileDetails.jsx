@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProfile, getProfileWithRolesById } from "../../managers/userProfileManager";
 import { Card, CardBody, CardImg, CardText, Label } from "reactstrap";
-
+import defaultPic from "../../resources/defaultPic.png";
 export default function UserProfileDetails() {
   const [userProfile, setUserProfile] = useState();
 
   const { id } = useParams();
-
+console.log(defaultPic)
   useEffect(() => {
     getProfileWithRolesById(id).then(setUserProfile);
   }, [id]);
@@ -30,7 +30,7 @@ export default function UserProfileDetails() {
         </div>
        <div className="">
       <img alt="user profile image" className="w-25 m-auto"
-      src={userProfile.imageLocation  ? (userProfile.imageLocation) : ("../../../resources/defaultPic.png") } style={{ borderRadius: "50%"}}/>
+      src={userProfile.imageLocation||defaultPic} style={{ borderRadius: "50%"}}/>
       
       </div>
       <CardBody className="m-auto ">
