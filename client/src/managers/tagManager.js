@@ -13,3 +13,17 @@ export const createTag = (newTag) => {
         body: JSON.stringify(newTag)
     })
 }
+
+export const getTagById = (Id) => {
+    return fetch(`${_api}/${Id}`).then((res) => res.json())
+}
+
+export const updateTag = (Id, updateTag) => {
+    return fetch(`${_api}/${Id}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(updateTag)
+    });
+}
