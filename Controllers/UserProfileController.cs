@@ -52,7 +52,7 @@ public class UserProfileController : ControllerBase
     [Authorize(Roles = "Admin")]
     public IActionResult GetWithRolesById(int id)
     {
-        return Ok(_dbContext.UserProfiles
+        UserProfileForUserProfileDetailsDTO profileDTO = _dbContext.UserProfiles
         .Include(up => up.IdentityUser)
         .Where(up => up.Id == id)
         .Select(up => new UserProfileForUserProfileDetailsDTO
@@ -69,7 +69,12 @@ public class UserProfileController : ControllerBase
             .Where(ur => ur.UserId == up.IdentityUserId)
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
             .ToList()
-        }).SingleOrDefault());
+        }).SingleOrDefault();
+        if (profileDTO == null)
+        {
+            return NotFound();
+        }
+        return Ok(profileDTO);
     }
 
     [HttpPost("promote/{id}")]

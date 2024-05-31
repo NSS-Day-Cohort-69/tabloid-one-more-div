@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProfile, getProfileWithRolesById } from "../../managers/userProfileManager";
-import { Card, CardBody, CardImg, CardText, Label } from "reactstrap";
+import { getProfileWithRolesById } from "../../managers/userProfileManager";
+import { Card, CardBody, CardText, Label } from "reactstrap";
 import defaultPic from "../../resources/defaultPic.png";
 export default function UserProfileDetails() {
   const [userProfile, setUserProfile] = useState();
@@ -24,19 +24,16 @@ console.log(defaultPic)
           <div className="d-flex">
             <Label className="me-1 fw-bold" >User Since:</Label>
             <CardText className="fst-italic">
-              {userProfile.createdOnDate}
+              {userProfile.formattedCreateDateTime}
             </CardText>
           </div>
         </div>
        <div className="ms-1">
       <img alt="user profile image" className="w-25 m-auto"
       src={userProfile.imageLocation||defaultPic} style={{ borderRadius: "50%"}}/>
-      
       </div>
       <CardBody className="m-auto ">
-        {/* <Label className="fw-bold">FullName:</Label> */}
         <Label className="fw-bold fs-3">FullName:</Label>
-       
     <CardText className="fs-3  ">
           {userProfile.fullName}
         </CardText>

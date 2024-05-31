@@ -43,8 +43,5 @@ public class UserProfileForUserProfileDetailsDTO
     }
 
     public bool IsActive { get; set; }
-    public string CreatedOnDate
-    {
-        get { return CreateDateTime.Date.ToString("MM-dd-yyyy"); }
-    }
+    public string FormattedCreateDateTime => CreateDateTime.Date.ToString("MM-dd-yyyy");
 }
