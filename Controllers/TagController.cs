@@ -64,6 +64,10 @@ public class TagController : ControllerBase
     public IActionResult UpdateATag(TagUpdateDTO newTag, int id)
     {
         Tag tagToUpdate = _dbContext.Tags.FirstOrDefault(t => t.Id == id);
+        if (tagToUpdate == null)
+        {
+            return NotFound();
+        }
 
         tagToUpdate.Name = newTag.Name;
         _dbContext.SaveChanges();
