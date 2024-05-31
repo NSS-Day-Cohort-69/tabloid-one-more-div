@@ -44,10 +44,6 @@ console.log(defaultPic)
         <CardText className="fs-3">
           {userProfile.email}
         </CardText>
-        <Label className="fw-bold fs-3">Creation Date:</Label>
-        <CardText className="fs-3">
-          {userProfile.createdOnDate}
-        </CardText>
         {userProfile.roles.length > 0 ? (
           <>
         <Label className="fw-bold fs-3">Roles:</Label>
