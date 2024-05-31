@@ -1,6 +1,6 @@
-import { useDebugValue, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { getAllCategories } from "../../managers/categoryManager";
-import { Button, ButtonToolbar, Card, CardBody, CardTitle, Table } from "reactstrap";
+import { Button, ButtonToolbar, Card, CardBody, CardTitle} from "reactstrap";
 import { Link } from "react-router-dom";
 import { deleteCategory } from "../../managers/CategoryManager";
 import ConfirmDeleteModal from "../modals/ConfirmDeleteModal";
@@ -18,7 +18,7 @@ export default function CategoryList() {
         setIsModalOpen(!isModalOpen);
     }
 
-    const handleDeleteBtnClick = (id) => {
+    const handleDeleteModal = (id) => {
         setCategoryIdToDelete(id);
         toggleModal();
     };
@@ -47,7 +47,7 @@ export default function CategoryList() {
                 
                     <ButtonToolbar className="gap-2 ">
                         <Button color="primary">Edit</Button>
-                        <Button color="danger" onClick={() => handleDeleteBtnClick(c.id)}>Delete</Button>
+                        <Button color="danger" onClick={() => handleDeleteModal(c.id)}>Delete</Button>
                     </ButtonToolbar>
                 </CardBody>
             </Card>
@@ -56,6 +56,7 @@ export default function CategoryList() {
             isOpen={isModalOpen}
             toggle={toggleModal}
             confirmDelete={handleDelete}
+            typeName={"category"}
         />
         </div>
     )

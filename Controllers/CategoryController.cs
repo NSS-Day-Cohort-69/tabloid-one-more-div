@@ -35,7 +35,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost("create")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public IActionResult CategoryCreate(CategoryCreateDTO newCategory)
     {
         Category categoryToCreate = new Category()
@@ -48,10 +48,10 @@ public class CategoryController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public IActionResult CategoryDelete(int id)
     {
-        var category =_dbContext.Categories.Find(id);
+        Category category = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
         _dbContext.Categories.Remove(category);
         _dbContext.SaveChanges();
 
