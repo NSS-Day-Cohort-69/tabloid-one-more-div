@@ -61,10 +61,10 @@ export default function CreateTagForm()
             </FormGroup>
             <FormGroup>
               <ButtonToolbar  className="gap-2 "style={{float: "right"}}>
-              <Button type="submit" color="success" style={{float: "right"}}>
+              <Button type="submit" color="primary" style={{float: "right"}}>
                     Save
                 </Button>
-                <Button onClick={() => {navigate("/tags")}}>Cancel</Button>
+                <Button color="danger" onClick={() => {navigate("/tags")}}>Cancel</Button>
               </ButtonToolbar>
             </FormGroup>
         </Form>
