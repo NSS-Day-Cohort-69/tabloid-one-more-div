@@ -28,7 +28,7 @@ console.log(defaultPic)
             </CardText>
           </div>
         </div>
-       <div className="">
+       <div className="ms-1">
       <img alt="user profile image" className="w-25 m-auto"
       src={userProfile.imageLocation||defaultPic} style={{ borderRadius: "50%"}}/>
       
