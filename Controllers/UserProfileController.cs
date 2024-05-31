@@ -4,6 +4,7 @@ using Tabloid.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Tabloid.Models.DTOs;
 
 namespace Tabloid.Controllers;
 
@@ -54,7 +55,7 @@ public class UserProfileController : ControllerBase
         return Ok(_dbContext.UserProfiles
         .Include(up => up.IdentityUser)
         .Where(up => up.Id == id)
-        .Select(up => new UserProfile
+        .Select(up => new UserProfileForUserProfileDetailsDTO
         {
             Id = up.Id,
             FirstName = up.FirstName,

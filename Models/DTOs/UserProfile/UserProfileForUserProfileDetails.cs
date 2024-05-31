@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace Tabloid.Models.DTOs;
-public class UserProfileForDateCalculatedPropertyDTO
+public class UserProfileForUserProfileDetailsDTO
 {
     public int Id { get; set; }
 
@@ -45,6 +45,6 @@ public class UserProfileForDateCalculatedPropertyDTO
     public bool IsActive { get; set; }
     public string CreatedOnDate
     {
-        get { return CreateDateTime.Date.ToString("MM-DD-YYY"); }
+        get { return CreateDateTime.Date.ToString("MM-dd-yyyy"); }
     }
 }

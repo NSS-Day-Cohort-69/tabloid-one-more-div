@@ -16,7 +16,7 @@ export default function UserProfileDetails() {
     return null;
   }
   return (
-    <Card className="w-50 m-auto">
+    <Card className="w-50 m-auto mt-3">
        <div className="">
       <img alt="user profile image" className="w-50"
       src={userProfile.imageLocation} style={{height: 200, borderRadius: "50%"}}/>
@@ -37,7 +37,7 @@ export default function UserProfileDetails() {
         </CardText>
         <Label className="fw-bold">Creation Date:</Label>
         <CardText>
-          {userProfile.createDateTime}
+          {userProfile.createdOnDate}
         </CardText>
         <Label className="fw-bold">Roles:</Label>
         <CardText>
