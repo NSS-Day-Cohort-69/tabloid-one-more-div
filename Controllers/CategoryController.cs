@@ -49,6 +49,13 @@ public class CategoryController : ControllerBase
 
     [HttpDelete("{id}")]
     [Authorize]
-    public IActionResult 
+    public IActionResult CategoryDelete(int id)
+    {
+        var category =_dbContext.Categories.Find(id);
+        _dbContext.Categories.Remove(category);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 
 }
