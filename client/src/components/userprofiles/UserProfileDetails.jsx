@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProfile } from "../../managers/userProfileManager";
+import { getProfile, getProfileWithRolesById } from "../../managers/userProfileManager";
 import { Card, CardBody, CardImg, CardText, Label } from "reactstrap";
 
 export default function UserProfileDetails() {
@@ -9,7 +9,7 @@ export default function UserProfileDetails() {
   const { id } = useParams();
 
   useEffect(() => {
-    getProfile(id).then(setUserProfile);
+    getProfileWithRolesById(id).then(setUserProfile);
   }, [id]);
 
   if (!userProfile) {
