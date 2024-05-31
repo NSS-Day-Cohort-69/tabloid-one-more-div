@@ -29,7 +29,7 @@ export default function TagList()
                         </CardTitle>
                         <ButtonToolbar className="gap-2 "style={{float: "right"}} >
                             <Button color="primary"
-                            onClick={() => navigate(`/tags/${t.id}`)} >Edit</Button>
+                            onClick={() => navigate(`/tags/${t.id}/edit`)} >Edit</Button>
                             <Button color="danger">DELETE</Button>
                         </ButtonToolbar>
                     </CardBody>
