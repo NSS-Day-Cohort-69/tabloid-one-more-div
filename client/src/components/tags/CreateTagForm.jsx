@@ -73,4 +73,3 @@ export default function CreateTagForm()
         </div>
     )
 }
-// need to add functionality for saving the updated tag name to the database: Controller, manager, add logic in handleSubmit
