@@ -71,7 +71,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         <Route path="tags">
             <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><TagList/></AuthorizedRoute>}/>
             <Route path="create" element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><CreateTagForm/></AuthorizedRoute>}/>
-            <Route path=":tagid" element={<AuthorizedRoute loggedInUser={loggedInUser}><CreateTagForm/></AuthorizedRoute>}/>
+            <Route path=":tagid" element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><CreateTagForm/></AuthorizedRoute>}/>
           </Route>
         <Route
           path="login"
