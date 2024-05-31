@@ -58,4 +58,15 @@ public class TagController : ControllerBase
             Name = t.Name
         }).SingleOrDefault());
     }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public IActionResult UpdateATag(Tag newTag, int id)
+    {
+        Tag tagToUpdate = _dbContext.Tags.FirstOrDefault(t => t.Id == id);
+
+        tagToUpdate.Name = newTag.Name;
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
 }

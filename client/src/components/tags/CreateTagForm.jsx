@@ -30,7 +30,7 @@ export default function CreateTagForm()
     return(
         <div>
             {tagid ? (
-            <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Edit a New Tag</h4>    
+            <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Edit a Tag</h4>    
             ) : (
             <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Create a New Tag</h4>
             )}
@@ -58,3 +58,4 @@ export default function CreateTagForm()
         </div>
     )
 }
+// need to add functionality for saving the updated tag name to the database: Controller, manager, add logic in handleSubmit
