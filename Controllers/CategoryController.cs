@@ -47,4 +47,7 @@ public class CategoryController : ControllerBase
         return Created($"/api/category/{categoryToCreate.Id}", categoryToCreate);
     }
 
+    [HttpPut("edit")]
+    [Authorize()]
+
 }
