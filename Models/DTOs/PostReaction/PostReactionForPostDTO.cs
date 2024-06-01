@@ -14,5 +14,4 @@ public class PostReactionForPostDTO
     public int ReactionId { get; set; }
 
     public UserProfileForPostReactionDTO UserProfile { get; set; }
-    public ReactionNoNavDTO Reaction { get; set; }
 }
