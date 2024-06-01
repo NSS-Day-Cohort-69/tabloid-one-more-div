@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 
 namespace Tabloid.Models.DTOs;
 
@@ -28,7 +27,7 @@ public class PostForDetailsDTO
     public UserProfileForPostDTO UserProfile { get; set; }
     public CategoryNoNavDTO Category { get; set; }
     public List<TagNoNavDTO> Tags { get; set; }
-    public List<PostReactionForPostDTO> PostReactions { get; set; } 
+    public List<ReactionForPostDTO> Reactions { get; set; } 
     public int CommentsCount { get; set; }
     public string FormattedPublicationDate => PublicationDate.Value.ToString("MMMM dd, yyyy");
 }
