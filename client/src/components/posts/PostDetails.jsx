@@ -37,7 +37,7 @@ export const PostDetails = ({ loggedInUser }) => {
                                 {post.title}
                             </Badge>
                             <div className="pe-auto">
-                                <Badge className="fs-6 mb-2 shadow" pill>{post.category.name}</Badge>
+                                <Badge className="fs-6 mb-2 shadow" pill>{post.category?.name}</Badge>
                             </div>
                         </CardImgOverlay>
                     </>
@@ -47,11 +47,11 @@ export const PostDetails = ({ loggedInUser }) => {
                         <>
                             <CardTitle className="fs-2 fw-bold mb-0">{post.title}</CardTitle>
                             <div>
-                                <Badge className="fs-6" pill>{post.category.name}</Badge>
+                                <Badge className="fs-6" pill>{post.category?.name}</Badge>
                             </div>
                         </>
                     )}
-                    <div className="d-flex justify-content-between pt-2">
+                    {/* <div className="d-flex justify-content-between pt-2">
                         <div>
                             {post.tags.length > 0 && (
                                 <div className="d-flex flex-wrap gap-2 mb-3">
@@ -74,8 +74,8 @@ export const PostDetails = ({ loggedInUser }) => {
                                 ))}
                             </div>
                         </div>
-                    </div>
-                    {/* {post.tags.length > 0 && (
+                    </div> */}
+                    {post.tags.length > 0 && (
                         <div className="d-flex gap-2 mb-3 pt-2">
                             {post.tags.map(t => {
                                 return (
@@ -85,16 +85,16 @@ export const PostDetails = ({ loggedInUser }) => {
                         </div>
                     )}
                     <CardSubtitle className="fw-bold">{post.userProfile.fullName}</CardSubtitle>
-                    <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle> */}
+                    <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle>
                     <CardText className="mt-3">{post.content}</CardText>
                     <div className="d-flex flex-column align-items-end">
-                        {/* <div className="d-flex flex-row flex-wrap gap-1">
+                        <div className="d-flex flex-row flex-wrap gap-1">
                             {post.reactions.map(r => (
                                 <Button className="px-1 pe-2 py-0" key={`reaction-${r.id}`}>
                                     {`${r.reactionImage} ${r.postReactionsCount}`}
                                 </Button>
                             ))}
-                        </div> */}
+                        </div>
                         <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
                             <div className="d-flex flex-fill">
                                 <Button>Subscribe</Button>
