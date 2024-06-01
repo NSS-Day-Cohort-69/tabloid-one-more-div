@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
-import { Badge, Button, ButtonToolbar, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
+import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
@@ -32,9 +32,11 @@ export const PostDetails = ({ loggedInUser }) => {
                             width="100%"
                             className="mb-1"
                         />
-                        <CardImgOverlay>
-                            <Badge className="fs-3 fw-bold mb-2 shadow">{post.title}</Badge>
-                            <div className="">
+                        <CardImgOverlay className="pe-none">
+                            <Badge className="fs-3 fw-bold mb-2 shadow pe-auto" style={{ wordWrap: "normal"}}>
+                                {post.title}
+                            </Badge>
+                            <div className="pe-auto">
                                 <Badge className="fs-6 mb-2 shadow" pill>{post.category.name}</Badge>
                             </div>
                         </CardImgOverlay>
@@ -49,7 +51,31 @@ export const PostDetails = ({ loggedInUser }) => {
                             </div>
                         </>
                     )}
-                    {post.tags.length > 0 && (
+                    <div className="d-flex justify-content-between pt-2">
+                        <div>
+                            {post.tags.length > 0 && (
+                                <div className="d-flex flex-wrap gap-2 mb-3">
+                                    {post.tags.map(t => {
+                                        return (
+                                            <Badge color="info" key={`tag-${t.id}`} pill>{t.name}</Badge>
+                                        )
+                                    })}
+                                </div>
+                            )}
+                            <CardSubtitle className="fw-bold">{post.userProfile.fullName}</CardSubtitle>
+                            <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle>
+                        </div>
+                        <div>
+                            <div className="d-flex flex-row flex-wrap justify-content-end gap-1">
+                                {post.reactions.map(r => (
+                                    <Button className="px-1 pe-2 py-0" key={`reaction-${r.id}`}>
+                                        {`${r.reactionImage} ${r.postReactionsCount}`}
+                                    </Button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    {/* {post.tags.length > 0 && (
                         <div className="d-flex gap-2 mb-3 pt-2">
                             {post.tags.map(t => {
                                 return (
@@ -58,17 +84,28 @@ export const PostDetails = ({ loggedInUser }) => {
                             })}
                         </div>
                     )}
-                    <CardSubtitle>{post.userProfile.fullName}</CardSubtitle>
-                    <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle>
+                    <CardSubtitle className="fw-bold">{post.userProfile.fullName}</CardSubtitle>
+                    <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle> */}
                     <CardText className="mt-3">{post.content}</CardText>
-                    <ButtonToolbar className="gap-2" style={{float: "right"}}>
-                        <Button>Subscribe</Button>
-                        <Button>{post.commentsCount} Comments</Button>
-                        <Button>Create A Comment</Button>
-                        <Button>Manage Tags</Button>
-                        <Button>Edit</Button>
-                        <Button>Delete</Button>
-                    </ButtonToolbar>
+                    <div className="d-flex flex-column align-items-end">
+                        {/* <div className="d-flex flex-row flex-wrap gap-1">
+                            {post.reactions.map(r => (
+                                <Button className="px-1 pe-2 py-0" key={`reaction-${r.id}`}>
+                                    {`${r.reactionImage} ${r.postReactionsCount}`}
+                                </Button>
+                            ))}
+                        </div> */}
+                        <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
+                            <div className="d-flex flex-fill">
+                                <Button>Subscribe</Button>
+                            </div>
+                            <Button>{`${post.commentsCount} Comments`}</Button>
+                            <Button>Create A Comment</Button>
+                            <Button>Manage Tags</Button>
+                            <Button>Edit</Button>
+                            <Button>Delete</Button>
+                        </div>
+                    </div>
                 </CardBody>
             </Card>
         </PageContainer>
