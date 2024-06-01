@@ -45,4 +45,32 @@ public class TagController : ControllerBase
         _dbContext.SaveChanges();
         return Created($"/api/tag/{createdTag.Id}", createdTag);
     }
+
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetTagById(int id)
+    {
+        return Ok(_dbContext.Tags
+        .Where(t => t.Id == id)
+        .Select(t => new TagNoNavDTO
+        {
+            Id = t.Id,
+            Name = t.Name
+        }).SingleOrDefault());
+    }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public IActionResult UpdateATag(TagUpdateDTO updateTag, int id)
+    {
+        Tag tagToUpdate = _dbContext.Tags.FirstOrDefault(t => t.Id == id);
+        if (tagToUpdate == null)
+        {
+            return NotFound();
+        }
+
+        tagToUpdate.Name = updateTag.Name;
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
 }

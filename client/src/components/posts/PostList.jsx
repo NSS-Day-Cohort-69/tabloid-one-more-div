@@ -19,7 +19,7 @@ export const PostList = ({ loggedInUser }) => {
                 return (
                     <Card className="w-75 shadow-sm p-3 pb-2" style={{maxWidth: "1200px"}} outline color="light" key={`post-${p.id}`}>
                         <div className="d-flex align-items-center gap-2">
-                            <Badge className="fs-6" pill>{p.category.name}</Badge>
+                            <Badge className="fs-6" pill>{p.category?.name}</Badge>
                             <CardLink className="text-black text-decoration-none" href={`userprofiles/${p.userProfile.id}`}>
                                 <em>{p.userProfile.fullName}</em>
                             </CardLink>
