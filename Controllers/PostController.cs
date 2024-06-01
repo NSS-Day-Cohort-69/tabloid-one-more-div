@@ -65,7 +65,10 @@ public class PostController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetSingleApprovedAndPublished(int id)
     {
-        PostForDetailsDTO postDTO = _dbContext.Posts
+        
+        List<Reaction> reactions = _dbContext.Reactions.ToList();
+        
+        Post foundPost = _dbContext.Posts
             .Where(p => p.IsApproved == true && p.PublicationDate <= DateTime.Now)
             .Include(p => p.UserProfile)
             .Include(p => p.Category)
@@ -75,35 +78,48 @@ public class PostController : ControllerBase
             .ThenInclude(pr => pr.Reaction)
             .Include(p => p.PostReactions)
             .ThenInclude(pr => pr.UserProfile)
-            .Include(p => p.Comments).Select(p => new PostForDetailsDTO()
+            .Include(p => p.Comments)
+            .SingleOrDefault(p => p.Id == id);
+
+        if (foundPost == null)
+        {
+            return NotFound();
+        }
+        
+        PostForDetailsDTO postDTO = new PostForDetailsDTO()
+        {
+            Id = foundPost.Id,
+            UserProfileId = foundPost.UserProfileId,
+            CategoryId = foundPost.CategoryId,
+            IsApproved = foundPost.IsApproved,
+            Title = foundPost.Title,
+            Content = foundPost.Content,
+            HeaderImageURL = foundPost.HeaderImageURL,
+            PublicationDate = foundPost.PublicationDate,
+            UserProfile = new UserProfileForPostDTO()
             {
-                Id = p.Id,
-                UserProfileId = p.UserProfileId,
-                CategoryId = p.CategoryId,
-                IsApproved = p.IsApproved,
-                Title = p.Title,
-                Content = p.Content,
-                HeaderImageURL = p.HeaderImageURL,
-                PublicationDate = p.PublicationDate,
-                UserProfile = new UserProfileForPostDTO()
-                {
-                    Id = p.UserProfile.Id,
-                    FirstName = p.UserProfile.FirstName,
-                    LastName = p.UserProfile.LastName,
-                    ImageLocation = p.UserProfile.ImageLocation,
-                    IsActive = p.UserProfile.IsActive
-                },
-                Category = new CategoryNoNavDTO()
-                {
-                    Id = p.Category.Id,
-                    Name = p.Category.Name
-                },
-                Tags = p.PostTags.Select(pt => new TagNoNavDTO()
-                {
-                    Id = pt.Tag.Id,
-                    Name = pt.Tag.Name
-                }).ToList(),
-                PostReactions = p.PostReactions.Select(pr => new PostReactionForPostDTO()
+                Id = foundPost.UserProfile.Id,
+                FirstName = foundPost.UserProfile.FirstName,
+                LastName = foundPost.UserProfile.LastName,
+                ImageLocation = foundPost.UserProfile.ImageLocation,
+                IsActive = foundPost.UserProfile.IsActive
+            },
+            Category = foundPost.Category == null ? null : new CategoryNoNavDTO()
+            {
+                Id = foundPost.Category.Id,
+                Name = foundPost.Category.Name
+            },
+            Tags = foundPost.PostTags.Select(pt => new TagNoNavDTO()
+            {
+                Id = pt.Tag.Id,
+                Name = pt.Tag.Name
+            }).ToList(),
+            Reactions = reactions.Select(r => new ReactionForPostDTO()
+            {
+                Id = r.Id,
+                Name = r.Name,
+                ReactionImage = r.ReactionImage,
+                PostReactions = foundPost.PostReactions.Where(pr => pr.ReactionId == r.Id).Select(pr => new PostReactionForPostDTO()
                 {
                     UserProfileId = pr.UserProfileId,
                     PostId = pr.PostId,
@@ -115,23 +131,11 @@ public class PostController : ControllerBase
                         LastName = pr.UserProfile.LastName,
                         ImageLocation = pr.UserProfile.ImageLocation,
                         IsActive = pr.UserProfile.IsActive
-                    },
-                    Reaction = new ReactionNoNavDTO()
-                    {
-                        Id = pr.Reaction.Id,
-                        Name = pr.Reaction.Name,
-                        ReactionImage = pr.Reaction.ReactionImage
                     }
-                }).ToList(),
-                CommentsCount = p.Comments.Count()
-            })
-            .SingleOrDefault(p => p.Id == id);
-        
-        if (postDTO == null)
-        {
-            return NotFound();
-        }
-        
+                }).ToList()
+            }).ToList(),
+            CommentsCount = foundPost.Comments.Count()
+        };        
 
         return Ok(postDTO);
     }
