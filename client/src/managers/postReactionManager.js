@@ -11,3 +11,11 @@ export const createPostReaction = (postReaction) => {
 
     return fetch(_apiUrl, postOptions)
 }
+
+export const deletePostReaction = (postReaction) => {
+    const deleteOptions = {method: "DELETE"}
+
+    const queryParams = `?reactionId=${postReaction.reactionId}&postId=${postReaction.postId}&userProfileId=${postReaction.userProfileId}`
+
+    return fetch(`${_apiUrl}${queryParams}`, deleteOptions)
+}
