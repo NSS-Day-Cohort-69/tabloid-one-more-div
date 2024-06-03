@@ -139,4 +139,36 @@ public class PostController : ControllerBase
 
         return Ok(postDTO);
     }
+
+    [HttpPost("{id}/react")]
+    public IActionResult ReactToPost(int id, PostReactionCreateDTO newPostReaction)
+    {
+        // Data validation
+        if (newPostReaction.PostId != id)
+        {
+            return BadRequest("Reaction data does not match the Post you are Reacting to");
+        }
+        
+        PostReaction existingPostReaction = _dbContext.PostReactions.SingleOrDefault(
+            pr => pr.UserProfileId == newPostReaction.UserProfileId
+            && (pr.PostId == newPostReaction.PostId)
+            && pr.ReactionId == newPostReaction.ReactionId);
+        if (existingPostReaction != null)
+        {
+            return Conflict("You have already Reacted to this Post like that!");
+        }
+        
+        // Creation logic
+        PostReaction postReaction = new PostReaction()
+        {
+            UserProfileId = newPostReaction.UserProfileId,
+            PostId = newPostReaction.PostId,
+            ReactionId = newPostReaction.ReactionId
+        };
+        _dbContext.PostReactions.Add(postReaction);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
 }
