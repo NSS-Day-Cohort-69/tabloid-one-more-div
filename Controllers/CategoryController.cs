@@ -63,9 +63,22 @@ public class CategoryController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("edit")]
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetCategoryById(int id)
+    {
+        return Ok(_dbContext.Categories
+        .Where(c => c.Id == id)
+        .Select(c => new CategoryNoNavDTO
+        {
+            Id = c.Id,
+            Name = c.Name
+        }).SingleOrDefault());
+    }
+
+    [HttpPut("edit/{id}")]
     [Authorize()]
-    public IActionResult CategoryEdit(int id, Category updatedCategory)
+    public IActionResult CategoryEdit(int id, CategoryUpdateDTO  updatedCategory)
     {
         Category category = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
         
