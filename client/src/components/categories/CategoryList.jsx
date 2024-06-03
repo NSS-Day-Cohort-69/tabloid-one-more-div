@@ -1,7 +1,7 @@
 import {useEffect, useState } from "react";
 import { getAllCategories } from "../../managers/categoryManager";
 import { Button, ButtonToolbar, Card, CardBody, CardTitle} from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteCategory } from "../../managers/CategoryManager";
 import ConfirmDeleteModal from "../modals/ConfirmDeleteModal";
 
@@ -9,6 +9,8 @@ export default function CategoryList() {
     const [categories, setCategories] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAllCategories().then(setCategories);
@@ -46,7 +48,7 @@ export default function CategoryList() {
                     </CardTitle>
                 
                     <ButtonToolbar className="gap-2 ">
-                        <Button color="primary">Edit</Button>
+                        <Button color="primary" onClick={() => navigate(`/categories/${c.id}/edit`)}>Edit</Button>
                         <Button color="danger" onClick={() => handleDeleteModal(c.id)}>Delete</Button>
                     </ButtonToolbar>
                 </CardBody>
