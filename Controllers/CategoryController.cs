@@ -21,7 +21,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public IActionResult GetAllCategories()
     {
         return Ok(_dbContext.Categories
@@ -64,7 +64,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetCategoryById(int id)
     {
         return Ok(_dbContext.Categories
@@ -76,8 +76,8 @@ public class CategoryController : ControllerBase
         }).SingleOrDefault());
     }
 
-    [HttpPut("edit/{id}")]
-    [Authorize()]
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult CategoryEdit(int id, CategoryUpdateDTO  updatedCategory)
     {
         Category category = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
