@@ -88,7 +88,7 @@ public class CategoryController : ControllerBase
         }
 
         category.Name = updatedCategory.Name;
-
+        _dbContext.SaveChanges();
         return NoContent();
     }
 

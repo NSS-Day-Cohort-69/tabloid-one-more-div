@@ -22,16 +22,16 @@ export default function CreateCategoryForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newCategory = {
-            name,
+        const category = {
+            name: name
         };
         if(categoryid)
             {
-                updateCategory(editCategory.id,newCategory).then(() => {navigate("/categories")});
+                updateCategory(editCategory.id,category).then(() => {navigate("/categories")});
             }
             else
             {
-                createCategory(newCategory).then(() => {navigate("/categories")});
+                createCategory(category).then(() => {navigate("/categories")});
             }
     };
 
