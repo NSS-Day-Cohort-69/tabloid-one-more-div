@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { getAllTags } from "../../managers/tagManager.js"
+import { deleteTag, getAllTags } from "../../managers/tagManager.js"
 import { Button, ButtonToolbar, Card, CardBody, CardTitle } from "reactstrap"
 import { useNavigate } from "react-router-dom"
+import ConfirmDeleteModal from "../modals/ConfirmDeleteModal";
 
 export default function TagList()
 {
@@ -21,6 +22,14 @@ export default function TagList()
         setTagIdToDelete(id);
         toggleModal();
     };
+
+    const handleDelete = () => {
+        deleteTag(tagIdToDelete)
+        .then(() => {
+            getAllTags().then(setTags)
+            toggleModal();
+        })
+    }
 
     
     return(
@@ -45,7 +54,12 @@ export default function TagList()
                     </CardBody>
                 </Card>
             ))}
-            
+              <ConfirmDeleteModal
+            isOpen={isModalOpen}
+            toggle={toggleModal}
+            confirmDelete={handleDelete}
+            typeName={"category"}
+        />
         </>
     )
 }
