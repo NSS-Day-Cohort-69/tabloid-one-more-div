@@ -27,3 +27,13 @@ export const updateTag = (Id, updateTag) => {
         body: JSON.stringify(updateTag)
     });
 }
+
+export const deleteTag = (id) => {
+    return fetch(`${_api}/${id}`,{
+        method: "DELETE",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(id)
+    })
+}
