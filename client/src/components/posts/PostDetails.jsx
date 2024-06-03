@@ -23,7 +23,7 @@ export const PostDetails = ({ loggedInUser }) => {
     
     return (
         <PageContainer>
-            <Card className="w-75 shadow-sm" style={{maxWidth: "1200px"}} outline color="light" key={post.id}>
+            <Card className="w-75 shadow" style={{maxWidth: "1200px"}} outline color="light" key={post.id}>
                 {post.headerImageURL && (
                     <>
                         <CardImg 
@@ -68,13 +68,13 @@ export const PostDetails = ({ loggedInUser }) => {
                             {post.reactions.map(r => {
                                 if (r.postReactions.some(pr => pr.userProfileId == loggedInUser.id)) {
                                     return (
-                                        <Button className="px-1 pe-2 py-0 text-light" outline color="info" style={{backgroundColor: "#6c757d"}} key={`reaction-${r.id}`}>
+                                        <Button className="px-1 pe-2 py-0" title={r.name} key={`reaction-${r.id}`}>
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
                                         </Button>
                                     )
                                 } else {
                                     return (
-                                        <Button className="px-1 pe-2 py-0" key={`reaction-${r.id}`}>
+                                        <Button className="px-1 pe-2 py-0" title={r.name} key={`reaction-${r.id}`}>
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
                                         </Button>
                                     )
