@@ -2,16 +2,24 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
-import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
+import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Input, Modal, ModalBody, ModalHeader, Spinner } from "reactstrap"
+import { getAllTags } from "../../managers/tagManager.js"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [allTags, setAllTags] = useState([])
 
     const {id} = useParams()
 
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
+        getAllTags().then(setAllTags)
     }, [])
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen)
+    }
     
     if (!post) {
         return (
@@ -91,7 +99,7 @@ export const PostDetails = ({ loggedInUser }) => {
                             <Button>Create A Comment</Button>
                             {loggedInUser.id == post.userProfileId && (
                                 <>
-                                    <Button>Manage Tags</Button>
+                                    <Button onClick={toggleModal}>Manage Tags</Button>
                                     <Button>Edit</Button>
                                 </>
                             )}
@@ -102,6 +110,18 @@ export const PostDetails = ({ loggedInUser }) => {
                     </div>
                 </CardBody>
             </Card>
+            <Modal isOpen={isModalOpen}>
+                <ModalHeader toggle={toggleModal}>
+                    Associated Tags
+                </ModalHeader>
+                <ModalBody>
+                    {allTags.map(t =>( 
+                        <Input
+                        type="checkbox"
+                        value={t.name}/>
+                    ))}
+                </ModalBody>
+            </Modal>
         </PageContainer>
     )
 }
