@@ -4,6 +4,7 @@ using Tabloid.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Tabloid.Models.DTOs;
 
 namespace Tabloid.Controllers;
 
@@ -45,6 +46,35 @@ public class UserProfileController : ControllerBase
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
             .ToList()
         }).OrderBy(up => up.UserName));
+    }
+
+    [HttpGet("withroles/{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult GetWithRolesById(int id)
+    {
+        UserProfileForUserProfileDetailsDTO profileDTO = _dbContext.UserProfiles
+        .Include(up => up.IdentityUser)
+        .Where(up => up.Id == id)
+        .Select(up => new UserProfileForUserProfileDetailsDTO
+        {
+            Id = up.Id,
+            FirstName = up.FirstName,
+            LastName = up.LastName,
+            Email = up.IdentityUser.Email,
+            UserName = up.IdentityUser.UserName,
+            IdentityUserId = up.IdentityUserId,
+            CreateDateTime = up.CreateDateTime,
+            ImageLocation = up.ImageLocation,
+            Roles = _dbContext.UserRoles
+            .Where(ur => ur.UserId == up.IdentityUserId)
+            .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
+            .ToList()
+        }).SingleOrDefault();
+        if (profileDTO == null)
+        {
+            return NotFound();
+        }
+        return Ok(profileDTO);
     }
 
     [HttpPost("promote/{id}")]
