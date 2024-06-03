@@ -68,7 +68,7 @@ export const PostDetails = ({ loggedInUser }) => {
                             {post.reactions.map(r => {
                                 if (r.postReactions.some(pr => pr.userProfileId == loggedInUser.id)) {
                                     return (
-                                        <Button className="px-1 pe-2 py-0" title={r.name} key={`reaction-${r.id}`}>
+                                        <Button className="px-1 pe-2 py-0" color="primary" title={r.name} key={`reaction-${r.id}`}>
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
                                         </Button>
                                     )
