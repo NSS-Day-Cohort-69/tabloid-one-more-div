@@ -46,8 +46,7 @@ export default function CreateCategoryForm() {
             style={{maxWidth:"20rem"}}
             onSubmit={handleSubmit}
         >
-            <FormGroup >
-                
+            <FormGroup >               
                     <Input
                         type="text"
                         value={name}
@@ -62,7 +61,6 @@ export default function CreateCategoryForm() {
                     {categoryid && <Button color="danger" onClick={() => {navigate("/categories")}}>Cancel</Button>}
                 </ButtonToolbar>
         </Form>
-
         </>
     )
 }
