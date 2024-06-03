@@ -33,7 +33,7 @@ export const PostDetails = ({ loggedInUser }) => {
                             className="mb-1"
                         />
                         <CardImgOverlay className="pe-none">
-                            <Badge className="fs-3 fw-bold mb-2 shadow pe-auto" style={{ wordWrap: "normal"}}>
+                            <Badge className="fs-3 fw-bold mb-2 shadow pe-auto">
                                 {post.title}
                             </Badge>
                             <div className="pe-auto">
