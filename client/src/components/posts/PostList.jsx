@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllApprovedAndPublishedPosts } from "../../managers/postManager"
 import PageContainer from "../PageContainer"
-import { Badge, Card, CardLink } from "reactstrap"
+import { Badge, Card, CardLink, CardText } from "reactstrap"
 
 export const PostList = ({ loggedInUser }) => {
     const [posts, setPosts] = useState([])
@@ -20,9 +20,15 @@ export const PostList = ({ loggedInUser }) => {
                     <Card className="w-75 shadow-sm p-3 pb-2" style={{maxWidth: "1200px"}} outline color="light" key={`post-${p.id}`}>
                         <div className="d-flex align-items-center gap-2">
                             <Badge className="fs-6" pill>{p.category?.name}</Badge>
-                            <CardLink className="text-black text-decoration-none" href={`userprofiles/${p.userProfile.id}`}>
-                                <em>{p.userProfile.fullName}</em>
-                            </CardLink>
+                            {loggedInUser.roles.includes("Admin") ? (
+                                <CardLink className="text-black text-decoration-none" href={`userprofiles/${p.userProfile.id}`}>
+                                    <em>{p.userProfile.fullName}</em>
+                                </CardLink>
+                            ) : (
+                                <CardText className="fst-italic">
+                                    {p.userProfile.fullName}
+                                </CardText>
+                            )}
                         </div>
                         <div>
                             <CardLink className="fs-2 fw-bold text-black text-decoration-none" href={`posts/${p.id}`}>
