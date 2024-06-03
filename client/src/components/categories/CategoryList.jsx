@@ -2,7 +2,7 @@ import {useEffect, useState } from "react";
 import { getAllCategories } from "../../managers/categoryManager";
 import { Button, ButtonToolbar, Card, CardBody, CardTitle} from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteCategory } from "../../managers/CategoryManager";
+import { deleteCategory } from "../../managers/categoryManager";
 import ConfirmDeleteModal from "../modals/ConfirmDeleteModal";
 
 export default function CategoryList() {
