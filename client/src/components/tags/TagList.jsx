@@ -7,10 +7,20 @@ export default function TagList()
 {
     const [tags, setTags]= useState([])
     const navigate = useNavigate()
+    const [tagIdToDelete, setTagIdToDelete] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         getAllTags().then(setTags)
     },[])
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    }
+
+    const handleDeleteModal = (id) => {
+        setTagIdToDelete(id);
+        toggleModal();
+    };
 
     
     return(
@@ -30,11 +40,12 @@ export default function TagList()
                         <ButtonToolbar className="gap-2 "style={{float: "right"}} >
                             <Button color="primary"
                             onClick={() => navigate(`/tags/${t.id}/edit`)} >Edit</Button>
-                            <Button color="danger">DELETE</Button>
+                            <Button color="danger" onClick={() => handleDeleteModal(t.id)}>DELETE</Button>
                         </ButtonToolbar>
                     </CardBody>
                 </Card>
             ))}
+            
         </>
     )
 }
