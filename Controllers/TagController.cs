@@ -73,4 +73,19 @@ public class TagController : ControllerBase
         _dbContext.SaveChanges();
         return NoContent();
     }
+
+
+    [HttpDelete]
+    [Authorize(Roles = "Admin")]
+    public IActionResult DeleteTag(int id)
+    {
+        Tag TagToDelete = _dbContext.Tags.SingleOrDefault(t => t.Id == id);
+        if (TagToDelete == null)
+        {
+            return NotFound();
+        }
+        _dbContext.Tags.Remove(TagToDelete);
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
 }
