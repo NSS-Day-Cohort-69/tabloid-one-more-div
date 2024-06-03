@@ -21,7 +21,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public IActionResult GetAllCategories()
     {
         return Ok(_dbContext.Categories
@@ -55,6 +55,40 @@ public class CategoryController : ControllerBase
         _dbContext.Categories.Remove(category);
         _dbContext.SaveChanges();
 
+        if(category == null)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult GetCategoryById(int id)
+    {
+        return Ok(_dbContext.Categories
+        .Where(c => c.Id == id)
+        .Select(c => new CategoryNoNavDTO
+        {
+            Id = c.Id,
+            Name = c.Name
+        }).SingleOrDefault());
+    }
+
+    [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult CategoryEdit(int id, CategoryUpdateDTO  updatedCategory)
+    {
+        Category category = _dbContext.Categories.SingleOrDefault(c => c.Id == id);
+        
+        if(category == null)
+        {
+            return NotFound();
+        }
+
+        category.Name = updatedCategory.Name;
+        _dbContext.SaveChanges();
         return NoContent();
     }
 
