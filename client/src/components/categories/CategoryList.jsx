@@ -39,27 +39,27 @@ export default function CategoryList() {
                 <div className="w-25 m-auto">
                     <Link to="/categories/create"><Button color="success">Create a Category</Button></Link>
                 </div>
-        {categories.map((c) => (
-            <Card key={c.id} className="mt-3 w-25 m-auto">
-                <CardBody className="d-flex align-items-center justify-content-between">
-                
-                    <CardTitle>
-                        {c.name}
-                    </CardTitle>
-                
-                    <ButtonToolbar className="gap-2 ">
-                        <Button color="primary" onClick={() => navigate(`/categories/${c.id}/edit`)}>Edit</Button>
-                        <Button color="danger" onClick={() => handleDeleteModal(c.id)}>Delete</Button>
-                    </ButtonToolbar>
-                </CardBody>
-            </Card>
-        ))}
-        <ConfirmDeleteModal
-            isOpen={isModalOpen}
-            toggle={toggleModal}
-            confirmDelete={handleDelete}
-            typeName={"category"}
-        />
+            {categories.map((c) => (
+                <Card key={c.id} className="mt-3 w-25 m-auto">
+                    <CardBody className="d-flex align-items-center justify-content-between">
+                    
+                        <CardTitle>
+                            {c.name}
+                        </CardTitle>
+                    
+                        <ButtonToolbar className="gap-2 ">
+                            <Button color="primary" onClick={() => navigate(`/categories/${c.id}/edit`)}>Edit</Button>
+                            <Button color="danger" onClick={() => handleDeleteModal(c.id)}>Delete</Button>
+                        </ButtonToolbar>
+                    </CardBody>
+                </Card>
+            ))}
+            <ConfirmDeleteModal
+                isOpen={isModalOpen}
+                toggle={toggleModal}
+                confirmDelete={handleDelete}
+                typeName={"category"}
+            />
         </div>
     )
 }

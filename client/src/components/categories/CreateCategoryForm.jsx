@@ -38,28 +38,28 @@ export default function CreateCategoryForm() {
     return (
         <>
         {categoryid ? (
-        <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Edit a Category</h4>
+            <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Edit a Category</h4>
         ) : (
-        <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Create a Category</h4>
+            <h4 className="mt-2" style={{display: 'flex', justifyContent: 'center'}}>Create a Category</h4>
         )}
         <Form className="w-50 m-auto"
             style={{maxWidth:"20rem"}}
             onSubmit={handleSubmit}
         >
             <FormGroup >               
-                    <Input
-                        type="text"
-                        value={name}
-                        placeholder="Enter Name For A Category"
-                        onChange={(e) => {
-                        setName(e.target.value);
-                        }}
-                    />
+                <Input
+                    type="text"
+                    value={name}
+                    placeholder="Enter Name For A Category"
+                    onChange={(e) => {
+                     setName(e.target.value);
+                     }}
+                />
             </FormGroup>
-                <ButtonToolbar className="gap-2" style={{float: "right"}}>
-                    <Button type="submit" color="success" style={{float: "right"}}>Save</Button>
-                    {categoryid && <Button color="danger" onClick={() => {navigate("/categories")}}>Cancel</Button>}
-                </ButtonToolbar>
+            <ButtonToolbar className="gap-2" style={{float: "right"}}>
+                <Button type="submit" color="success" style={{float: "right"}}>Save</Button>
+                {categoryid && <Button color="danger" onClick={() => {navigate("/categories")}}>Cancel</Button>}
+            </ButtonToolbar>
         </Form>
         </>
     )
