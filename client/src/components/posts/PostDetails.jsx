@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
+import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
@@ -12,6 +13,30 @@ export const PostDetails = ({ loggedInUser }) => {
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
     }, [])
+
+    const handleCreatePostReaction = (reactionId) => {
+        const postReaction = {
+            userProfileId: loggedInUser.id,
+            postId: id,
+            reactionId: reactionId
+        }
+
+        createPostReaction(postReaction).then(() => {
+            getApprovedAndPublishedPostById(id).then(setPost)
+        })
+    }
+
+    const handleDeletePostReaction = (reactionId) => {
+        const postReaction = {
+            userProfileId: loggedInUser.id,
+            postId: id,
+            reactionId: reactionId
+        }
+        
+        deletePostReaction(postReaction).then(() => {
+            getApprovedAndPublishedPostById(id).then(setPost)
+        })
+    }
     
     if (!post) {
         return (
@@ -68,13 +93,24 @@ export const PostDetails = ({ loggedInUser }) => {
                             {post.reactions.map(r => {
                                 if (r.postReactions.some(pr => pr.userProfileId == loggedInUser.id)) {
                                     return (
-                                        <Button className="px-1 pe-2 py-0" color="primary" title={r.name} key={`reaction-${r.id}`}>
+                                        <Button 
+                                            className="px-1 pe-2 py-0" 
+                                            color="primary" 
+                                            title={r.name} 
+                                            onClick={() => handleDeletePostReaction(r.id)}
+                                            key={`reaction-${r.id}`}
+                                        >
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
                                         </Button>
                                     )
                                 } else {
                                     return (
-                                        <Button className="px-1 pe-2 py-0" title={r.name} key={`reaction-${r.id}`}>
+                                        <Button 
+                                            className="px-1 pe-2 py-0" 
+                                            title={r.name} 
+                                            onClick={() => handleCreatePostReaction(r.id)}
+                                            key={`reaction-${r.id}`}
+                                        >
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
                                         </Button>
                                     )
