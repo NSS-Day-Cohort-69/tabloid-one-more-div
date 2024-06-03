@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
-import { createPostReaction } from "../../managers/postReactionManager.js"
+import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
@@ -22,6 +22,18 @@ export const PostDetails = ({ loggedInUser }) => {
         }
 
         createPostReaction(postReaction).then(() => {
+            getApprovedAndPublishedPostById(id).then(setPost)
+        })
+    }
+
+    const handleDeletePostReaction = (reactionId) => {
+        const postReaction = {
+            userProfileId: loggedInUser.id,
+            postId: id,
+            reactionId: reactionId
+        }
+        
+        deletePostReaction(postReaction).then(() => {
             getApprovedAndPublishedPostById(id).then(setPost)
         })
     }
@@ -85,6 +97,7 @@ export const PostDetails = ({ loggedInUser }) => {
                                             className="px-1 pe-2 py-0" 
                                             color="primary" 
                                             title={r.name} 
+                                            onClick={() => handleDeletePostReaction(r.id)}
                                             key={`reaction-${r.id}`}
                                         >
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
