@@ -44,16 +44,20 @@ public class PostReactionController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{reactionId}")]
-    public IActionResult Delete(int reactionId, int? userProfileId, int? postId)
+    [HttpDelete]
+    public IActionResult Delete(int? reactionId, int? userProfileId, int? postId)
     {
+        if (reactionId == null)
+        {
+            return BadRequest("You didn't specify which Reaction is being used!");
+        }
         if (userProfileId == null)
         {
-            return BadRequest("You didn't specify who is reacting!");
+            return BadRequest("You didn't specify who is Reacting!");
         }
         if (postId == null)
         {
-            return BadRequest("You didn't specify which Post is being reacted to!");
+            return BadRequest("You didn't specify which Post is being Reacted to!");
         }
         
         PostReaction postReactionToDelete = _dbContext.PostReactions.SingleOrDefault(
