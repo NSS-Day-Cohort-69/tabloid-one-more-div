@@ -51,30 +51,6 @@ export const PostDetails = ({ loggedInUser }) => {
                             </div>
                         </>
                     )}
-                    {/* <div className="d-flex justify-content-between pt-2">
-                        <div>
-                            {post.tags.length > 0 && (
-                                <div className="d-flex flex-wrap gap-2 mb-3">
-                                    {post.tags.map(t => {
-                                        return (
-                                            <Badge color="info" key={`tag-${t.id}`} pill>{t.name}</Badge>
-                                        )
-                                    })}
-                                </div>
-                            )}
-                            <CardSubtitle className="fw-bold">{post.userProfile.fullName}</CardSubtitle>
-                            <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle>
-                        </div>
-                        <div>
-                            <div className="d-flex flex-row flex-wrap justify-content-end gap-1">
-                                {post.reactions.map(r => (
-                                    <Button className="px-1 pe-2 py-0" key={`reaction-${r.id}`}>
-                                        {`${r.reactionImage} ${r.postReactionsCount}`}
-                                    </Button>
-                                ))}
-                            </div>
-                        </div>
-                    </div> */}
                     {post.tags.length > 0 && (
                         <div className="d-flex gap-2 mb-3 pt-2">
                             {post.tags.map(t => {
@@ -89,21 +65,39 @@ export const PostDetails = ({ loggedInUser }) => {
                     <CardText className="mt-3">{post.content}</CardText>
                     <div className="d-flex flex-column align-items-end">
                         <div className="d-flex flex-row flex-wrap gap-1">
-                            {post.reactions.map(r => (
-                                <Button className="px-1 pe-2 py-0" key={`reaction-${r.id}`}>
-                                    {`${r.reactionImage} ${r.postReactionsCount}`}
-                                </Button>
-                            ))}
+                            {post.reactions.map(r => {
+                                if (r.postReactions.some(pr => pr.userProfileId == loggedInUser.id)) {
+                                    return (
+                                        <Button className="px-1 pe-2 py-0 text-light" outline color="info" style={{backgroundColor: "#6c757d"}} key={`reaction-${r.id}`}>
+                                            {`${r.reactionImage} ${r.postReactionsCount}`}
+                                        </Button>
+                                    )
+                                } else {
+                                    return (
+                                        <Button className="px-1 pe-2 py-0" key={`reaction-${r.id}`}>
+                                            {`${r.reactionImage} ${r.postReactionsCount}`}
+                                        </Button>
+                                    )
+                                }
+                            })}
                         </div>
                         <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
                             <div className="d-flex flex-fill">
-                                <Button>Subscribe</Button>
+                                {loggedInUser.id != post.userProfileId && (
+                                    <Button>Subscribe</Button>
+                                )}
                             </div>
                             <Button>{`${post.commentsCount} Comments`}</Button>
                             <Button>Create A Comment</Button>
-                            <Button>Manage Tags</Button>
-                            <Button>Edit</Button>
-                            <Button>Delete</Button>
+                            {loggedInUser.id == post.userProfileId && (
+                                <>
+                                    <Button>Manage Tags</Button>
+                                    <Button>Edit</Button>
+                                </>
+                            )}
+                            {(loggedInUser.id == post.userProfileId || loggedInUser.roles.includes("Admin")) && (
+                                <Button>Delete</Button>
+                            )}
                         </div>
                     </div>
                 </CardBody>
