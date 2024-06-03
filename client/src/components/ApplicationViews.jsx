@@ -8,7 +8,7 @@ import PostList from "./posts/PostList";
 import CategoryList from "./categories/CategoryList";
 import TagList from "./tags/TagList.jsx";
 import CreateTagForm from "./tags/CreateTagForm.jsx";
-import CategoryCreate from "./categories/CategoryCreate.jsx";
+import CreateCategoryForm from "./categories/CreateCategoryForm.jsx";
 import PostDetails from "./posts/PostDetails.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -74,10 +74,20 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path="create"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CategoryCreate/>
+                <CreateCategoryForm/>
               </AuthorizedRoute>
             }
-          />    
+          /> 
+          <Route path=":categoryid">
+          <Route
+            path="edit"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CreateCategoryForm/>
+              </AuthorizedRoute>
+            }
+            />
+          </Route>   
           </Route>
         <Route path="tags">
             <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><TagList/></AuthorizedRoute>}/>
