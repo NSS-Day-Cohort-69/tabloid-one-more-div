@@ -171,4 +171,23 @@ public class PostController : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete("{id}/react")]
+    public IActionResult DeletePostReaction(int id, int userProfileId, int reactionId)
+    {
+        PostReaction postReactionToDelete = _dbContext.PostReactions.SingleOrDefault(
+            pr => pr.UserProfileId == userProfileId
+            && pr.PostId == id
+            && pr.ReactionId == reactionId);
+
+        if (postReactionToDelete == null)
+        {
+            return BadRequest("No Reaction for this Post exists for you!");
+        }
+
+        _dbContext.PostReactions.Remove(postReactionToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
 }
