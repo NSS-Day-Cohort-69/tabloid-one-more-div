@@ -37,7 +37,7 @@ export default function CategoryList() {
         <div>
             <h4 style={{display: 'flex', justifyContent: 'center'}}>Categories</h4>
                 <div className="w-25 m-auto">
-                    <Link to="/categories/create"><Button color="success">Create a Category</Button></Link>
+                    <Button color="success" onClick={() => navigate("/categories/create")}>Create a Category</Button>
                 </div>
             {categories.map((c) => (
                 <Card key={c.id} className="mt-3 w-25 m-auto">

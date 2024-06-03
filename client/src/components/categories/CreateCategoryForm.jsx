@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createCategory, getCategoryById, updateCategory } from "../../managers/categoryManager";
-import { Button, ButtonGroup, ButtonToolbar, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, ButtonToolbar, Form, FormGroup, Input, } from "reactstrap";
 
 export default function CreateCategoryForm() {
     const [name, setName] = useState("");
