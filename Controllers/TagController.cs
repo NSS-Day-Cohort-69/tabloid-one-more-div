@@ -75,7 +75,7 @@ public class TagController : ControllerBase
     }
 
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     public IActionResult DeleteTag(int id)
     {
