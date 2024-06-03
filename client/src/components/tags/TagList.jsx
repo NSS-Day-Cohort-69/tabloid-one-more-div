@@ -55,11 +55,11 @@ export default function TagList()
                 </Card>
             ))}
               <ConfirmDeleteModal
-            isOpen={isModalOpen}
-            toggle={toggleModal}
-            confirmDelete={handleDelete}
-            typeName={"category"}
-        />
+                isOpen={isModalOpen}
+                toggle={toggleModal}
+                confirmDelete={handleDelete}
+                typeName={"category"}
+              />
         </>
     )
 }
