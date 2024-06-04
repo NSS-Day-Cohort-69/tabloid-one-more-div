@@ -41,14 +41,6 @@ public class PostTagController : ControllerBase
             );
         }
 
-        // tagIds.Select(t => _dbContext.PostTags.Add(
-        //     new PostTag()
-        //     {
-        //         PostId = postId,
-        //         TagId = t
-        //     }
-        // ));
-
         _dbContext.SaveChanges();
 
         return NoContent();
