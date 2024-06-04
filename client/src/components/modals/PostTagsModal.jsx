@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { update } from "../../managers/postTagManager.js";
+import { getAllApprovedAndPublishedPosts } from "../../managers/postManager.js";
 
-const PostTagsModal = ({isModalOpen, toggleModal, allTags, postTags, post}) => {
+const PostTagsModal = ({isModalOpen, toggleModal, allTags, post, refresh}) => {
     const [selectedTagIds, setSelectedTagIds] = useState([])
 
     const postTagIds = post.tags.map(tag => tag.id);
@@ -29,6 +31,12 @@ const PostTagsModal = ({isModalOpen, toggleModal, allTags, postTags, post}) => {
 
     }
 
+    const handleSave = () => {
+        update(post.id,selectedTagIds);
+        refresh();
+        toggleModal();
+    }
+
     return(
         <Modal isOpen={isModalOpen}>
         <ModalHeader toggle={toggleModal}>
@@ -48,7 +56,8 @@ const PostTagsModal = ({isModalOpen, toggleModal, allTags, postTags, post}) => {
                 </FormGroup>
                 
             ))}
-            <Button color="primary" style={{float: "right"}}>Save</Button>
+            <Button color="primary" style={{float: "right"}}
+        onClick={() => handleSave()}>Save</Button>
         </ModalBody>
   </Modal>
     )

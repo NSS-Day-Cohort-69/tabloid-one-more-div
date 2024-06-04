@@ -1,4 +1,4 @@
-const _apiUrl = "/api/postTag"
+const _apiUrl = "/api/PostTag"
 
 export const update = (postId, newTags) => {
     return fetch(`${_apiUrl}?postId=${postId}`,{

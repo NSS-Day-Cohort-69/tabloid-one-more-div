@@ -24,7 +24,9 @@ export const PostDetails = ({ loggedInUser }) => {
     }, [])
 
 
-
+    const refresh = () => {
+        getApprovedAndPublishedPostById(id).then(setPost)
+    }
 
     const handleCreatePostReaction = (reactionId) => {
         const postReaction = {
@@ -155,6 +157,7 @@ export const PostDetails = ({ loggedInUser }) => {
                 </CardBody>
             </Card>
             <PostTagsModal
+            refresh = {refresh}
             isModalOpen={isModalOpen}
             toggleModal={toggleModal}
             allTags={allTags}
