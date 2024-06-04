@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
-import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Spinner } from "reactstrap"
+import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 import { getAllTags } from "../../managers/tagManager.js"
 import PostTagsModal from "../modals/PostTagsModal.jsx"
@@ -11,18 +11,12 @@ export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [allTags, setAllTags] = useState([])
-    const [selectedTagIds, setSelectedTagIds] = useState([])
-
     const {id} = useParams()
    
-
-
-
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
         getAllTags().then(setAllTags)
     }, [])
-
 
     const refresh = () => {
         getApprovedAndPublishedPostById(id).then(setPost)
@@ -157,11 +151,12 @@ export const PostDetails = ({ loggedInUser }) => {
                 </CardBody>
             </Card>
             <PostTagsModal
-            refresh = {refresh}
-            isModalOpen={isModalOpen}
-            toggleModal={toggleModal}
-            allTags={allTags}
-            post={post}/>
+                refresh = {refresh}
+                isModalOpen={isModalOpen}
+                toggleModal={toggleModal}
+                allTags={allTags}
+                post={post}
+            />
         </PageContainer>
     )
 }
