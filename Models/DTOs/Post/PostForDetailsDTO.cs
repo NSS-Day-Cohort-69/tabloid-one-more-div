@@ -31,5 +31,16 @@ public class PostForDetailsDTO
     public List<TagNoNavDTO> Tags { get; set; }
     public List<ReactionForPostDTO> Reactions { get; set; } 
     public int CommentsCount { get; set; }
-    public string FormattedPublicationDate => PublicationDate.Value.ToString("MMMM dd, yyyy");
+    public string FormattedPublicationDate
+    {
+        get
+        {
+            if (PublicationDate == null)
+            {
+                return DateCreated.ToString("MMMM dd, yyyy");
+            }
+
+            return PublicationDate.Value.ToString("MMMM dd, yyyy");
+        }
+    }
 }
