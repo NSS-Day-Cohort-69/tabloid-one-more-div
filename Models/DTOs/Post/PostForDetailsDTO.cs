@@ -22,6 +22,8 @@ public class PostForDetailsDTO
 
     public string HeaderImageURL { get; set; }
     
+    public DateTime DateCreated { get; set; }
+
     public DateTime? PublicationDate { get; set; }
 
     public UserProfileForPostDTO UserProfile { get; set; }
