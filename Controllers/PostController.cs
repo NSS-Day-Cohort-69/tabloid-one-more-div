@@ -24,8 +24,8 @@ public class PostController : ControllerBase
     public IActionResult GetApprovedAndPublished()
     {
         List<PostForListDTO> postDTOs = _dbContext.Posts
-            .Where(p => p.IsApproved == true && p.PublicationDate <= DateTime.Now)
-            .OrderByDescending(p => p.PublicationDate)
+            .Where(p => p.IsApproved == true && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null))
+            .OrderByDescending(p => p.PublicationDate == null ? p.DateCreated : p.PublicationDate)
             .Include(p => p.UserProfile)
             .Include(p => p.Category)
             .Include(p => p.PostTags)
@@ -37,6 +37,7 @@ public class PostController : ControllerBase
                 CategoryId = p.CategoryId,
                 IsApproved = p.IsApproved,
                 Title = p.Title,
+                DateCreated = p.DateCreated,
                 PublicationDate = p.PublicationDate,
                 UserProfile = new UserProfileForPostDTO()
                 {
@@ -69,7 +70,7 @@ public class PostController : ControllerBase
         List<Reaction> reactions = _dbContext.Reactions.ToList();
         
         Post foundPost = _dbContext.Posts
-            .Where(p => p.IsApproved == true && p.PublicationDate <= DateTime.Now)
+            .Where(p => p.IsApproved == true && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null))
             .Include(p => p.UserProfile)
             .Include(p => p.Category)
             .Include(p => p.PostTags)
@@ -95,6 +96,7 @@ public class PostController : ControllerBase
             Title = foundPost.Title,
             Content = foundPost.Content,
             HeaderImageURL = foundPost.HeaderImageURL,
+            DateCreated = foundPost.DateCreated,
             PublicationDate = foundPost.PublicationDate,
             UserProfile = new UserProfileForPostDTO()
             {
