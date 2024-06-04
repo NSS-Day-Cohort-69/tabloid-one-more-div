@@ -32,8 +32,8 @@ const PostTagsModal = ({isModalOpen, toggleModal, allTags, post, refresh}) => {
     }
 
     const handleSave = () => {
-        update(post.id,selectedTagIds);
-        refresh();
+        update(post.id,selectedTagIds).then(() => {refresh()});
+       
         toggleModal();
     }
 
