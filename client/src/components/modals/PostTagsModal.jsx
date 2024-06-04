@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from "reactstrap";
 
 const PostTagsModal = ({isModalOpen, toggleModal, allTags, postTags, post}) => {
     const [selectedTagIds, setSelectedTagIds] = useState([])
@@ -48,6 +48,7 @@ const PostTagsModal = ({isModalOpen, toggleModal, allTags, postTags, post}) => {
                 </FormGroup>
                 
             ))}
+            <Button color="primary" style={{float: "right"}}>Save</Button>
         </ModalBody>
   </Modal>
     )
