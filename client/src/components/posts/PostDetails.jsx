@@ -5,6 +5,7 @@ import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Spinner } from "reactstrap"
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 import { getAllTags } from "../../managers/tagManager.js"
+import PostTagsModal from "../modals/PostTagsModal.jsx"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
@@ -13,15 +14,9 @@ export const PostDetails = ({ loggedInUser }) => {
     const [selectedTagIds, setSelectedTagIds] = useState([])
 
     const {id} = useParams()
+   
 
-    useEffect(() => {
-        if(isModalOpen)
-            {
-                const postTagIds = post.tags.map(tag => tag.id);
-                setSelectedTagIds(postTagIds);
-                
-            }
-    },[isModalOpen])
+
 
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
@@ -29,20 +24,7 @@ export const PostDetails = ({ loggedInUser }) => {
     }, [])
 
 
-    const handleCheckboxChange = (tagId) => {
-        const newSelectedTagIds = [...selectedTagIds];
-        const index = newSelectedTagIds.indexOf(tagId)
-        if(index === -1)
-            {
-                newSelectedTagIds.push(tagId)
-            }
-            else{
-                newSelectedTagIds.splice(index, 1)
-            }
 
-            setSelectedTagIds(newSelectedTagIds);
-
-    }
 
     const handleCreatePostReaction = (reactionId) => {
         const postReaction = {
@@ -172,26 +154,11 @@ export const PostDetails = ({ loggedInUser }) => {
                     </div>
                 </CardBody>
             </Card>
-            <Modal isOpen={isModalOpen}>
-                <ModalHeader toggle={toggleModal}>
-                    Associated Tags
-                </ModalHeader>
-                <ModalBody>
-                    {allTags.map(t =>( 
-                        <FormGroup check key={t.id}>
-                            <Input
-                            type="checkbox"
-                            value={t.id}
-                            checked={selectedTagIds.includes(t.id)}
-                            onChange={() => handleCheckboxChange(t.id)}/>
-                            <Label>
-                                {t.name}
-                            </Label>
-                        </FormGroup>
-                        
-                    ))}
-                </ModalBody>
-            </Modal>
+            <PostTagsModal
+            isModalOpen={isModalOpen}
+            toggleModal={toggleModal}
+            allTags={allTags}
+            post={post}/>
         </PageContainer>
     )
 }
