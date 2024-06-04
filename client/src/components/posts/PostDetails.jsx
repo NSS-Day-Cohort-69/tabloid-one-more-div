@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
-import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Input, Modal, ModalBody, ModalHeader, Spinner } from "reactstrap"
+import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Spinner } from "reactstrap"
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 import { getAllTags } from "../../managers/tagManager.js"
 
@@ -10,13 +10,39 @@ export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [allTags, setAllTags] = useState([])
+    const [selectedTagIds, setSelectedTagIds] = useState([])
 
     const {id} = useParams()
+
+    useEffect(() => {
+        if(isModalOpen)
+            {
+                const postTagIds = post.tags.map(tag => tag.id);
+                setSelectedTagIds(postTagIds);
+                
+            }
+    },[isModalOpen])
 
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
         getAllTags().then(setAllTags)
     }, [])
+
+
+    const handleCheckboxChange = (tagId) => {
+        const newSelectedTagIds = [...selectedTagIds];
+        const index = newSelectedTagIds.indexOf(tagId)
+        if(index === -1)
+            {
+                newSelectedTagIds.push(tagId)
+            }
+            else{
+                newSelectedTagIds.splice(index, 1)
+            }
+
+            setSelectedTagIds(newSelectedTagIds);
+
+    }
 
     const handleCreatePostReaction = (reactionId) => {
         const postReaction = {
@@ -152,9 +178,17 @@ export const PostDetails = ({ loggedInUser }) => {
                 </ModalHeader>
                 <ModalBody>
                     {allTags.map(t =>( 
-                        <Input
-                        type="checkbox"
-                        value={t.name}/>
+                        <FormGroup check key={t.id}>
+                            <Input
+                            type="checkbox"
+                            value={t.id}
+                            checked={selectedTagIds.includes(t.id)}
+                            onChange={() => handleCheckboxChange(t.id)}/>
+                            <Label>
+                                {t.name}
+                            </Label>
+                        </FormGroup>
+                        
                     ))}
                 </ModalBody>
             </Modal>
