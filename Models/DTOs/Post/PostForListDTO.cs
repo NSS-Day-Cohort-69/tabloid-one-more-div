@@ -20,6 +20,8 @@ public class PostForListDTO
     [Required]
     public string Content { get; set; }
     
+    public DateTime DateCreated { get; set; }
+
     public DateTime? PublicationDate { get; set; }
 
     public UserProfileForPostDTO UserProfile { get; set; }

@@ -21,6 +21,7 @@ public class Post
     public string Content { get; set; }
     
     public string HeaderImageURL { get; set; }
+    public DateTime DateCreated { get; set; }
     public DateTime? PublicationDate { get; set; }
 
     public UserProfile UserProfile { get; set; }
