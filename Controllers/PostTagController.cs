@@ -8,6 +8,8 @@ using Tabloid.Models.DTOs;
 
 namespace Tabloid.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
 public class PostTagController : ControllerBase
 {
     private TabloidDbContext _dbContext;
@@ -22,16 +24,30 @@ public class PostTagController : ControllerBase
     public IActionResult Update(int postId, int[] tagIds)
     {
         List<PostTag> postTagToRemove = _dbContext.PostTags.Where(pt => pt.PostId == postId).ToList();
-        _dbContext.Remove(postTagToRemove);
+        foreach (PostTag postTag in postTagToRemove)
+        {
+            _dbContext.Remove(postTag);
+        }
         _dbContext.SaveChanges();
 
-        tagIds.Select(t => _dbContext.PostTags.Add(
-            new PostTag()
+        foreach (int newTagId in tagIds)
+        {
+            _dbContext.Add(new PostTag()
             {
                 PostId = postId,
-                TagId = t
+                TagId = newTagId
+
             }
-        ));
+            );
+        }
+
+        // tagIds.Select(t => _dbContext.PostTags.Add(
+        //     new PostTag()
+        //     {
+        //         PostId = postId,
+        //         TagId = t
+        //     }
+        // ));
 
         _dbContext.SaveChanges();
 
