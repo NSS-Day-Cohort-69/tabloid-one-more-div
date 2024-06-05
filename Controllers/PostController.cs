@@ -46,7 +46,7 @@ public class PostController : ControllerBase
                     LastName = p.UserProfile.LastName,
                     ImageLocation = p.UserProfile.ImageLocation,
                     IsActive = p.UserProfile.IsActive
-                }, 
+                },
                 Category = p.Category == null ? null : new CategoryNoNavDTO()
                 {
                     Id = p.Category.Id,
@@ -66,9 +66,9 @@ public class PostController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetSingleApprovedAndPublished(int id)
     {
-        
+
         List<Reaction> reactions = _dbContext.Reactions.ToList();
-        
+
         Post foundPost = _dbContext.Posts
             .Where(p => p.IsApproved == true && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null))
             .Include(p => p.UserProfile)
@@ -86,7 +86,7 @@ public class PostController : ControllerBase
         {
             return NotFound();
         }
-        
+
         PostForDetailsDTO postDTO = new PostForDetailsDTO()
         {
             Id = foundPost.Id,
@@ -137,7 +137,7 @@ public class PostController : ControllerBase
                 }).ToList()
             }).ToList(),
             CommentsCount = foundPost.Comments.Count()
-        };        
+        };
 
         return Ok(postDTO);
     }
@@ -155,7 +155,7 @@ public class PostController : ControllerBase
         {
             return NotFound("No Category with that Id found!");
         }
-        
+
         Post newPost = new Post()
         {
             UserProfileId = post.UserProfileId,
@@ -198,8 +198,72 @@ public class PostController : ControllerBase
                 }
             })
             .SingleOrDefault(p => p.Id == newPost.Id);
-        
+
         return Created($"posts/{createdPost.Id}", createdPost);
+    }
+
+    [HttpGet("unapproved")]
+    public IActionResult GetUnapproved()
+    {
+
+        List<Post> postList = _dbContext.Posts
+            .Where(p => p.IsApproved == false)
+            .Include(p => p.UserProfile)
+            .Include(p => p.Category)
+            .ToList();
+
+        List<PostsForUnapprovedDTO> postDTOs = postList.Select(p => new PostsForUnapprovedDTO
+        {
+            Id = p.Id,
+            UserProfileId = p.UserProfileId,
+            CategoryId = p.CategoryId,
+            IsApproved = p.IsApproved,
+            Title = p.Title,
+            Content = p.Content,
+            HeaderImageURL = p.HeaderImageURL,
+            DateCreated = p.DateCreated,
+            PublicationDate = p.PublicationDate,
+            UserProfile = new UserProfileForPostDTO()
+            {
+                Id = p.UserProfile.Id,
+                FirstName = p.UserProfile.FirstName,
+                LastName = p.UserProfile.LastName,
+                ImageLocation = p.UserProfile.ImageLocation,
+                IsActive = p.UserProfile.IsActive
+            },
+            Category = p.Category == null ? null : new CategoryNoNavDTO()
+            {
+                Id = p.Category.Id,
+                Name = p.Category.Name
+            },
+        }).ToList();
+
+        return Ok(postDTOs);
+    }
+
+    [HttpGet("unapprovedCount")]
+    public IActionResult GetUnapprovedCount()
+    {
+        int UnapprovedCount = _dbContext.Posts
+            .Where(p => p.IsApproved == false)
+            .Count();
+
+        return Ok(UnapprovedCount);
+    }
+
+    [HttpPut("{id}/approve")]
+    public IActionResult Approve(int id)
+    {
+        Post postToApprove = _dbContext.Posts.FirstOrDefault(p => p.Id == id);
+        if (postToApprove == null)
+        {
+            return NotFound();
+        }
+
+        postToApprove.IsApproved = true;
+        _dbContext.SaveChanges();
+        return NoContent();
+
     }
 
 }

@@ -12,6 +12,7 @@ import CreateCategoryForm from "./categories/CreateCategoryForm.jsx";
 import PostDetails from "./posts/PostDetails.jsx";
 import { CommentList } from "./comments/CommentList.jsx";
 import PostForm from "./posts/PostForm.jsx";
+import ApprovePost from "./posts/ApprovePost.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -61,16 +62,26 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                 </AuthorizedRoute>
               }
             />
-            <Route path="comments">
-              <Route
-                index
-                element={
-                  <AuthorizedRoute loggedInUser={loggedInUser}>
-                    <CommentList loggedInUser={loggedInUser} />
-                  </AuthorizedRoute>
-                }
-              />
-            </Route>
+          </Route>
+          <Route path="unapproved">
+            <Route
+              index
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <ApprovePost loggedInUser={loggedInUser} />
+                </AuthorizedRoute>
+              }
+            />
+          </Route>
+          <Route path="comments">
+            <Route
+              index
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <CommentList loggedInUser={loggedInUser} />
+                </AuthorizedRoute>
+              }
+            />
           </Route>
           <Route
             path="new"
