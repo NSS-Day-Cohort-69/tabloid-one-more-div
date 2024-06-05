@@ -1,21 +1,39 @@
 import { useEffect, useState } from "react"
-import { approvePost, getUnapprovedPosts } from "../../managers/postManager.js"
+import { approvePost, deletePost, getUnapprovedPosts } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle } from "reactstrap"
+import ConfirmDeleteModal from "../modals/ConfirmDeleteModal.jsx"
 
 export default function ApprovePost({loggedInUser}){
-
     const [unapprovedPosts, setUnapprovedPosts] = useState([])
-
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [postToDelete, setPostToDelete] = useState(0)
 
     useEffect(() => {
         getUnapprovedPosts().then(setUnapprovedPosts)
     },[])
+
+    const handleDeleteModal = (postId) => {
+        setPostToDelete(postId)
+        toggleModal()
+    }
+    
+    const handleDelete = () => {
+        deletePost(postToDelete).then(() => {
+            toggleModal()
+            getUnapprovedPosts().then(setUnapprovedPosts)
+        })
+    }
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen)
+    }
+
     return (
         <PageContainer>
             <h2>Unapproved Posts</h2>
             {unapprovedPosts.map(up => {
-                return(
+                return (
                     <Card className="w-75 shadow" style={{maxWidth: "1200px"}} outline color="light" key={up.id}>
                         {up.headerImageURL && (
                             <>
@@ -49,7 +67,9 @@ export default function ApprovePost({loggedInUser}){
                             <CardText className="mt-3">{up.content}</CardText>
                             <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
                                 {(loggedInUser.id == up.userProfileId || loggedInUser.roles.includes("Admin")) && (
-                                    <Button>Delete</Button>
+                                    <Button onClick={() => handleDeleteModal(up.id)}>
+                                        Delete
+                                    </Button>
                                 )}
                                 <Button onClick={() => {approvePost(up.id)
                                     .then(getUnapprovedPosts()
@@ -61,9 +81,13 @@ export default function ApprovePost({loggedInUser}){
                         </CardBody>
                     </Card>
                 )
-  
             })}
-            
+            <ConfirmDeleteModal 
+                isOpen={isModalOpen}
+                toggle={toggleModal}
+                confirmDelete={handleDelete}
+                typeName={"Post"}
+            />
         </PageContainer>
     )
 }
