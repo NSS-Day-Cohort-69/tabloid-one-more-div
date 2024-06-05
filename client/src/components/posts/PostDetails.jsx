@@ -6,17 +6,19 @@ import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, C
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 import { getAllTags } from "../../managers/tagManager.js"
 import PostTagsModal from "../modals/PostTagsModal.jsx"
-import { createSubscription } from "../../managers/subscriptionManager.js"
+import { createSubscription, getSubscriptionsById } from "../../managers/subscriptionManager.js"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [allTags, setAllTags] = useState([])
+    const [userSubscriptions, setUserSubscriptions] = useState([])
     const {id} = useParams()
    
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
         getAllTags().then(setAllTags)
+        getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions)
     }, [])
 
     const refresh = () => {
@@ -52,7 +54,7 @@ export const PostDetails = ({ loggedInUser }) => {
             creatorId: authorId,
             followerId: followerId
         }
-        createSubscription(newSubscription)
+        createSubscription(newSubscription).then(() =>  getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions))
     }
 
     const toggleModal = () => {
@@ -140,9 +142,13 @@ export const PostDetails = ({ loggedInUser }) => {
                         </div>
                         <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
                             <div className="d-flex flex-fill">
-                                {loggedInUser.id != post.userProfileId && (
-                                    <Button onClick={() => {handleSubscribe(post.userProfileId,loggedInUser.id)}}>Subscribe</Button>
-                                )}
+                                {loggedInUser.id != post.userProfileId && 
+                                   ( userSubscriptions.some(us => us.creatorId == post.userProfileId) ? (
+                                        <Button>Unsubscribe</Button>
+                                    ) : (
+                                        <Button onClick={() => {handleSubscribe(post.userProfileId,loggedInUser.id)}}>Subscribe</Button>
+                                    ))
+                                }
                             </div>
                             <Button>{`${post.commentsCount} Comments`}</Button>
                             <Button>Create A Comment</Button>

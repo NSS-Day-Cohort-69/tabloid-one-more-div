@@ -21,12 +21,12 @@ public class SubscriptionController : ControllerBase
     [HttpPost]
     public IActionResult Subscribe(SubscriptionCreateDTO newSubscription)
     {
-        Subscription Subsciption = new Subscription()
+        Subscription Subscription = new Subscription()
         {
             CreatorId = newSubscription.CreatorId,
             FollowerId = newSubscription.FollowerId
         };
-        _dbContext.Subscriptions.Add(Subsciption);
+        _dbContext.Subscriptions.Add(Subscription);
         _dbContext.SaveChanges();
 
         return NoContent();
