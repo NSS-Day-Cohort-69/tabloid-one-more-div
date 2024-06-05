@@ -11,6 +11,7 @@ import CreateTagForm from "./tags/CreateTagForm.jsx";
 import CreateCategoryForm from "./categories/CreateCategoryForm.jsx";
 import PostDetails from "./posts/PostDetails.jsx";
 import PostForm from "./posts/PostForm.jsx";
+import ApprovePost from "./posts/ApprovePost.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -61,6 +62,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               }
             />
           </Route>
+          <Route path="unapproved">
+              <Route
+                index
+                element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <ApprovePost loggedInUser={loggedInUser}/>
+                </AuthorizedRoute>
+                }
+              />
+            </Route>
           <Route 
             path="new"
             element={

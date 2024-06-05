@@ -1,18 +1,32 @@
 import { useEffect, useState } from "react"
-import { getAllApprovedAndPublishedPosts } from "../../managers/postManager"
+import { getAllApprovedAndPublishedPosts, getUnapprovedCount } from "../../managers/postManager"
 import PageContainer from "../PageContainer"
-import { Badge, Card, CardLink, CardText } from "reactstrap"
+import { Badge, Button, Card, CardLink, CardText } from "reactstrap"
+import { useNavigate } from "react-router-dom"
 
 export const PostList = ({ loggedInUser }) => {
     const [posts, setPosts] = useState([])
+    const [unapprovedCount, setUnapprovedCount] = useState(null)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         getAllApprovedAndPublishedPosts().then(setPosts)
+        getUnapprovedCount().then(setUnapprovedCount)
     }, [])
 
     return (
         <PageContainer>
             <div className="w-75" style={{maxWidth: "1200px"}}>
+                {loggedInUser.roles.includes("Admin") && (
+                    <Button 
+                        color = "primary" 
+                        style={{float: "right"}}
+                        onClick={() => {navigate("unapproved")}}
+                    >
+                        Unapproved Posts: {unapprovedCount}
+                    </Button>
+                )}
                 <h1>Posts</h1>
             </div>
             {posts.map(p => {
