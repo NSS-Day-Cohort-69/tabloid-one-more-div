@@ -50,7 +50,7 @@ public class SubscriptionController : ControllerBase
         return Ok(subDTO);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete]
     public IActionResult Unsubscribe(int creatorId, int followerId)
     {
         Subscription foundSub = _dbContext.Subscriptions.FirstOrDefault(s => s.CreatorId == creatorId && s.FollowerId == followerId);

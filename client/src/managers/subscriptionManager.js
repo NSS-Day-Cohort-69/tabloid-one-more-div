@@ -13,3 +13,12 @@ export const createSubscription = (newSub) => {
 export const getSubscriptionsById = (Id) => {
     return fetch(`${_apiUrl}/${Id}`).then(res => res.json())
 };
+
+export const unsubscribe = (creatorId, followerId) => {
+    return fetch(`${_apiUrl}?creatorId=${creatorId}followerId=${followerId}`,{
+        method: "DELETE",
+        headers:{
+            "Content-Type":"application/json"
+        }
+    })
+}
