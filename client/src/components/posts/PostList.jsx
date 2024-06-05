@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 import { getAllApprovedAndPublishedPosts } from "../../managers/postManager"
 import PageContainer from "../PageContainer"
-import { Badge, Card, CardLink, CardText, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap"
+import { Badge, Card, CardLink, CardText, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input } from "reactstrap"
 import { getAllCategories } from "../../managers/categoryManager"
 
 export const PostList = ({ loggedInUser }) => {
     const [posts, setPosts] = useState([])
     const [categories, setCategories] = useState([])
-    const [selectedCategory, setSelectedCategory] = useState('All')
-    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const [categoryId, setCategoryId] = useState(0)
 
     useEffect(() => {
         getAllApprovedAndPublishedPosts().then(setPosts)
@@ -18,41 +17,39 @@ export const PostList = ({ loggedInUser }) => {
         getAllCategories().then(setCategories)
     }, [])
 
-    const handleCategorySelect = (category) => {
-        setSelectedCategory(category)
-    }
-
-    const toggle = () => {
-        setDropdownOpen(!dropdownOpen)
-    }
-
-    const filteredPosts = selectedCategory == 'All' ? posts : 
-    posts.filter(p => p.category?.name === selectedCategory);
+    const filteredPosts = categoryId === 0 ? posts : 
+    posts.filter(p => p.categoryId === categoryId);
 
     return (
         <PageContainer>
             <div className="w-75" style={{maxWidth: "1200px"}}>
                 <h1>Posts</h1>
             </div>
-            <div className="d-flex align-items-center justify-content-between mb-3" style={{ maxWidth: "1200px" }}>
-            <div>
-                <Dropdown className="shadow-sm" isOpen={dropdownOpen} toggle={toggle}>
-                    <DropdownToggle caret>
-                        Categories
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem onClick={() => handleCategorySelect('All')}>All</DropdownItem>
-                        {categories.map((c) => (
-                            <DropdownItem key={c.id} onClick={() => 
-                                handleCategorySelect(c.name)
-                            }>
-                                {c.name}
-                            </DropdownItem>
-                        ))}
-                    </DropdownMenu>
-                </Dropdown>
+            <div className="d-flex justify-content-start w-75" style={{maxWidth: "1200px"}}>
+                <div>
+                <Input
+                    type="select"
+                    required
+                    value={categoryId}
+                    onChange={event => setCategoryId(parseInt(event.target.value))}
+                >
+                    <option
+                        value={0}
+                        key={"c-0"}
+                    >
+                        All Categories
+                    </option>
+                    {categories.map(c => (
+                        <option
+                            value={c.id}
+                            key={`c-${c.id}`}
+                        >
+                            {c.name}
+                        </option>
+                    ))}
+                </Input>
+                </div>
             </div>
-            <div>
             {filteredPosts.map(p => {
                 return (
                     <Card className="w-75 shadow-sm p-3 pb-2" style={{maxWidth: "1200px"}} outline color="light" key={`post-${p.id}`}>
@@ -76,8 +73,6 @@ export const PostList = ({ loggedInUser }) => {
                     </Card>
                 )
             })}
-            </div>
-            </div>
         </PageContainer>
     )
 }
