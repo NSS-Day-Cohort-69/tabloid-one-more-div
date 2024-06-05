@@ -247,20 +247,12 @@ public class PostController : ControllerBase
         return Ok(postDTOs);
     }
 
-    [HttpGet("unapprovedcount")]
+    [HttpGet("unapprovedCount")]
     public IActionResult GetUnapprovedCount()
     {
         int UnapprovedCount = _dbContext.Posts
-         .Where(p => p.IsApproved == false)
-         .Include(p => p.UserProfile)
-         .Include(p => p.Category)
-         .Include(p => p.PostTags)
-         .ThenInclude(pt => pt.Tag)
-         .Include(p => p.PostReactions)
-         .ThenInclude(pr => pr.Reaction)
-         .Include(p => p.PostReactions)
-         .ThenInclude(pr => pr.UserProfile)
-         .Include(p => p.Comments).Count();
+        .Where(p => p.IsApproved == false)
+        .Count();
 
         return Ok(UnapprovedCount);
     }
