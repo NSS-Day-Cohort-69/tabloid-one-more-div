@@ -20,6 +20,12 @@ export const createPost = (post) => {
     return fetch(_apiUrl, postOptions)
 }
 
+export const deletePost = (postId) => {
+    const deleteOptions = {method: "DELETE"}
+
+    return fetch(`${_apiUrl}/${postId}`, deleteOptions)
+}
+
 export const getUnapprovedPosts = () => {
     return fetch(`${_apiUrl}/unapproved`).then(res => res.json());
 }
