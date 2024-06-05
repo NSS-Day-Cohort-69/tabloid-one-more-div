@@ -203,11 +203,11 @@ public class PostController : ControllerBase
     }
 
     [HttpGet("unapproved")]
-    public IActionResult GetUnapprovedAndPublished()
+    public IActionResult GetUnapproved()
     {
 
         List<Post> postList = _dbContext.Posts
-             .Where(p => p.IsApproved == false && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null))
+             .Where(p => p.IsApproved == false)
              .Include(p => p.UserProfile)
              .Include(p => p.Category)
              .Include(p => p.PostTags)
@@ -251,7 +251,7 @@ public class PostController : ControllerBase
     public IActionResult GetUnapprovedCount()
     {
         int UnapprovedCount = _dbContext.Posts
-         .Where(p => p.IsApproved == false && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null))
+         .Where(p => p.IsApproved == false)
          .Include(p => p.UserProfile)
          .Include(p => p.Category)
          .Include(p => p.PostTags)
