@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getUnapprovedPosts } from "../../managers/postManager.js"
+import { approvePost, getUnapprovedPosts } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle } from "reactstrap"
 
@@ -51,7 +51,12 @@ export default function ApprovePost({loggedInUser}){
                                 {(loggedInUser.id == up.userProfileId || loggedInUser.roles.includes("Admin")) && (
                                     <Button>Delete</Button>
                                 )}
-                            <Button >Approve</Button>
+                            <Button onClick={() => {approvePost(up.id)
+                                .then(getUnapprovedPosts()
+                                .then(setUnapprovedPosts))}} 
+                                >
+                                    Approve
+                                </Button>
                             </div>
                     </CardBody>
                 </Card>
