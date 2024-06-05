@@ -25,6 +25,10 @@ export const PostForm = ({ loggedInUser }) => {
     useEffect(() => {
         if (id) {
             getApprovedAndPublishedPostById(id).then(post => {
+                if (post.userProfileId != loggedInUser.id) {
+                    navigate(`/posts/${id}`)
+                }
+                
                 setTitle(post.title)
                 setCategoryId(post.categoryId)
                 setHeaderImageURL(post.headerImageURL)
