@@ -7,23 +7,23 @@ import { useNavigate } from "react-router-dom"
 
 export const PostList = ({ loggedInUser }) => {
     const [posts, setPosts] = useState([])
+    const [filteredPosts, setFilteredPosts] = useState(posts)
     const [categories, setCategories] = useState([])
     const [categoryId, setCategoryId] = useState(0)
     const [unapprovedCount, setUnapprovedCount] = useState(null)
+    
 
     const navigate = useNavigate()
 
     useEffect(() => {
         getAllApprovedAndPublishedPosts().then(setPosts)
         getUnapprovedCount().then(setUnapprovedCount)
-    }, [])
-
-    useEffect(() => {
         getAllCategories().then(setCategories)
     }, [])
 
-    const filteredPosts = categoryId === 0 ? posts : 
-    posts.filter(p => p.categoryId === categoryId);
+    useEffect(() => {
+        setFilteredPosts(categoryId === 0 ? posts : posts.filter(p => p.categoryId === categoryId))
+    }, [posts, categoryId])
 
     return (
         <PageContainer>
@@ -41,27 +41,27 @@ export const PostList = ({ loggedInUser }) => {
             </div>
             <div className="d-flex justify-content-start w-75" style={{maxWidth: "1200px"}}>
                 <div>
-                <Input
-                    type="select"
-                    required
-                    value={categoryId}
-                    onChange={event => setCategoryId(parseInt(event.target.value))}
-                >
-                    <option
-                        value={0}
-                        key={"c-0"}
+                    <Input
+                        type="select"
+                        required
+                        value={categoryId}
+                        onChange={event => setCategoryId(parseInt(event.target.value))}
                     >
-                        All Categories
-                    </option>
-                    {categories.map(c => (
                         <option
-                            value={c.id}
-                            key={`c-${c.id}`}
+                            value={0}
+                            key={"c-0"}
                         >
-                            {c.name}
+                            All Categories
                         </option>
-                    ))}
-                </Input>
+                        {categories.map(c => (
+                            <option
+                                value={c.id}
+                                key={`c-${c.id}`}
+                            >
+                                {c.name}
+                            </option>
+                        ))}
+                    </Input>
                 </div>
             </div>
             {filteredPosts.map(p => {
