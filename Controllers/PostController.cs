@@ -206,8 +206,6 @@ public class PostController : ControllerBase
     public IActionResult GetUnapprovedAndPublished()
     {
 
-        List<Reaction> reactions = _dbContext.Reactions.ToList();
-
         List<Post> postList = _dbContext.Posts
              .Where(p => p.IsApproved == false && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null))
              .Include(p => p.UserProfile)
@@ -220,10 +218,7 @@ public class PostController : ControllerBase
              .ThenInclude(pr => pr.UserProfile)
              .Include(p => p.Comments).ToList();
 
-
-
-
-        List<PostForDetailsDTO> postDTOs = postList.Select(p => new PostForDetailsDTO
+        List<PostsForUnapprovedDTO> postDTOs = postList.Select(p => new PostsForUnapprovedDTO
         {
             Id = p.Id,
             UserProfileId = p.UserProfileId,
@@ -247,35 +242,27 @@ public class PostController : ControllerBase
                 Id = p.Category.Id,
                 Name = p.Category.Name
             },
-            Tags = p.PostTags.Select(pt => new TagNoNavDTO()
-            {
-                Id = pt.Tag.Id,
-                Name = pt.Tag.Name
-            }).ToList(),
-            Reactions = reactions.Select(r => new ReactionForPostDTO()
-            {
-                Id = r.Id,
-                Name = r.Name,
-                ReactionImage = r.ReactionImage,
-                PostReactions = p.PostReactions.Where(pr => pr.ReactionId == r.Id).Select(pr => new PostReactionForPostDTO()
-                {
-                    UserProfileId = pr.UserProfileId,
-                    PostId = pr.PostId,
-                    ReactionId = pr.ReactionId,
-                    UserProfile = new UserProfileForPostReactionDTO()
-                    {
-                        Id = pr.UserProfile.Id,
-                        FirstName = pr.UserProfile.FirstName,
-                        LastName = pr.UserProfile.LastName,
-                        ImageLocation = pr.UserProfile.ImageLocation,
-                        IsActive = pr.UserProfile.IsActive
-                    }
-                }).ToList()
-            }).ToList(),
-            CommentsCount = p.Comments.Count()
         }).ToList();
 
         return Ok(postDTOs);
+    }
+
+    [HttpGet("unapprovedcount")]
+    public IActionResult GetUnapprovedCount()
+    {
+        int UnapprovedCount = _dbContext.Posts
+         .Where(p => p.IsApproved == false && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null))
+         .Include(p => p.UserProfile)
+         .Include(p => p.Category)
+         .Include(p => p.PostTags)
+         .ThenInclude(pt => pt.Tag)
+         .Include(p => p.PostReactions)
+         .ThenInclude(pr => pr.Reaction)
+         .Include(p => p.PostReactions)
+         .ThenInclude(pr => pr.UserProfile)
+         .Include(p => p.Comments).Count();
+
+        return Ok(UnapprovedCount);
     }
 
 }
