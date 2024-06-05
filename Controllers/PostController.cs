@@ -202,6 +202,21 @@ public class PostController : ControllerBase
         return Created($"posts/{createdPost.Id}", createdPost);
     }
 
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        Post postToDelete = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        if (postToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Posts.Remove(postToDelete);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
     [HttpGet("unapproved")]
     public IActionResult GetUnapproved()
     {
