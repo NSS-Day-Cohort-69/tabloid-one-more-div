@@ -202,6 +202,25 @@ public class PostController : ControllerBase
         return Created($"posts/{createdPost.Id}", createdPost);
     }
 
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, PostUpdateDTO update)
+    {
+        Post postToUpdate = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        if (postToUpdate == null)
+        {
+            return NotFound();
+        }
+
+        postToUpdate.Title = update.Title;
+        postToUpdate.Content = update.Content;
+        postToUpdate.CategoryId = update.CategoryId;
+        postToUpdate.HeaderImageURL = update.HeaderImageURL;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
     [HttpGet("unapproved")]
     public IActionResult GetUnapproved()
     {
