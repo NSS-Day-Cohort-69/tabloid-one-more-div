@@ -20,11 +20,17 @@ import {
 } from "../../managers/postReactionManager.js";
 import { getAllTags } from "../../managers/tagManager.js";
 import PostTagsModal from "../modals/PostTagsModal.jsx";
+import {
+  createSubscription,
+  getSubscriptionsById,
+  removeSubscription,
+} from "../../managers/subscriptionManager.js";
 
 export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [allTags, setAllTags] = useState([]);
+  const [userSubscriptions, setUserSubscriptions] = useState([]);
 
   const { id } = useParams();
 
@@ -33,6 +39,7 @@ export const PostDetails = ({ loggedInUser }) => {
   useEffect(() => {
     getApprovedAndPublishedPostById(id).then(setPost);
     getAllTags().then(setAllTags);
+    getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
   }, []);
 
   const refresh = () => {
@@ -60,6 +67,23 @@ export const PostDetails = ({ loggedInUser }) => {
 
     deletePostReaction(postReaction).then(() => {
       getApprovedAndPublishedPostById(id).then(setPost);
+    });
+  };
+
+  const handleSubscribe = (authorId, followerId) => {
+    const newSubscription = {
+      creatorId: authorId,
+      followerId: followerId,
+    };
+
+    createSubscription(newSubscription).then(() => {
+      getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
+    });
+  };
+
+  const handleUnsubscribe = (CreatorId, followerId) => {
+    removeSubscription(CreatorId, followerId).then(() => {
+      getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
     });
   };
 
@@ -166,9 +190,26 @@ export const PostDetails = ({ loggedInUser }) => {
             </div>
             <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
               <div className="d-flex flex-fill">
-                {loggedInUser.id != post.userProfileId && (
-                  <Button>Subscribe</Button>
-                )}
+                {loggedInUser.id != post.userProfileId &&
+                  (userSubscriptions.some(
+                    (us) => us.creatorId == post.userProfileId
+                  ) ? (
+                    <Button
+                      onClick={() => {
+                        handleUnsubscribe(post.userProfileId, loggedInUser.id);
+                      }}
+                    >
+                      Unsubscribe
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        handleSubscribe(post.userProfileId, loggedInUser.id);
+                      }}
+                    >
+                      Subscribe
+                    </Button>
+                  ))}
               </div>
               <Button
                 onClick={() => navigate(`comments`)}
