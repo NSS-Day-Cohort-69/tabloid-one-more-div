@@ -68,6 +68,14 @@ export const PostForm = ({ loggedInUser }) => {
         })
     }
 
+    const handleCancel = () => {
+        if (id) {
+            navigate(`/posts/${id}`)
+        } else {
+            navigate("/posts")
+        }
+    }
+
     return (
         <PageContainer>
             <Card className="w-75 shadow" outline color="light" style={{maxWidth: "1200px"}}>
@@ -152,7 +160,7 @@ export const PostForm = ({ loggedInUser }) => {
                             </FormGroup>
                         )}
                         <ButtonToolbar className="d-flex justify-content-end gap-2">
-                            <Button onClick={() => navigate("/posts")}>Cancel</Button>
+                            <Button onClick={handleCancel}>Cancel</Button>
                             <Button type="submit">Save</Button>
                         </ButtonToolbar>
                     </Form>
