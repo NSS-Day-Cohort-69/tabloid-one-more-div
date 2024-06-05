@@ -9,3 +9,7 @@ export const createSubscription = (newSub) => {
         body: JSON.stringify(newSub)
     })
 }
+
+export const getSubscriptionsById = (Id) => {
+    return fetch(`${_apiUrl}/${Id}`).then(res => res.json())
+};
