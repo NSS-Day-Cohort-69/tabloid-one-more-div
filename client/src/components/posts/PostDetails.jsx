@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
+import { useNavigate, useParams } from "react-router-dom"
+import { deletePost, getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 import { getAllTags } from "../../managers/tagManager.js"
 import PostTagsModal from "../modals/PostTagsModal.jsx"
 import { createSubscription, getSubscriptionsById, removeSubscription,  } from "../../managers/subscriptionManager.js"
+import ConfirmDeleteModal from "../modals/ConfirmDeleteModal.jsx"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [allTags, setAllTags] = useState([])
     const [userSubscriptions, setUserSubscriptions] = useState([])
+    
     const {id} = useParams()
+
+    const navigate = useNavigate()
    
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
@@ -24,6 +29,13 @@ export const PostDetails = ({ loggedInUser }) => {
     const refresh = () => {
         getApprovedAndPublishedPostById(id).then(setPost)
     }
+
+    const handleDeletePost = () => {
+        deletePost(id).then(() => {
+            navigate("/posts")
+        })
+    }
+
 
     const handleCreatePostReaction = (reactionId) => {
         const postReaction = {
@@ -68,6 +80,10 @@ export const PostDetails = ({ loggedInUser }) => {
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen)
+    }
+
+    const toggleDeleteModal = () => {
+        setIsDeleteModalOpen(!isDeleteModalOpen)
     }
     
     if (!post) {
@@ -168,7 +184,7 @@ export const PostDetails = ({ loggedInUser }) => {
                                 </>
                             )}
                             {(loggedInUser.id == post.userProfileId || loggedInUser.roles.includes("Admin")) && (
-                                <Button>Delete</Button>
+                                <Button onClick={toggleDeleteModal}>Delete</Button>
                             )}
                         </div>
                     </div>
@@ -180,6 +196,12 @@ export const PostDetails = ({ loggedInUser }) => {
                 toggleModal={toggleModal}
                 allTags={allTags}
                 post={post}
+            />
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                toggle={toggleDeleteModal}
+                confirmDelete={handleDeletePost}
+                typeName={"Post"}
             />
         </PageContainer>
     )
