@@ -16,4 +16,5 @@ public class CommentForPostDTO
     public string Content { get; set; }
 
     public UserProfileForCommentDTO UserProfile { get; set; }
+    // public string Subject { get; set; }
 }

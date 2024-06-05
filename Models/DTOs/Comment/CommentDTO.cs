@@ -17,4 +17,5 @@ public class CommentDTO
 
     public UserProfileDTO UserProfile { get; set; }
     public PostDTO Post { get; set; }
+    // public string Subject { get; set; }
 }

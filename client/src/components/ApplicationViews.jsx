@@ -10,6 +10,7 @@ import TagList from "./tags/TagList.jsx";
 import CreateTagForm from "./tags/CreateTagForm.jsx";
 import CreateCategoryForm from "./categories/CreateCategoryForm.jsx";
 import PostDetails from "./posts/PostDetails.jsx";
+import { CommentList } from "./comments/CommentList.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -42,7 +43,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           />
         </Route>
         <Route path="posts">
-          <Route 
+          <Route
             index
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
@@ -51,14 +52,24 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             }
           />
           <Route path=":id">
-            <Route 
+            <Route
               index
               element={
                 <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <PostDetails loggedInUser={loggedInUser}/>
+                  <PostDetails loggedInUser={loggedInUser} />
                 </AuthorizedRoute>
               }
             />
+            <Route path="comments">
+              <Route
+                index
+                element={
+                  <AuthorizedRoute loggedInUser={loggedInUser}>
+                    <CommentList loggedInUser={loggedInUser} />
+                  </AuthorizedRoute>
+                }
+              />
+            </Route>
           </Route>
         </Route>
         <Route path="/categories">
@@ -66,36 +77,57 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             index
             element={
               <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
-                <CategoryList/>
+                <CategoryList />
               </AuthorizedRoute>
             }
           />
-          <Route 
+          <Route
             path="create"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CreateCategoryForm/>
+                <CreateCategoryForm />
               </AuthorizedRoute>
             }
-          /> 
+          />
           <Route path=":categoryid">
+            <Route
+              path="edit"
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <CreateCategoryForm />
+                </AuthorizedRoute>
+              }
+            />
+          </Route>
+        </Route>
+        <Route path="tags">
           <Route
-            path="edit"
+            index
             element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CreateCategoryForm/>
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                <TagList />
               </AuthorizedRoute>
             }
+          />
+          <Route
+            path="create"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                <CreateTagForm />
+              </AuthorizedRoute>
+            }
+          />
+          <Route path=":tagid">
+            <Route
+              path="edit"
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                  <CreateTagForm />
+                </AuthorizedRoute>
+              }
             />
-          </Route>   
           </Route>
-        <Route path="tags">
-            <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><TagList/></AuthorizedRoute>}/>
-            <Route path="create" element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><CreateTagForm/></AuthorizedRoute>}/>
-            <Route path=":tagid" >
-              <Route path="edit" element={<AuthorizedRoute loggedInUser={loggedInUser}roles={["Admin"]}><CreateTagForm/></AuthorizedRoute>}/>
-            </Route>
-          </Route>
+        </Route>
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}
