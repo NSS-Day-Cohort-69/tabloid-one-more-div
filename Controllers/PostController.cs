@@ -207,16 +207,10 @@ public class PostController : ControllerBase
     {
 
         List<Post> postList = _dbContext.Posts
-             .Where(p => p.IsApproved == false)
-             .Include(p => p.UserProfile)
-             .Include(p => p.Category)
-             .Include(p => p.PostTags)
-             .ThenInclude(pt => pt.Tag)
-             .Include(p => p.PostReactions)
-             .ThenInclude(pr => pr.Reaction)
-             .Include(p => p.PostReactions)
-             .ThenInclude(pr => pr.UserProfile)
-             .Include(p => p.Comments).ToList();
+            .Where(p => p.IsApproved == false)
+            .Include(p => p.UserProfile)
+            .Include(p => p.Category)
+            .ToList();
 
         List<PostsForUnapprovedDTO> postDTOs = postList.Select(p => new PostsForUnapprovedDTO
         {
