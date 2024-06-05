@@ -18,7 +18,9 @@ export const PostList = ({ loggedInUser }) => {
     return (
         <PageContainer>
             <div className="w-75" style={{maxWidth: "1200px"}}>
-                <Button color = "primary"  style={{float: "right"}} onClick={() => {navigate("unapproved")}}>Unapproved Posts: {unapprovedCount}</Button>
+                {loggedInUser.roles.includes("Admin") && (
+                    <Button color = "primary"  style={{float: "right"}} onClick={() => {navigate("unapproved")}}>Unapproved Posts: {unapprovedCount}</Button>
+                )}
                 <h1>Posts</h1>
             </div>
             {posts.map(p => {
