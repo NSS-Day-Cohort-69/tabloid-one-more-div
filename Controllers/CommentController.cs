@@ -18,7 +18,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpGet]
-    // [Authorize]
+    [Authorize]
     
     public IActionResult GetAllComments(int postId)
     {
@@ -43,9 +43,13 @@ public class CommentController : ControllerBase
                 LastName = c.UserProfile.LastName,
                 UserName = c.UserProfile.IdentityUser.UserName
             },
-            UserProfileId = c.UserProfileId
-            // Subject = c.Subject
-        }).ToList();//order by
+            UserProfileId = c.UserProfileId,
+            Subject = c.Subject,
+            DateCreated = c.DateCreated
+            
+        })
+        .OrderByDescending(c => c.DateCreated)
+        .ToList();//order by
 
         return Ok(commentDTOs);
     }

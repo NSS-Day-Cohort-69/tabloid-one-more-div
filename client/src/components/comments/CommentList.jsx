@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { getAllComments } from "../../managers/commentManager";
 import { useParams } from "react-router-dom";
-import { Button, Card, CardBody, CardFooter, CardHeader } from "reactstrap";
+import {
+  Button,
+  ButtonToolbar,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+} from "reactstrap";
 import { getApprovedAndPublishedPostById } from "../../managers/postManager";
 import PageContainer from "../PageContainer";
 
@@ -22,18 +29,20 @@ export const CommentList = () => {
     <PageContainer>
       <h1>{post.title}</h1>
       {comments.map((c) => (
-        <Card key={c.id}>
+        <Card key={c.id} className="w-50">
           <CardHeader key={c.id}>
             {c.userProfile.userName} - DateCreated/Posted
           </CardHeader>
           <CardBody>
-            {/* <p>{c.subject}</p> */}
+            <p>{c.subject}</p>
             <p>{c.content}</p>
           </CardBody>
           {c.userProfileId === post.userProfileId ? (
             <CardFooter>
-              <Button>Edit</Button>
-              <Button>Delete</Button>
+              <ButtonToolbar className="gap-2">
+                <Button>Edit</Button>
+                <Button>Delete</Button>
+              </ButtonToolbar>
             </CardFooter>
           ) : null}
         </Card>

@@ -25,7 +25,10 @@ export const PostDetails = ({ loggedInUser }) => {
   const [post, setPost] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [allTags, setAllTags] = useState([]);
+
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getApprovedAndPublishedPostById(id).then(setPost);

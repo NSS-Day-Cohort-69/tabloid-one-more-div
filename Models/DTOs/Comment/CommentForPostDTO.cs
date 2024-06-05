@@ -18,5 +18,5 @@ public class CommentForPostDTO
     public DateTime DateCreated { get; set; }
 
     public UserProfileForCommentDTO UserProfile { get; set; }
-    // public string Subject { get; set; }
+    public string Subject { get; set; }
 }

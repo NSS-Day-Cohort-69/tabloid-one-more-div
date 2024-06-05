@@ -19,5 +19,5 @@ public class Comment
 
     public UserProfile UserProfile { get; set; }
     public Post Post { get; set; }
-    // public string Subject { get; set; }
+    public string Subject { get; set; }
 }
