@@ -29,7 +29,7 @@ export default function ApprovePost({loggedInUser}){
                                 <Badge className="fs-3 fw-bold mb-2 shadow pe-auto">
                                     {up.title}
                                 </Badge>
-                                <div className="pe-auto">
+                                <div className="pe-auto ">
                                     <Badge className="fs-6 mb-2 shadow" pill>{up.category?.name}</Badge>
                                 </div>
                             </CardImgOverlay>
@@ -39,7 +39,7 @@ export default function ApprovePost({loggedInUser}){
                         {!up.headerImageURL && (
                             <>
                                 <CardTitle className="fs-2 fw-bold mb-0">{up.title}</CardTitle>
-                                <div>
+                                <div className="mb-2">
                                     <Badge className="fs-6" pill>{up.category?.name}</Badge>
                                 </div>
                             </>
