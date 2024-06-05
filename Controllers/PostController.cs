@@ -265,4 +265,19 @@ public class PostController : ControllerBase
         return Ok(UnapprovedCount);
     }
 
+    [HttpPut("{id}/approve")]
+    public IActionResult Approve(int id)
+    {
+        Post postToApprove = _dbContext.Posts.FirstOrDefault(p => p.Id == id);
+        if (postToApprove == null)
+        {
+            return NotFound();
+        }
+
+        postToApprove.IsApproved = true;
+        _dbContext.SaveChanges();
+        return NoContent();
+
+    }
+
 }
