@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllApprovedAndPublishedPosts } from "../../managers/postManager"
 import PageContainer from "../PageContainer"
-import { Badge, Card, CardLink, CardText } from "reactstrap"
+import { Badge, Button, Card, CardLink, CardText } from "reactstrap"
 
 export const PostList = ({ loggedInUser }) => {
     const [posts, setPosts] = useState([])
@@ -13,6 +13,7 @@ export const PostList = ({ loggedInUser }) => {
     return (
         <PageContainer>
             <div className="w-75" style={{maxWidth: "1200px"}}>
+                <Button style={{float: "right"}}>Unapproved Posts</Button>
                 <h1>Posts</h1>
             </div>
             {posts.map(p => {
