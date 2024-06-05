@@ -6,7 +6,7 @@ import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, C
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 import { getAllTags } from "../../managers/tagManager.js"
 import PostTagsModal from "../modals/PostTagsModal.jsx"
-import { createSubscription, getSubscriptionsById } from "../../managers/subscriptionManager.js"
+import { createSubscription, getSubscriptionsById, unsubscribe } from "../../managers/subscriptionManager.js"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
@@ -54,7 +54,15 @@ export const PostDetails = ({ loggedInUser }) => {
             creatorId: authorId,
             followerId: followerId
         }
-        createSubscription(newSubscription).then(() =>  getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions))
+        createSubscription(newSubscription)
+        .then(() =>  getSubscriptionsById(loggedInUser.id)
+            .then(setUserSubscriptions))
+    }
+
+    const handleUnsubscribe = (CreatorId, followerId) => {
+        unsubscribe(CreatorId, followerId)
+        .then(() =>  getSubscriptionsById(loggedInUser.id)
+            .then(setUserSubscriptions))
     }
 
     const toggleModal = () => {
@@ -144,7 +152,7 @@ export const PostDetails = ({ loggedInUser }) => {
                             <div className="d-flex flex-fill">
                                 {loggedInUser.id != post.userProfileId && 
                                    ( userSubscriptions.some(us => us.creatorId == post.userProfileId) ? (
-                                        <Button>Unsubscribe</Button>
+                                        <Button onClick={() => {handleUnsubscribe(post.userProfileId, loggedInUser.id)}}>Unsubscribe</Button>
                                     ) : (
                                         <Button onClick={() => {handleSubscribe(post.userProfileId,loggedInUser.id)}}>Subscribe</Button>
                                     ))

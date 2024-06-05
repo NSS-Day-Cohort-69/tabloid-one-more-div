@@ -15,7 +15,7 @@ export const getSubscriptionsById = (Id) => {
 };
 
 export const unsubscribe = (creatorId, followerId) => {
-    return fetch(`${_apiUrl}?creatorId=${creatorId}followerId=${followerId}`,{
+    return fetch(`${_apiUrl}?creatorId=${creatorId}&followerId=${followerId}`,{
         method: "DELETE",
         headers:{
             "Content-Type":"application/json"
