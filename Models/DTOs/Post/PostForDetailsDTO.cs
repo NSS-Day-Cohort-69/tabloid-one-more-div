@@ -22,6 +22,8 @@ public class PostForDetailsDTO
 
     public string HeaderImageURL { get; set; }
     
+    public DateTime DateCreated { get; set; }
+
     public DateTime? PublicationDate { get; set; }
 
     public UserProfileForPostDTO UserProfile { get; set; }
@@ -29,5 +31,16 @@ public class PostForDetailsDTO
     public List<TagNoNavDTO> Tags { get; set; }
     public List<ReactionForPostDTO> Reactions { get; set; } 
     public int CommentsCount { get; set; }
-    public string FormattedPublicationDate => PublicationDate.Value.ToString("MMMM dd, yyyy");
+    public string FormattedPublicationDate
+    {
+        get
+        {
+            if (PublicationDate == null)
+            {
+                return DateCreated.ToString("MMMM dd, yyyy");
+            }
+
+            return PublicationDate.Value.ToString("MMMM dd, yyyy");
+        }
+    }
 }

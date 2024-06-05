@@ -11,6 +11,7 @@ import CreateTagForm from "./tags/CreateTagForm.jsx";
 import CreateCategoryForm from "./categories/CreateCategoryForm.jsx";
 import PostDetails from "./posts/PostDetails.jsx";
 import { CommentList } from "./comments/CommentList.jsx";
+import PostForm from "./posts/PostForm.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -71,6 +72,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               />
             </Route>
           </Route>
+          <Route
+            path="new"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <PostForm loggedInUser={loggedInUser} />
+              </AuthorizedRoute>
+            }
+          />
         </Route>
         <Route path="/categories">
           <Route

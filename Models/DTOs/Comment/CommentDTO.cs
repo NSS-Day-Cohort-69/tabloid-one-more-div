@@ -15,6 +15,8 @@ public class CommentDTO
     [Required]
     public string Content { get; set; }
 
+    public DateTime DateCreated { get; set; }
+
     public UserProfileDTO UserProfile { get; set; }
     public PostDTO Post { get; set; }
     // public string Subject { get; set; }
