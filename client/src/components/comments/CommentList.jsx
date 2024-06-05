@@ -31,7 +31,7 @@ export const CommentList = () => {
       {comments.map((c) => (
         <Card key={c.id} className="w-50">
           <CardHeader key={c.id}>
-            {c.userProfile.userName} - DateCreated/Posted
+            {c.userProfile.userName} - {c.formattedDateCreated}
           </CardHeader>
           <CardBody>
             <p>{c.subject}</p>

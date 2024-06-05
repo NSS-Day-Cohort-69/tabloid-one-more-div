@@ -62,6 +62,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                 </AuthorizedRoute>
               }
             />
+            <Route path="comments">
+              <Route
+                index
+                element={
+                  <AuthorizedRoute loggedInUser={loggedInUser}>
+                    <CommentList loggedInUser={loggedInUser} />
+                  </AuthorizedRoute>
+                }
+              />
+            </Route>
           </Route>
           <Route path="unapproved">
             <Route
@@ -69,16 +79,6 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               element={
                 <AuthorizedRoute loggedInUser={loggedInUser}>
                   <ApprovePost loggedInUser={loggedInUser} />
-                </AuthorizedRoute>
-              }
-            />
-          </Route>
-          <Route path="comments">
-            <Route
-              index
-              element={
-                <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <CommentList loggedInUser={loggedInUser} />
                 </AuthorizedRoute>
               }
             />
