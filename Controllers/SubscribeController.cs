@@ -49,4 +49,17 @@ public class SubscriptionController : ControllerBase
 
         return Ok(subDTO);
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult Unsubscribe(int creatorId, int followerId)
+    {
+        Subscription foundSub = _dbContext.Subscriptions.FirstOrDefault(s => s.CreatorId == creatorId && s.FollowerId == followerId);
+        if (foundSub == null)
+        {
+            return NotFound();
+        }
+        _dbContext.Subscriptions.Remove(foundSub);
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
 }
