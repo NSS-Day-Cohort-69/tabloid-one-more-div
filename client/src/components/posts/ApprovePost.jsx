@@ -1,5 +1,5 @@
 export default function ApprovePost(){
     return(
-        <>hello</>
+        <div>hello</div>
     )
 }
