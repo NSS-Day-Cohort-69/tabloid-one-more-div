@@ -10,10 +10,10 @@ namespace Tabloid.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class SubscribeController : ControllerBase
+public class SubscriptionController : ControllerBase
 {
     private TabloidDbContext _dbContext;
-    public SubscribeController(TabloidDbContext context)
+    public SubscriptionController(TabloidDbContext context)
     {
         _dbContext = context;
     }
@@ -30,5 +30,23 @@ public class SubscribeController : ControllerBase
         _dbContext.SaveChanges();
 
         return NoContent();
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetSubByFollowerId(int id)
+    {
+        List<Subscription> foundSub = _dbContext.Subscriptions.Where(s => s.FollowerId == id).ToList();
+        if (foundSub == null)
+        {
+            return NotFound();
+        }
+
+        List<SubscriptionCreateDTO> subDTO = foundSub.Select(fs => new SubscriptionCreateDTO
+        {
+            CreatorId = fs.CreatorId,
+            FollowerId = fs.FollowerId
+        }).ToList();
+
+        return Ok(subDTO);
     }
 }

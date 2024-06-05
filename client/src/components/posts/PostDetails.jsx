@@ -6,6 +6,7 @@ import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, C
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
 import { getAllTags } from "../../managers/tagManager.js"
 import PostTagsModal from "../modals/PostTagsModal.jsx"
+import { createSubscription } from "../../managers/subscriptionManager.js"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
@@ -44,6 +45,14 @@ export const PostDetails = ({ loggedInUser }) => {
         deletePostReaction(postReaction).then(() => {
             getApprovedAndPublishedPostById(id).then(setPost)
         })
+    }
+
+    const handleSubscribe= (authorId, followerId) => {
+        const newSubscription = {
+            creatorId: authorId,
+            followerId: followerId
+        }
+        createSubscription(newSubscription)
     }
 
     const toggleModal = () => {
@@ -132,7 +141,7 @@ export const PostDetails = ({ loggedInUser }) => {
                         <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
                             <div className="d-flex flex-fill">
                                 {loggedInUser.id != post.userProfileId && (
-                                    <Button>Subscribe</Button>
+                                    <Button onClick={() => {handleSubscribe(post.userProfileId,loggedInUser.id)}}>Subscribe</Button>
                                 )}
                             </div>
                             <Button>{`${post.commentsCount} Comments`}</Button>
