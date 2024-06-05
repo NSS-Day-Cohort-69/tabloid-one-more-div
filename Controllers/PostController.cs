@@ -245,8 +245,8 @@ public class PostController : ControllerBase
     public IActionResult GetUnapprovedCount()
     {
         int UnapprovedCount = _dbContext.Posts
-        .Where(p => p.IsApproved == false)
-        .Count();
+            .Where(p => p.IsApproved == false)
+            .Count();
 
         return Ok(UnapprovedCount);
     }
