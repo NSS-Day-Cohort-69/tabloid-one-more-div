@@ -34,5 +34,5 @@ export const approvePost = (postId) => {
 }
 
 export const getUnapprovedCount = () => {
-    return fetch(_apiUrl/unapprovedcount).then(res => res.json());
+    return fetch(`${_apiUrl}/unapprovedcount`).then(res => res.json());
 }
