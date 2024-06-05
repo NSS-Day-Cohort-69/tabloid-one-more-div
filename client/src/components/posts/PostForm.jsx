@@ -46,18 +46,21 @@ export const PostForm = ({ loggedInUser }) => {
         }
         
         if (id) {
-            const postUpdate = {
-                title: title,
-                categoryId: categoryId,
-                headerImageURL: headerImageURL == "" ? null : headerImageURL,
-                content: content
-            }
-
-            updatePost(id, postUpdate).then(() => {
-                navigate(`/posts/${id}`)
-            })
+            updateExistingPost()
+        } else {
+            createNewPost()
         }
+    }
 
+    const handleCancel = () => {
+        if (id) {
+            navigate(`/posts/${id}`)
+        } else {
+            navigate("/posts")
+        }
+    }
+
+    const createNewPost = () => {
         const newPost = {
             title: title,
             categoryId: categoryId,
@@ -72,12 +75,17 @@ export const PostForm = ({ loggedInUser }) => {
         })
     }
 
-    const handleCancel = () => {
-        if (id) {
-            navigate(`/posts/${id}`)
-        } else {
-            navigate("/posts")
+    const updateExistingPost = () => {
+        const postUpdate = {
+            title: title,
+            categoryId: categoryId,
+            headerImageURL: headerImageURL == "" ? null : headerImageURL,
+            content: content
         }
+
+        updatePost(id, postUpdate).then(() => {
+            navigate(`/posts/${id}`)
+        })
     }
 
     return (
