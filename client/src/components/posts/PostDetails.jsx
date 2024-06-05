@@ -3,15 +3,52 @@ import { useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
+import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
+import { getAllTags } from "../../managers/tagManager.js"
+import PostTagsModal from "../modals/PostTagsModal.jsx"
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
-
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [allTags, setAllTags] = useState([])
     const {id} = useParams()
-
+   
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
+        getAllTags().then(setAllTags)
     }, [])
+
+    const refresh = () => {
+        getApprovedAndPublishedPostById(id).then(setPost)
+    }
+
+    const handleCreatePostReaction = (reactionId) => {
+        const postReaction = {
+            userProfileId: loggedInUser.id,
+            postId: id,
+            reactionId: reactionId
+        }
+
+        createPostReaction(postReaction).then(() => {
+            getApprovedAndPublishedPostById(id).then(setPost)
+        })
+    }
+
+    const handleDeletePostReaction = (reactionId) => {
+        const postReaction = {
+            userProfileId: loggedInUser.id,
+            postId: id,
+            reactionId: reactionId
+        }
+        
+        deletePostReaction(postReaction).then(() => {
+            getApprovedAndPublishedPostById(id).then(setPost)
+        })
+    }
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen)
+    }
     
     if (!post) {
         return (
@@ -68,13 +105,24 @@ export const PostDetails = ({ loggedInUser }) => {
                             {post.reactions.map(r => {
                                 if (r.postReactions.some(pr => pr.userProfileId == loggedInUser.id)) {
                                     return (
-                                        <Button className="px-1 pe-2 py-0" color="primary" title={r.name} key={`reaction-${r.id}`}>
+                                        <Button 
+                                            className="px-1 pe-2 py-0" 
+                                            color="primary" 
+                                            title={r.name} 
+                                            onClick={() => handleDeletePostReaction(r.id)}
+                                            key={`reaction-${r.id}`}
+                                        >
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
                                         </Button>
                                     )
                                 } else {
                                     return (
-                                        <Button className="px-1 pe-2 py-0" title={r.name} key={`reaction-${r.id}`}>
+                                        <Button 
+                                            className="px-1 pe-2 py-0" 
+                                            title={r.name} 
+                                            onClick={() => handleCreatePostReaction(r.id)}
+                                            key={`reaction-${r.id}`}
+                                        >
                                             {`${r.reactionImage} ${r.postReactionsCount}`}
                                         </Button>
                                     )
@@ -91,7 +139,7 @@ export const PostDetails = ({ loggedInUser }) => {
                             <Button>Create A Comment</Button>
                             {loggedInUser.id == post.userProfileId && (
                                 <>
-                                    <Button>Manage Tags</Button>
+                                    <Button onClick={toggleModal}>Manage Tags</Button>
                                     <Button>Edit</Button>
                                 </>
                             )}
@@ -102,6 +150,13 @@ export const PostDetails = ({ loggedInUser }) => {
                     </div>
                 </CardBody>
             </Card>
+            <PostTagsModal
+                refresh = {refresh}
+                isModalOpen={isModalOpen}
+                toggleModal={toggleModal}
+                allTags={allTags}
+                post={post}
+            />
         </PageContainer>
     )
 }
