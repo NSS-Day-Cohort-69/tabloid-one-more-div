@@ -214,7 +214,7 @@ public class PostController : ControllerBase
         postToUpdate.Title = update.Title;
         postToUpdate.Content = update.Content;
         postToUpdate.CategoryId = update.CategoryId;
-        postToUpdate.HeaderImageURL = update.HeaderImageURL;
+        postToUpdate.HeaderImageURL = update.HeaderImageURL == null ? null : update.HeaderImageURL;
 
         _dbContext.SaveChanges();
 

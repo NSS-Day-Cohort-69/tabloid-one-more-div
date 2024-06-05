@@ -30,8 +30,8 @@ export const PostForm = ({ loggedInUser }) => {
                 }
                 
                 setTitle(post.title)
-                setCategoryId(post.categoryId)
-                setHeaderImageURL(post.headerImageURL)
+                setCategoryId(post.categoryId == null ? 0 : post.categoryId)
+                setHeaderImageURL(post.headerImageURL == null ? "" : post.headerImageURL)
                 setContent(post.content)
             })
         }
