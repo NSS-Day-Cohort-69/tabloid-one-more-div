@@ -27,17 +27,16 @@ export const PostList = ({ loggedInUser }) => {
 
     return (
         <PageContainer>
-            <div className="w-75" style={{maxWidth: "1200px"}}>
+            <div className="w-75 d-flex align-items-center justify-content-between" style={{maxWidth: "1200px"}}>
+                <h1>Posts</h1>
                 {loggedInUser.roles.includes("Admin") && (
                     <Button 
                         color = "primary" 
-                        style={{float: "right"}}
                         onClick={() => {navigate("unapproved")}}
                     >
                         Unapproved Posts: {unapprovedCount}
                     </Button>
                 )}
-                <h1>Posts</h1>
             </div>
             <div className="d-flex justify-content-start w-75" style={{maxWidth: "1200px"}}>
                 <div>
