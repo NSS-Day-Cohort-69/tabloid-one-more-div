@@ -19,3 +19,7 @@ export const createPost = (post) => {
     
     return fetch(_apiUrl, postOptions)
 }
+
+export const getUnapprovedPosts = () => {
+    return fetch(`${_apiUrl}/unapproved`).then(res => res.json());
+}
