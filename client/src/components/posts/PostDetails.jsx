@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
@@ -13,7 +13,10 @@ export const PostDetails = ({ loggedInUser }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [allTags, setAllTags] = useState([])
     const [userSubscriptions, setUserSubscriptions] = useState([])
+    
     const {id} = useParams()
+
+    const navigate = useNavigate()
    
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
@@ -164,7 +167,7 @@ export const PostDetails = ({ loggedInUser }) => {
                             {loggedInUser.id == post.userProfileId && (
                                 <>
                                     <Button onClick={toggleModal}>Manage Tags</Button>
-                                    <Button>Edit</Button>
+                                    <Button onClick={() => navigate("edit")}>Edit</Button>
                                 </>
                             )}
                             {(loggedInUser.id == post.userProfileId || loggedInUser.roles.includes("Admin")) && (
