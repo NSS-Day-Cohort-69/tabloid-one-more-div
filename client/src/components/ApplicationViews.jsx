@@ -13,6 +13,7 @@ import PostDetails from "./posts/PostDetails.jsx";
 import { CommentList } from "./comments/CommentList.jsx";
 import PostForm from "./posts/PostForm.jsx";
 import ApprovePost from "./posts/ApprovePost.jsx";
+import HomePagePosts from "./posts/HomePagePostList.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -22,7 +23,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <p>Welcome to Tabloid!</p>
+              <HomePagePosts loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
         />
