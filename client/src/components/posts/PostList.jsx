@@ -14,6 +14,7 @@ export const PostList = ({ loggedInUser }) => {
     const [tags, setTags] = useState([])
     const [tagId, setTagId] = useState(0)
     const [unapprovedCount, setUnapprovedCount] = useState(null)
+    const [searchText, setSearchText] = useState("")
     
 
     const navigate = useNavigate()
@@ -29,10 +30,11 @@ export const PostList = ({ loggedInUser }) => {
         setFilteredPosts(
             posts.filter(p => 
                 (categoryId === 0 || p.categoryId === categoryId) && 
-                (tagId === 0 || (p.tags && p.tags.some(tag => tag.id === tagId)))
+                (tagId === 0 || (p.tags && p.tags.some(tag => tag.id === tagId))) &&
+                (searchText === "" || p.userProfile.fullName.toLowerCase().includes(searchText.toLowerCase()))
             )
         )
-    }, [posts, categoryId, tagId, categories, tags])
+    }, [posts, categoryId, tagId, searchText, categories, tags])
 
     return (
         <PageContainer>
@@ -93,6 +95,14 @@ export const PostList = ({ loggedInUser }) => {
                             </option>
                         ))}
                     </Input>
+                </div>
+                <div>
+                    <Input
+                        type="text"
+                        placeholder="Search by name..."
+                        value={searchText}
+                        onChange={event => setSearchText(event.target.value)}
+                    />
                 </div>
             </div>
             {filteredPosts.map(p => {
