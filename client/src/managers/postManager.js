@@ -54,3 +54,7 @@ export const approvePost = (postId) => {
 export const getUnapprovedCount = () => {
     return fetch(`${_apiUrl}/unapprovedCount`).then(res => res.json());
 }
+
+export const getSubscribedPosts = (id) => {
+    return fetch(`${_apiUrl}/${id}/subscribedPosts`).then(res => res.json());
+}

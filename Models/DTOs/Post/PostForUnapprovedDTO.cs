@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tabloid.Models.DTOs;
 
-public class PostsForUnapprovedDTO
+public class PostForUnapprovedDTO
 {
     public int Id { get; set; }
 
@@ -25,6 +25,8 @@ public class PostsForUnapprovedDTO
     public DateTime DateCreated { get; set; }
 
     public DateTime? PublicationDate { get; set; }
+
+    public int EstimatedReadTime { get; set; }
 
     public UserProfileForPostDTO UserProfile { get; set; }
     public CategoryNoNavDTO Category { get; set; }

@@ -26,6 +26,8 @@ public class PostForDetailsDTO
 
     public DateTime? PublicationDate { get; set; }
 
+    public int EstimatedReadTime { get; set; }
+
     public UserProfileForPostDTO UserProfile { get; set; }
     public CategoryNoNavDTO Category { get; set; }
     public List<TagNoNavDTO> Tags { get; set; }

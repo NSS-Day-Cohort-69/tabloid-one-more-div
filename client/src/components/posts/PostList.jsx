@@ -120,6 +120,9 @@ export const PostList = ({ loggedInUser }) => {
                                     {p.userProfile.fullName}
                                 </CardText>
                             )}
+                            <div className="flex-fill text-end">
+                                {p.estimatedReadTime} {p.estimatedReadTime > 1 ? "minutes" : "minute"}
+                            </div>
                         </div>
                         <div>
                             {p.tags.length > 0 && (
