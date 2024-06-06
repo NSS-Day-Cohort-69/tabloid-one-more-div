@@ -24,6 +24,22 @@ public class Post
     public DateTime DateCreated { get; set; }
     public DateTime? PublicationDate { get; set; }
 
+    public int EstimatedReadTime
+    {
+        get
+        {
+            int wordCount = Content == null ? 0 : Content.Split().Count();
+            if (wordCount == 0)
+            {
+                return 0;
+            }
+
+            int timeToRead = (int)Math.Ceiling((decimal) wordCount / 265);
+            
+            return timeToRead;
+        }
+    }
+
     public UserProfile UserProfile { get; set; }
     public Category Category { get; set; }
     public List<PostTag> PostTags { get; set; }
