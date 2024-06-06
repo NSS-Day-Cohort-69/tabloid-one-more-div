@@ -72,6 +72,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                 }
               />
             </Route>
+            <Route 
+              path="edit"
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <PostForm loggedInUser={loggedInUser}/>
+                </AuthorizedRoute>
+              }
+            />
           </Route>
           <Route path="unapproved">
             <Route
@@ -79,14 +87,6 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               element={
                 <AuthorizedRoute loggedInUser={loggedInUser}>
                   <ApprovePost loggedInUser={loggedInUser} />
-                </AuthorizedRoute>
-              }
-            />
-            <Route 
-              path="edit"
-              element={
-                <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <PostForm loggedInUser={loggedInUser}/>
                 </AuthorizedRoute>
               }
             />
