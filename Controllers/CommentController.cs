@@ -19,7 +19,6 @@ public class CommentController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    
     public IActionResult GetAllComments(int postId)
     {
         List<Comment> foundComments = _dbContext.Comments
@@ -46,10 +45,9 @@ public class CommentController : ControllerBase
             UserProfileId = c.UserProfileId,
             Subject = c.Subject,
             DateCreated = c.DateCreated
-            
         })
         .OrderByDescending(c => c.DateCreated)
-        .ToList();//order by
+        .ToList();
 
         return Ok(commentDTOs);
     }
