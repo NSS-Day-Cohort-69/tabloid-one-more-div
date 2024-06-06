@@ -248,7 +248,7 @@ public class PostController : ControllerBase
             .Include(p => p.Category)
             .ToList();
 
-        List<PostsForUnapprovedDTO> postDTOs = postList.Select(p => new PostsForUnapprovedDTO
+        List<PostForUnapprovedDTO> postDTOs = postList.Select(p => new PostForUnapprovedDTO
         {
             Id = p.Id,
             UserProfileId = p.UserProfileId,
