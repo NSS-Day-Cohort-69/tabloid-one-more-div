@@ -62,8 +62,11 @@ export default function ApprovePost({loggedInUser}){
                                     </div>
                                 </>
                             )}
-                            <CardSubtitle className="fw-bold">{up.userProfile.fullName}</CardSubtitle>
+                            <div className="fw-bold">{up.userProfile.fullName}</div>
                             <CardSubtitle>{up.formattedPublicationDate}</CardSubtitle>
+                            <CardSubtitle className="fst-italic">
+                                {up.estimatedReadTime} {up.estimatedReadTime > 1 ? "minutes" : "minute"}
+                            </CardSubtitle>
                             <CardText className="mt-3">{up.content}</CardText>
                             <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2">
                                 {(loggedInUser.id == up.userProfileId || loggedInUser.roles.includes("Admin")) && (

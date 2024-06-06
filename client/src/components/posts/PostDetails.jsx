@@ -133,8 +133,11 @@ export const PostDetails = ({ loggedInUser }) => {
                             })}
                         </div>
                     )}
-                    <CardSubtitle className="fw-bold mt-3">{post.userProfile.fullName}</CardSubtitle>
+                    <div className="fw-bold mt-2">{post.userProfile.fullName}</div>
                     <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle>
+                    <CardSubtitle className="fst-italic">
+                        {post.estimatedReadTime} {post.estimatedReadTime > 1 ? "minutes" : "minute"}
+                    </CardSubtitle>
                     <CardText className="mt-3">{post.content}</CardText>
                     <div className="d-flex flex-column align-items-end">
                         <div className="d-flex flex-row flex-wrap gap-1">
