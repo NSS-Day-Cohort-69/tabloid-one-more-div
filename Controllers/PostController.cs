@@ -305,10 +305,10 @@ public class PostController : ControllerBase
     {
         List<Subscription> subs = _dbContext.Subscriptions.Where(s => s.FollowerId == id).ToList();
 
-        var commonAttribute = subs.Select(s => s.CreatorId).ToList();
+        List<int> subscribedUsers = subs.Select(s => s.CreatorId).ToList();
 
         List<PostForListDTO> subPostList = _dbContext.Posts
-           .Where(p => p.IsApproved == true && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null) && commonAttribute.Contains(p.UserProfileId))
+           .Where(p => p.IsApproved == true && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null) && subscribedUsers.Contains(p.UserProfileId))
            .OrderByDescending(p => p.PublicationDate == null ? p.DateCreated : p.PublicationDate)
            .Include(p => p.UserProfile)
            .Include(p => p.Category)
