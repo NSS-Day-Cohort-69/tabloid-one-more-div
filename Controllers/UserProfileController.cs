@@ -41,6 +41,7 @@ public class UserProfileController : ControllerBase
             Email = up.IdentityUser.Email,
             UserName = up.IdentityUser.UserName,
             IdentityUserId = up.IdentityUserId,
+            IsActive = up.IsActive,
             Roles = _dbContext.UserRoles
             .Where(ur => ur.UserId == up.IdentityUserId)
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)

@@ -13,9 +13,9 @@ export default function UserProfileList() {
     getUserProfiles();
   }, []);
 
-  const handleActiveStatusChange = (id) => {
-    changeIsActiveStatus(id)
-    console.log("Clicked bitch")
+  const handleIsActiveChange = (id) => {
+    changeIsActiveStatus(id).then(() =>{getProfiles().then(setUserProfiles)})
+    
   }
   return (
     <>
@@ -24,8 +24,7 @@ export default function UserProfileList() {
         <Button>View Deactivated</Button>
       </div>
 
-      {userprofiles.map((p) => (
-        
+      {userprofiles.filter(p => p.isActive).map((p) => (
         <Card className="w-50 mx-auto md-2 mt-2 " key={p.id}>
           <CardBody className="d-flex align-items-center justify-content-around flex-column">
             {p.userName}
@@ -42,7 +41,7 @@ export default function UserProfileList() {
               <Button style={{ paddingLeft: "37px", paddingRight: "37px" }}>
                 Edit
               </Button>
-              <Button onClick={() => {handleActiveStatusChange(p.id)}}>Deactivate</Button>
+              <Button onClick={() => {handleIsActiveChange(p.id)}}>Deactivate</Button>
             </div>
           </CardBody>
         </Card>
