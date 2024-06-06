@@ -229,26 +229,26 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<Comment>().HasData(new Comment[]
         {
-            new Comment { Id = 1, UserProfileId = 1, PostId = 1, Content = "Comment 1", DateCreated = DateTime.Now.AddDays(-1) },
-            new Comment { Id = 2, UserProfileId = 1, PostId = 2, Content = "Comment 2", DateCreated = DateTime.Now.AddDays(-1) },
-            new Comment { Id = 3, UserProfileId = 2, PostId = 3, Content = "Comment 3", DateCreated = DateTime.Now.AddDays(-1) },
-            new Comment { Id = 4, UserProfileId = 2, PostId = 4, Content = "Comment 4", DateCreated = DateTime.Now.AddDays(-1) },
-            new Comment { Id = 5, UserProfileId = 3, PostId = 5, Content = "Comment 5", DateCreated = DateTime.Now.AddDays(-1) },
-            new Comment { Id = 6, UserProfileId = 3, PostId = 6, Content = "Comment 6", DateCreated = DateTime.Now },
-            new Comment { Id = 7, UserProfileId = 4, PostId = 7, Content = "Comment 7", DateCreated = DateTime.Now },
-            new Comment { Id = 8, UserProfileId = 4, PostId = 8, Content = "Comment 8", DateCreated = DateTime.Now },
-            new Comment { Id = 9, UserProfileId = 5, PostId = 9, Content = "Comment 9", DateCreated = DateTime.Now },
-            new Comment { Id = 10, UserProfileId = 5, PostId = 10, Content = "Comment 10", DateCreated = DateTime.Now },
-            new Comment { Id = 11, UserProfileId = 6, PostId = 11, Content = "Comment 11", DateCreated = DateTime.Now },
-            new Comment { Id = 12, UserProfileId = 6, PostId = 12, Content = "Comment 12", DateCreated = DateTime.Now },
-            new Comment { Id = 13, UserProfileId = 1, PostId = 13, Content = "Comment 13", DateCreated = DateTime.Now },
-            new Comment { Id = 14, UserProfileId = 2, PostId = 14, Content = "Comment 14", DateCreated = DateTime.Now },
-            new Comment { Id = 15, UserProfileId = 3, PostId = 15, Content = "Comment 15", DateCreated = DateTime.Now },
-            new Comment { Id = 16, UserProfileId = 4, PostId = 1, Content = "Comment 16", DateCreated = DateTime.Now },
-            new Comment { Id = 17, UserProfileId = 5, PostId = 2, Content = "Comment 17", DateCreated = DateTime.Now },
-            new Comment { Id = 18, UserProfileId = 6, PostId = 3, Content = "Comment 18", DateCreated = DateTime.Now },
-            new Comment { Id = 19, UserProfileId = 1, PostId = 4, Content = "Comment 19", DateCreated = DateTime.Now },
-            new Comment { Id = 20, UserProfileId = 2, PostId = 5, Content = "Comment 20", DateCreated = DateTime.Now }
+            new Comment { Id = 1, UserProfileId = 1, PostId = 1, Content = "Comment 1", DateCreated = DateTime.Now.AddDays(-1), Subject = "Subject 1" },
+            new Comment { Id = 2, UserProfileId = 1, PostId = 2, Content = "Comment 2", DateCreated = DateTime.Now.AddDays(-1), Subject = "Subject 2" },
+            new Comment { Id = 3, UserProfileId = 2, PostId = 3, Content = "Comment 3", DateCreated = DateTime.Now.AddDays(-1), Subject = "Subject 3" },
+            new Comment { Id = 4, UserProfileId = 2, PostId = 4, Content = "Comment 4", DateCreated = DateTime.Now.AddDays(-1), Subject = "Subject 4" },
+            new Comment { Id = 5, UserProfileId = 3, PostId = 5, Content = "Comment 5", DateCreated = DateTime.Now.AddDays(-1), Subject = "Subject 5" },
+            new Comment { Id = 6, UserProfileId = 3, PostId = 6, Content = "Comment 6", DateCreated = DateTime.Now, Subject = "Subject 6" },
+            new Comment { Id = 7, UserProfileId = 4, PostId = 7, Content = "Comment 7", DateCreated = DateTime.Now, Subject = "Subject 7" },
+            new Comment { Id = 8, UserProfileId = 4, PostId = 8, Content = "Comment 8", DateCreated = DateTime.Now, Subject = "Subject 8" },
+            new Comment { Id = 9, UserProfileId = 5, PostId = 9, Content = "Comment 9", DateCreated = DateTime.Now, Subject = "Subject 9" },
+            new Comment { Id = 10, UserProfileId = 5, PostId = 10, Content = "Comment 10", DateCreated = DateTime.Now, Subject = "Subject 10" },
+            new Comment { Id = 11, UserProfileId = 6, PostId = 11, Content = "Comment 11", DateCreated = DateTime.Now, Subject = "Subject 11" },
+            new Comment { Id = 12, UserProfileId = 6, PostId = 12, Content = "Comment 12", DateCreated = DateTime.Now, Subject = "Subject 12" },
+            new Comment { Id = 13, UserProfileId = 1, PostId = 13, Content = "Comment 13", DateCreated = DateTime.Now, Subject = "Subject 13" },
+            new Comment { Id = 14, UserProfileId = 2, PostId = 14, Content = "Comment 14", DateCreated = DateTime.Now, Subject = "Subject 14" },
+            new Comment { Id = 15, UserProfileId = 3, PostId = 15, Content = "Comment 15", DateCreated = DateTime.Now, Subject = "Subject 15" },
+            new Comment { Id = 16, UserProfileId = 4, PostId = 1, Content = "Comment 16", DateCreated = DateTime.Now, Subject = "Subject 16" },
+            new Comment { Id = 17, UserProfileId = 5, PostId = 2, Content = "Comment 17", DateCreated = DateTime.Now, Subject = "Subject 17" },
+            new Comment { Id = 18, UserProfileId = 6, PostId = 3, Content = "Comment 18", DateCreated = DateTime.Now, Subject = "Subject 18" },
+            new Comment { Id = 19, UserProfileId = 1, PostId = 4, Content = "Comment 19", DateCreated = DateTime.Now, Subject = "Subject 19" },
+            new Comment { Id = 20, UserProfileId = 2, PostId = 5, Content = "Comment 20", DateCreated = DateTime.Now, Subject = "Subject 20" }
         });
 
         modelBuilder.Entity<Reaction>().HasData(new Reaction[]
