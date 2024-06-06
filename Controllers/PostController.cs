@@ -39,6 +39,7 @@ public class PostController : ControllerBase
                 Title = p.Title,
                 DateCreated = p.DateCreated,
                 PublicationDate = p.PublicationDate,
+                EstimatedReadTime = p.EstimatedReadTime,
                 UserProfile = new UserProfileForPostDTO()
                 {
                     Id = p.UserProfile.Id,
@@ -98,6 +99,7 @@ public class PostController : ControllerBase
             HeaderImageURL = foundPost.HeaderImageURL,
             DateCreated = foundPost.DateCreated,
             PublicationDate = foundPost.PublicationDate,
+            EstimatedReadTime = foundPost.EstimatedReadTime,
             UserProfile = new UserProfileForPostDTO()
             {
                 Id = foundPost.UserProfile.Id,
@@ -257,6 +259,7 @@ public class PostController : ControllerBase
             HeaderImageURL = p.HeaderImageURL,
             DateCreated = p.DateCreated,
             PublicationDate = p.PublicationDate,
+            EstimatedReadTime = p.EstimatedReadTime,
             UserProfile = new UserProfileForPostDTO()
             {
                 Id = p.UserProfile.Id,
