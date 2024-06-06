@@ -1,30 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { createSubscription, getSubscriptionsById, removeSubscription } from "../../managers/subscriptionManager.js";
+import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js";
 import { getApprovedAndPublishedPostById } from "../../managers/postManager.js";
-import PageContainer from "../PageContainer.jsx";
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  CardImgOverlay,
-  CardSubtitle,
-  CardText,
-  CardTitle,
-  Spinner,
-} from "reactstrap";
-import {
-  createPostReaction,
-  deletePostReaction,
-} from "../../managers/postReactionManager.js";
 import { getAllTags } from "../../managers/tagManager.js";
 import PostTagsModal from "../modals/PostTagsModal.jsx";
-import {
-  createSubscription,
-  getSubscriptionsById,
-  removeSubscription,
-} from "../../managers/subscriptionManager.js";
+import PageContainer from "../PageContainer.jsx";
+import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap";
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
