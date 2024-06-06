@@ -36,7 +36,6 @@ export const PostList = ({ loggedInUser }) => {
         )
     }, [posts, categoryId, tagId, searchText, categories, tags])
 
-
     return (
         <PageContainer>
             <div className="w-75 d-flex align-items-center justify-content-between" style={{maxWidth: "1200px"}}>
