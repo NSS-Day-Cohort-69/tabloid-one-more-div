@@ -32,7 +32,7 @@ export const PostList = ({ loggedInUser }) => {
                 (tagId === 0 || (p.tags && p.tags.some(tag => tag.id === tagId)))
             )
         )
-    }, [posts, categoryId, tagId])
+    }, [posts, categoryId, tagId, categories, tags])
 
     return (
         <PageContainer>
@@ -111,15 +111,15 @@ export const PostList = ({ loggedInUser }) => {
                             )}
                         </div>
                         <div>
-                        {p.tags.length > 0 && (
-                        <div className="d-flex gap-2 pt-2">
-                            {p.tags.map(t => {
-                                return (
-                                    <Badge color="info" key={`tag-${t.id}`} pill>{t.name}</Badge>
-                                )
-                            })}
-                        </div>
-                    )}
+                            {p.tags.length > 0 && (
+                                <div className="d-flex gap-2 pt-2">
+                                    {p.tags.map(t => {
+                                        return (
+                                            <Badge color="info" key={`tag-${t.id}`} pill>{t.name}</Badge>
+                                        )
+                                    })}
+                                </div>
+                            )}
                         </div>
                         <div>
                             <CardLink className="fs-2 fw-bold text-black text-decoration-none" href={`posts/${p.id}`}>
