@@ -303,4 +303,51 @@ public class PostController : ControllerBase
 
     }
 
+    [HttpGet("{id}/subscribedPosts")]
+    public IActionResult GetSubscribedPosts(int id)
+    {
+        List<Subscription> subs = _dbContext.Subscriptions.Where(s => s.FollowerId == id).ToList();
+
+        List<int> subscribedUsers = subs.Select(s => s.CreatorId).ToList();
+
+        List<PostForListDTO> subPostList = _dbContext.Posts
+           .Where(p => p.IsApproved == true && (p.PublicationDate.Value <= DateTime.Now | p.PublicationDate == null) && subscribedUsers.Contains(p.UserProfileId))
+           .OrderByDescending(p => p.PublicationDate == null ? p.DateCreated : p.PublicationDate)
+           .Include(p => p.UserProfile)
+           .Include(p => p.Category)
+           .Include(p => p.PostTags)
+           .ThenInclude(pt => pt.Tag)
+           .Select(p => new PostForListDTO()
+           {
+               Id = p.Id,
+               UserProfileId = p.UserProfileId,
+               CategoryId = p.CategoryId,
+               IsApproved = p.IsApproved,
+               Title = p.Title,
+               DateCreated = p.DateCreated,
+               PublicationDate = p.PublicationDate,
+               UserProfile = new UserProfileForPostDTO()
+               {
+                   Id = p.UserProfile.Id,
+                   FirstName = p.UserProfile.FirstName,
+                   LastName = p.UserProfile.LastName,
+                   ImageLocation = p.UserProfile.ImageLocation,
+                   IsActive = p.UserProfile.IsActive
+               },
+               Category = p.Category == null ? null : new CategoryNoNavDTO()
+               {
+                   Id = p.Category.Id,
+                   Name = p.Category.Name
+               },
+               Tags = p.PostTags.Select(pt => new TagNoNavDTO()
+               {
+                   Id = pt.Tag.Id,
+                   Name = pt.Tag.Name
+               }).ToList()
+           })
+            .ToList();
+
+        return Ok(subPostList);
+    }
+
 }
