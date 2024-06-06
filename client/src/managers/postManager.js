@@ -20,6 +20,12 @@ export const createPost = (post) => {
     return fetch(_apiUrl, postOptions)
 }
 
+export const deletePost = (postId) => {
+    const deleteOptions = {method: "DELETE"}
+
+    return fetch(`${_apiUrl}/${postId}`, deleteOptions)
+}
+
 export const updatePost = (postId, postUpdate) => {
     const putOptions = {
         method: "PUT",
