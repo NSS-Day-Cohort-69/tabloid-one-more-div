@@ -2,8 +2,8 @@ import { Button, ButtonToolbar, Card, CardBody, Form, FormGroup, Input, InputGro
 import PageContainer from "../PageContainer.jsx"
 import { useEffect, useState } from "react"
 import { getAllCategories } from "../../managers/categoryManager.js"
-import { useNavigate } from "react-router-dom"
-import { createPost } from "../../managers/postManager.js"
+import { useNavigate, useParams } from "react-router-dom"
+import { createPost, getApprovedAndPublishedPostById, updatePost } from "../../managers/postManager.js"
 
 export const PostForm = ({ loggedInUser }) => {
     const [title, setTitle] = useState("")
@@ -14,11 +14,28 @@ export const PostForm = ({ loggedInUser }) => {
     const [includeDate, setIncludeDate] = useState(false)
     const [categories, setCategories] = useState([])
 
+    const {id} = useParams()
+
     const navigate = useNavigate()
     
     useEffect(() => {
         getAllCategories().then(setCategories)
     }, [])
+
+    useEffect(() => {
+        if (id) {
+            getApprovedAndPublishedPostById(id).then(post => {
+                if (post.userProfileId != loggedInUser.id) {
+                    navigate(`/posts/${id}`)
+                }
+                
+                setTitle(post.title)
+                setCategoryId(post.categoryId == null ? 0 : post.categoryId)
+                setHeaderImageURL(post.headerImageURL == null ? "" : post.headerImageURL)
+                setContent(post.content)
+            })
+        }
+    }, [id])
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -28,6 +45,22 @@ export const PostForm = ({ loggedInUser }) => {
             return
         }
         
+        if (id) {
+            updateExistingPost()
+        } else {
+            createNewPost()
+        }
+    }
+
+    const handleCancel = () => {
+        if (id) {
+            navigate(`/posts/${id}`)
+        } else {
+            navigate("/posts")
+        }
+    }
+
+    const createNewPost = () => {
         const newPost = {
             title: title,
             categoryId: categoryId,
@@ -42,11 +75,24 @@ export const PostForm = ({ loggedInUser }) => {
         })
     }
 
+    const updateExistingPost = () => {
+        const postUpdate = {
+            title: title,
+            categoryId: categoryId,
+            headerImageURL: headerImageURL == "" ? null : headerImageURL,
+            content: content
+        }
+
+        updatePost(id, postUpdate).then(() => {
+            navigate(`/posts/${id}`)
+        })
+    }
+
     return (
         <PageContainer>
             <Card className="w-75 shadow" outline color="light" style={{maxWidth: "1200px"}}>
                 <CardBody>
-                    <h1>Create new Post</h1>
+                    {id ? (<h1>Edit Post</h1>) : (<h1>Create new Post</h1>)}
                     <Form
                         onSubmit={handleSubmit}
                     >
@@ -104,27 +150,29 @@ export const PostForm = ({ loggedInUser }) => {
                                 onChange={event => setContent(event.target.value)}
                             />
                         </FormGroup>
-                        <FormGroup>
-                            <Label className="fw-bold">When to Publish?</Label>
-                            <InputGroup>
-                                <InputGroupText>
+                        {!id && (
+                            <FormGroup>
+                                <Label className="fw-bold">When to Publish?</Label>
+                                <InputGroup>
+                                    <InputGroupText>
+                                        <Input 
+                                            addon
+                                            type="checkbox"
+                                            value={includeDate}
+                                            onChange={event => setIncludeDate(event.target.checked)}
+                                        />
+                                    </InputGroupText>
                                     <Input 
-                                        addon
-                                        type="checkbox"
-                                        value={includeDate}
-                                        onChange={event => setIncludeDate(event.target.checked)}
+                                        type="date"
+                                        value={date}
+                                        disabled={!includeDate}
+                                        onChange={event => setDate(event.target.value)}
                                     />
-                                </InputGroupText>
-                                <Input 
-                                    type="date"
-                                    value={date}
-                                    disabled={!includeDate}
-                                    onChange={event => setDate(event.target.value)}
-                                />
-                            </InputGroup>
-                        </FormGroup>
+                                </InputGroup>
+                            </FormGroup>
+                        )}
                         <ButtonToolbar className="d-flex justify-content-end gap-2">
-                            <Button onClick={() => navigate("/posts")}>Cancel</Button>
+                            <Button onClick={handleCancel}>Cancel</Button>
                             <Button type="submit">Save</Button>
                         </ButtonToolbar>
                     </Form>
