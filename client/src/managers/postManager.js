@@ -26,6 +26,18 @@ export const deletePost = (postId) => {
     return fetch(`${_apiUrl}/${postId}`, deleteOptions)
 }
 
+export const updatePost = (postId, postUpdate) => {
+    const putOptions = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postUpdate)
+    }
+
+    return fetch(`${_apiUrl}/${postId}`, putOptions)
+}
+
 export const getUnapprovedPosts = () => {
     return fetch(`${_apiUrl}/unapproved`).then(res => res.json());
 }

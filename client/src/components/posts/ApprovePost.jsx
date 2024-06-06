@@ -71,9 +71,10 @@ export default function ApprovePost({loggedInUser}){
                                         Delete
                                     </Button>
                                 )}
-                                <Button onClick={() => {approvePost(up.id)
-                                    .then(getUnapprovedPosts()
-                                    .then(setUnapprovedPosts))}} 
+                                <Button onClick={() => {
+                                    approvePost(up.id).then(() => {
+                                        getUnapprovedPosts().then(setUnapprovedPosts)
+                                    })}} 
                                 >
                                     Approve
                                 </Button>

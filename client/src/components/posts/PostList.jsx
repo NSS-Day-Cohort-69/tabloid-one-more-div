@@ -4,12 +4,15 @@ import PageContainer from "../PageContainer"
 import { getAllCategories } from "../../managers/categoryManager"   
 import { Badge, Button, Card, CardLink, CardText, Input } from "reactstrap"
 import { useNavigate } from "react-router-dom"
+import { getAllTags } from "../../managers/tagManager"
 
 export const PostList = ({ loggedInUser }) => {
     const [posts, setPosts] = useState([])
     const [filteredPosts, setFilteredPosts] = useState(posts)
     const [categories, setCategories] = useState([])
     const [categoryId, setCategoryId] = useState(0)
+    const [tags, setTags] = useState([])
+    const [tagId, setTagId] = useState(0)
     const [unapprovedCount, setUnapprovedCount] = useState(null)
     
 
@@ -19,11 +22,17 @@ export const PostList = ({ loggedInUser }) => {
         getAllApprovedAndPublishedPosts().then(setPosts)
         getUnapprovedCount().then(setUnapprovedCount)
         getAllCategories().then(setCategories)
+        getAllTags().then(setTags)
     }, [])
 
     useEffect(() => {
-        setFilteredPosts(categoryId === 0 ? posts : posts.filter(p => p.categoryId === categoryId))
-    }, [posts, categoryId])
+        setFilteredPosts(
+            posts.filter(p => 
+                (categoryId === 0 || p.categoryId === categoryId) && 
+                (tagId === 0 || (p.tags && p.tags.some(tag => tag.id === tagId)))
+            )
+        )
+    }, [posts, categoryId, tagId, categories, tags])
 
     return (
         <PageContainer>
@@ -38,7 +47,7 @@ export const PostList = ({ loggedInUser }) => {
                     </Button>
                 )}
             </div>
-            <div className="d-flex justify-content-start w-75" style={{maxWidth: "1200px"}}>
+            <div className="d-flex justify-content-start w-75 gap-2" style={{maxWidth: "1200px"}}>
                 <div>
                     <Input
                         type="select"
@@ -62,6 +71,29 @@ export const PostList = ({ loggedInUser }) => {
                         ))}
                     </Input>
                 </div>
+                <div>
+                    <Input
+                        type="select"
+                        required
+                        value={tagId}
+                        onChange={event => setTagId(parseInt(event.target.value))}
+                    >
+                        <option
+                            value={0}
+                            key={"t-0"}
+                        >
+                            All Tags
+                        </option>
+                        {tags.map(t => (
+                            <option
+                                value={t.id}
+                                key={`t-${t.id}`}
+                            >
+                                {t.name}
+                            </option>
+                        ))}
+                    </Input>
+                </div>
             </div>
             {filteredPosts.map(p => {
                 return (
@@ -76,6 +108,17 @@ export const PostList = ({ loggedInUser }) => {
                                 <CardText className="fst-italic">
                                     {p.userProfile.fullName}
                                 </CardText>
+                            )}
+                        </div>
+                        <div>
+                            {p.tags.length > 0 && (
+                                <div className="d-flex gap-2 pt-2">
+                                    {p.tags.map(t => {
+                                        return (
+                                            <Badge color="info" key={`tag-${t.id}`} pill>{t.name}</Badge>
+                                        )
+                                    })}
+                                </div>
                             )}
                         </div>
                         <div>
