@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getSubscribedPosts } from "../../managers/postManager.js"
 import PageContainer from "../PageContainer.jsx"
-import { Badge, Button, Card, CardLink, CardText, Input } from "reactstrap"
+import { Badge, Button, Card, CardLink, CardText} from "reactstrap"
 
 export default function HomePagePosts({loggedInUser})
 {
@@ -14,14 +14,14 @@ export default function HomePagePosts({loggedInUser})
         <PageContainer>
         <div className="w-75 d-flex align-items-center justify-content-between" style={{maxWidth: "1200px"}}>
             <h1>Subscribed Posts</h1>
-            {loggedInUser.roles.includes("Admin") && (
+            {/* {loggedInUser.roles.includes("Admin") && (
                 <Button 
                     color = "primary" 
                     onClick={() => {navigate("unapproved")}}
                 >
                     Unapproved Posts: {unapprovedCount}
                 </Button>
-            )}
+            )} */}
         </div>
        
         {subscribedPosts.map(p => {
