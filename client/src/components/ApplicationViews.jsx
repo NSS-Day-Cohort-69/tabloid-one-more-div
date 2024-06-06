@@ -23,7 +23,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <HomePagePosts/>
+              <HomePagePosts loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
         />
