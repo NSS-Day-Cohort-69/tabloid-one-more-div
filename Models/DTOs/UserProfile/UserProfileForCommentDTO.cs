@@ -14,11 +14,6 @@ public class UserProfileForCommentDTO
     [Required]
     [MaxLength(50)]
     public string LastName { get; set; }
-    
-    [DataType(DataType.Url)]
-    [MaxLength(255)]
-    public string ImageLocation { get; set; }
-
     public string FullName
     {
         get
@@ -26,6 +21,6 @@ public class UserProfileForCommentDTO
             return $"{FirstName} {LastName}";
         }
     }
-
-    public bool IsActive { get; set; }
+    public string UserName {get; set; }
+    public IdentityUser IdentityUser { get; set; }
 }

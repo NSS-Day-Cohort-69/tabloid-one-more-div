@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { getApprovedAndPublishedPostById } from "../../managers/postManager.js"
-import PageContainer from "../PageContainer.jsx"
-import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap"
-import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js"
-import { getAllTags } from "../../managers/tagManager.js"
-import PostTagsModal from "../modals/PostTagsModal.jsx"
-import { createSubscription, getSubscriptionsById, removeSubscription,  } from "../../managers/subscriptionManager.js"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createSubscription, getSubscriptionsById, removeSubscription } from "../../managers/subscriptionManager.js";
+import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js";
+import { getApprovedAndPublishedPostById } from "../../managers/postManager.js";
+import { getAllTags } from "../../managers/tagManager.js";
+import PostTagsModal from "../modals/PostTagsModal.jsx";
+import PageContainer from "../PageContainer.jsx";
+import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, CardText, CardTitle, Spinner } from "reactstrap";
 
 export const PostDetails = ({ loggedInUser }) => {
     const [post, setPost] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [allTags, setAllTags] = useState([])
     const [userSubscriptions, setUserSubscriptions] = useState([])
+    
     const {id} = useParams()
+
+    const navigate = useNavigate()
    
     useEffect(() => {
         getApprovedAndPublishedPostById(id).then(setPost)
@@ -21,50 +24,50 @@ export const PostDetails = ({ loggedInUser }) => {
         getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions)
     }, [])
 
-    const refresh = () => {
-        getApprovedAndPublishedPostById(id).then(setPost)
-    }
+  const refresh = () => {
+    getApprovedAndPublishedPostById(id).then(setPost);
+  };
 
-    const handleCreatePostReaction = (reactionId) => {
-        const postReaction = {
-            userProfileId: loggedInUser.id,
-            postId: id,
-            reactionId: reactionId
-        }
+  const handleCreatePostReaction = (reactionId) => {
+    const postReaction = {
+      userProfileId: loggedInUser.id,
+      postId: id,
+      reactionId: reactionId,
+    };
 
-        createPostReaction(postReaction).then(() => {
-            getApprovedAndPublishedPostById(id).then(setPost)
-        })
-    }
+    createPostReaction(postReaction).then(() => {
+      getApprovedAndPublishedPostById(id).then(setPost);
+    });
+  };
 
-    const handleDeletePostReaction = (reactionId) => {
-        const postReaction = {
-            userProfileId: loggedInUser.id,
-            postId: id,
-            reactionId: reactionId
-        }
-        
-        deletePostReaction(postReaction).then(() => {
-            getApprovedAndPublishedPostById(id).then(setPost)
-        })
-    }
+  const handleDeletePostReaction = (reactionId) => {
+    const postReaction = {
+      userProfileId: loggedInUser.id,
+      postId: id,
+      reactionId: reactionId,
+    };
 
-    const handleSubscribe= (authorId, followerId) => {
-        const newSubscription = {
-            creatorId: authorId,
-            followerId: followerId
-        }
-        
-        createSubscription(newSubscription).then(() => {
-            getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions)}
-        )
-    }
+    deletePostReaction(postReaction).then(() => {
+      getApprovedAndPublishedPostById(id).then(setPost);
+    });
+  };
 
-    const handleUnsubscribe = (CreatorId, followerId) => {
-        removeSubscription(CreatorId, followerId).then(() => {
-            getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions)}
-        )
-    }
+  const handleSubscribe = (authorId, followerId) => {
+    const newSubscription = {
+      creatorId: authorId,
+      followerId: followerId,
+    };
+
+    createSubscription(newSubscription).then(() => {
+      getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
+    });
+  };
+
+  const handleUnsubscribe = (CreatorId, followerId) => {
+    removeSubscription(CreatorId, followerId).then(() => {
+      getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
+    });
+  };
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen)
@@ -159,12 +162,12 @@ export const PostDetails = ({ loggedInUser }) => {
                                     ))
                                 }
                             </div>
-                            <Button>{`${post.commentsCount} Comments`}</Button>
+                            <Button onClick={() => navigate(`comments`)}>{`${post.commentsCount} Comments`}</Button>
                             <Button>Create A Comment</Button>
                             {loggedInUser.id == post.userProfileId && (
                                 <>
                                     <Button onClick={toggleModal}>Manage Tags</Button>
-                                    <Button>Edit</Button>
+                                    <Button onClick={() => navigate("edit")}>Edit</Button>
                                 </>
                             )}
                             {(loggedInUser.id == post.userProfileId || loggedInUser.roles.includes("Admin")) && (
@@ -185,4 +188,4 @@ export const PostDetails = ({ loggedInUser }) => {
     )
 }
 
-export default PostDetails
+export default PostDetails;

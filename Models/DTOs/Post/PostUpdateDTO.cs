@@ -2,22 +2,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tabloid.Models.DTOs;
 
-public class CommentDTO
+public class PostUpdateDTO
 {
     public int Id { get; set; }
     
     [Required]
     public int UserProfileId { get; set; }
     
+    public int? CategoryId { get; set; }
+    
     [Required]
-    public int PostId { get; set; }
+    public string Title { get; set; }
     
     [Required]
     public string Content { get; set; }
-
-    public DateTime DateCreated { get; set; }
-
-    public UserProfileDTO UserProfile { get; set; }
-    public PostDTO Post { get; set; }
-    public string Subject { get; set; }
+    
+    public string HeaderImageURL { get; set; }
 }
