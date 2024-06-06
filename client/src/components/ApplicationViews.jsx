@@ -4,7 +4,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
-import PostList from "./posts/PostList";
+import PostList from "./posts/PostList.jsx";
 import CategoryList from "./categories/CategoryList";
 import TagList from "./tags/TagList.jsx";
 import CreateTagForm from "./tags/CreateTagForm.jsx";
