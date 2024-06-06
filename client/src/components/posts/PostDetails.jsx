@@ -112,7 +112,7 @@ export const PostDetails = ({ loggedInUser }) => {
                         </>
                     )}
                     {post.tags.length > 0 && (
-                        <div className="d-flex gap-2 mb-3 pt-2">
+                        <div className="d-flex gap-2 mb-2 pt-2">
                             {post.tags.map(t => {
                                 return (
                                     <Badge color="info" key={`tag-${t.id}`} pill>{t.name}</Badge>
@@ -120,7 +120,7 @@ export const PostDetails = ({ loggedInUser }) => {
                             })}
                         </div>
                     )}
-                    <CardSubtitle className="fw-bold">{post.userProfile.fullName}</CardSubtitle>
+                    <CardSubtitle className="fw-bold mt-3">{post.userProfile.fullName}</CardSubtitle>
                     <CardSubtitle>{post.formattedPublicationDate}</CardSubtitle>
                     <CardText className="mt-3">{post.content}</CardText>
                     <div className="d-flex flex-column align-items-end">

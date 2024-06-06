@@ -51,9 +51,10 @@ export default function ApprovePost({loggedInUser}){
                                 {(loggedInUser.id == up.userProfileId || loggedInUser.roles.includes("Admin")) && (
                                     <Button>Delete</Button>
                                 )}
-                                <Button onClick={() => {approvePost(up.id)
-                                    .then(getUnapprovedPosts()
-                                    .then(setUnapprovedPosts))}} 
+                                <Button onClick={() => {
+                                    approvePost(up.id).then(() => {
+                                        getUnapprovedPosts().then(setUnapprovedPosts)
+                                    })}} 
                                 >
                                     Approve
                                 </Button>
