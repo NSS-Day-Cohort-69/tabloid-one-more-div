@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useNavigate, useParams } from "react-router-dom";
-import { deletePost, createSubscription, getSubscriptionsById, removeSubscription } from "../../managers/subscriptionManager.js";
+import { useNavigate, useParams } from "react-router-dom";
+import { createSubscription, getSubscriptionsById, removeSubscription } from "../../managers/subscriptionManager.js";
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js";
-import { getApprovedAndPublishedPostById } from "../../managers/postManager.js";
+import { deletePost, getApprovedAndPublishedPostById } from "../../managers/postManager.js";
 import { getAllTags } from "../../managers/tagManager.js";
 import PostTagsModal from "../modals/PostTagsModal.jsx";
 import PageContainer from "../PageContainer.jsx";
@@ -15,7 +15,6 @@ export const PostDetails = ({ loggedInUser }) => {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [allTags, setAllTags] = useState([])
     const [userSubscriptions, setUserSubscriptions] = useState([])
-    
     
     const {id} = useParams()
 
