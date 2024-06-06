@@ -138,11 +138,9 @@ public class UserProfileController : ControllerBase
             return NotFound();
         }
 
-
         if (foundUser.IsActive)
         {
             foundUser.IsActive = false;
-
         }
         else
         {
@@ -150,6 +148,7 @@ public class UserProfileController : ControllerBase
         }
 
         _dbContext.SaveChanges();
+
         return NoContent();
     }
 }

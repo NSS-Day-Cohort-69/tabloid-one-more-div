@@ -15,7 +15,6 @@ export default function UserProfileList() {
 
   const handleIsActiveChange = (id) => {
     changeIsActiveStatus(id).then(() =>{getProfiles().then(setUserProfiles)})
-    
   }
   return (
     <>
