@@ -13,7 +13,5 @@ export const getProfileWithRolesById = (id) => {
 }
 
 export const changeIsActiveStatus = (id) => {
-  return fetch(`${_apiUrl}?id=${id}`, {
-    method: "PUT"
-  })
+  return fetch(`${_apiUrl}?id=${id}`,{method: "PUT"})
 }
