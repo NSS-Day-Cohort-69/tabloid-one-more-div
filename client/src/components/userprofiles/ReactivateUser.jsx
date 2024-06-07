@@ -11,14 +11,14 @@ export default function ReactivateUser()
       getProfiles().then(setUserProfiles);
     };
 
-
     useEffect(() => {
       getUserProfiles();
-
     }, []);
   
     const handleIsActiveChange = (id) => {
-      changeIsActiveStatus(id).then(() =>{getProfiles().then(setUserProfiles)})
+      changeIsActiveStatus(id).then(() => {
+        getProfiles().then(setUserProfiles)
+        })
     }
     
     return (
