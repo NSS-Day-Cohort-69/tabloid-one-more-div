@@ -17,9 +17,9 @@ export const changeIsActiveStatus = (id) => {
 }
 
 export const promoteUser = (id) => {
-  return fetch(`${_apiUrl}/promote/${id}`)
+  return fetch(`${_apiUrl}/promote/${id}`, {method: "POST"})
 }
 
 export const demoteUser = (id) => {
-  return fetch(`${_apiUrl}/demote/${id}`)
+  return fetch(`${_apiUrl}/demote/${id}`, {method: "POST"})
 }

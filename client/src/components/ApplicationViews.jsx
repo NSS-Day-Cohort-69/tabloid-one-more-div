@@ -51,7 +51,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               path="updateType"
               element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <UserProfileTypeChange/>
+                <UserProfileTypeChange loggedInUser={loggedInUser}/>
               </AuthorizedRoute>}
             />
           </Route>
