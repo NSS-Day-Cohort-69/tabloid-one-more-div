@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createSubscription, getSubscriptionsById, removeSubscription } from "../../managers/subscriptionManager.js";
 import { createPostReaction, deletePostReaction } from "../../managers/postReactionManager.js";
-import { deletePost, getApprovedAndPublishedPostById } from "../../managers/postManager.js";
+import { deletePost, getApprovedAndPublishedPostById, unapprovePost } from "../../managers/postManager.js";
 import { getAllTags } from "../../managers/tagManager.js";
 import PostTagsModal from "../modals/PostTagsModal.jsx";
 import PageContainer from "../PageContainer.jsx";
@@ -36,47 +36,46 @@ export const PostDetails = ({ loggedInUser }) => {
         })
     }
 
+    const handleCreatePostReaction = (reactionId) => {
+        const postReaction = {
+            userProfileId: loggedInUser.id,
+            postId: id,
+            reactionId: reactionId,
+        };
 
-  const handleCreatePostReaction = (reactionId) => {
-    const postReaction = {
-      userProfileId: loggedInUser.id,
-      postId: id,
-      reactionId: reactionId,
+        createPostReaction(postReaction).then(() => {
+            getApprovedAndPublishedPostById(id).then(setPost);
+        });
     };
 
-    createPostReaction(postReaction).then(() => {
-      getApprovedAndPublishedPostById(id).then(setPost);
-    });
-  };
+    const handleDeletePostReaction = (reactionId) => {
+        const postReaction = {
+            userProfileId: loggedInUser.id,
+            postId: id,
+            reactionId: reactionId,
+        };
 
-  const handleDeletePostReaction = (reactionId) => {
-    const postReaction = {
-      userProfileId: loggedInUser.id,
-      postId: id,
-      reactionId: reactionId,
+        deletePostReaction(postReaction).then(() => {
+            getApprovedAndPublishedPostById(id).then(setPost);
+        });
     };
 
-    deletePostReaction(postReaction).then(() => {
-      getApprovedAndPublishedPostById(id).then(setPost);
-    });
-  };
+    const handleSubscribe = (authorId, followerId) => {
+        const newSubscription = {
+            creatorId: authorId,
+            followerId: followerId,
+        };
 
-  const handleSubscribe = (authorId, followerId) => {
-    const newSubscription = {
-      creatorId: authorId,
-      followerId: followerId,
+        createSubscription(newSubscription).then(() => {
+            getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
+        });
     };
 
-    createSubscription(newSubscription).then(() => {
-      getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
-    });
-  };
-
-  const handleUnsubscribe = (CreatorId, followerId) => {
-    removeSubscription(CreatorId, followerId).then(() => {
-      getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
-    });
-  };
+    const handleUnsubscribe = (CreatorId, followerId) => {
+        removeSubscription(CreatorId, followerId).then(() => {
+            getSubscriptionsById(loggedInUser.id).then(setUserSubscriptions);
+        });
+    };
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen)
@@ -84,6 +83,12 @@ export const PostDetails = ({ loggedInUser }) => {
 
     const toggleDeleteModal = () => {
         setIsDeleteModalOpen(!isDeleteModalOpen)
+    }
+
+    const handleUnapprove = () => {
+        unapprovePost(id).then(() => {
+            navigate("/posts")
+        })
     }
     
     if (!post) {
@@ -185,6 +190,9 @@ export const PostDetails = ({ loggedInUser }) => {
                                     <Button onClick={toggleModal}>Manage Tags</Button>
                                     <Button onClick={() => navigate("edit")}>Edit</Button>
                                 </>
+                            )}
+                            {loggedInUser.roles.includes("Admin") && (
+                                <Button onClick={handleUnapprove}>Unapprove</Button>
                             )}
                             {(loggedInUser.id == post.userProfileId || loggedInUser.roles.includes("Admin")) && (
                                 <Button onClick={toggleDeleteModal}>Delete</Button>
