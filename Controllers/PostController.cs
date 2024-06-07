@@ -64,7 +64,7 @@ public class PostController : ControllerBase
         return Ok(postDTOs);
     }
 
-    [HttpGet("myPosts/{id}")]
+    [HttpGet("{id}/myPosts")]
     public IActionResult GetMy(int id)
     {
         List<PostForMyPostsDTO> postDTOs = _dbContext.Posts

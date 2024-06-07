@@ -9,7 +9,7 @@ export const getApprovedAndPublishedPostById = (id) => {
 }
 
 export const getMyPosts = (id) => {
-    return fetch(`${_apiUrl}/myPosts/${id}`).then(res => res.json())
+    return fetch(`${_apiUrl}/${id}/myPosts`).then(res => res.json())
 }
 
 export const getPostForEdit = (id) => {
