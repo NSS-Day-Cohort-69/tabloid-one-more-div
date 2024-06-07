@@ -48,4 +48,5 @@ public class UserProfile
     public List<Subscription> Subscribers { get; set; }
     public List<PostReaction> PostReactions { get; set; }
     public List<Comment> Comments { get; set; }
+    public byte[] ImageBlob { get; set; }
 }

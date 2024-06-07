@@ -28,9 +28,9 @@ public class TabloidDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<PostReaction>().HasKey(pr => new {pr.UserProfileId, pr.PostId, pr.ReactionId});
-        modelBuilder.Entity<PostTag>().HasKey(pt => new {pt.PostId, pt.TagId});
-        modelBuilder.Entity<Subscription>().HasKey(s => new {s.FollowerId, s.CreatorId});
+        modelBuilder.Entity<PostReaction>().HasKey(pr => new { pr.UserProfileId, pr.PostId, pr.ReactionId });
+        modelBuilder.Entity<PostTag>().HasKey(pt => new { pt.PostId, pt.TagId });
+        modelBuilder.Entity<Subscription>().HasKey(s => new { s.FollowerId, s.CreatorId });
 
         modelBuilder.Entity<PostReaction>()
             .HasOne(pr => pr.Post)
