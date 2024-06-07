@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, useResolvedPath } from "react-router-dom";
 import PageContainer from "../PageContainer";
 import { Button, ButtonToolbar, Card, CardBody, Form, FormGroup, Input, Label } from "reactstrap";
-import { createComment, getCommentById } from "../../managers/commentManager";
-import { updateCategory } from "../../managers/categoryManager";
+import { createComment, getCommentById, updateComment } from "../../managers/commentManager";
 
 export default function CreateCommentForm({ loggedInUser }) {
     const [content, setContent] = useState("");
@@ -38,7 +37,7 @@ export default function CreateCommentForm({ loggedInUser }) {
 
         if(commentid)
             {
-                updateCategory(editComment.id, comment).then(() => {navigate(`/posts/${id}/comments`)})
+                updateComment(editComment.id, comment).then(() => {navigate(`/posts/${id}/comments`)})
             }
             else
             {

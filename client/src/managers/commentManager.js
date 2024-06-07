@@ -20,7 +20,7 @@ export const createComment = (comment) => {
 };
 
 export const updateComment = (id, updateComment) => {
-  return fetch(`${_apiUrl}/edit/${id}`, {
+  return fetch(`${_apiUrl}/${id}`, {
     method: "PUT",
     headers: {
       'Content-Type' : 'application/json'
