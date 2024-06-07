@@ -42,6 +42,12 @@ export const updatePost = (postId, postUpdate) => {
     return fetch(`${_apiUrl}/${postId}`, putOptions)
 }
 
+export const publishPost = (postId) => {
+    const putOptions = {method: "PUT"}
+
+    return fetch(`${_apiUrl}/${postId}/publish`, putOptions)
+}
+
 export const getUnapprovedPosts = () => {
     return fetch(`${_apiUrl}/unapproved`).then(res => res.json());
 }
