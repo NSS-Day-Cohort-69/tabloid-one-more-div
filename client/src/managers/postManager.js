@@ -8,6 +8,10 @@ export const getApprovedAndPublishedPostById = (id) => {
     return fetch(`${_apiUrl}/${id}`).then(res => res.json())
 }
 
+export const getMyPosts = (id) => {
+    return fetch(`${_apiUrl}/myPosts/${id}`).then(res => res.json())
+}
+
 export const createPost = (post) => {
     const postOptions = {
         method: "POST",
