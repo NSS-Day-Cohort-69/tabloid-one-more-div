@@ -41,7 +41,8 @@ export default function UserProfileList() {
             </Link>
             {p.roles.map((p) => p)}
             <div className="d-flex gap-2">
-              <Button style={{ paddingLeft: "37px", paddingRight: "37px" }}>
+              <Button
+              onClick={() => {navigate(`${p.id}/updateType`)}} style={{ paddingLeft: "37px", paddingRight: "37px" }}>
                 Edit
               </Button>
               <Button onClick={() => {handleIsActiveChange(p.id)}}>Deactivate</Button>

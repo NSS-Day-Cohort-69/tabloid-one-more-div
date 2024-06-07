@@ -15,3 +15,11 @@ export const getProfileWithRolesById = (id) => {
 export const changeIsActiveStatus = (id) => {
   return fetch(`${_apiUrl}?id=${id}`, {method: "PUT"})
 }
+
+export const promoteUser = (id) => {
+  return fetch(`${_apiUrl}/promote/${id}`)
+}
+
+export const demoteUser = (id) => {
+  return fetch(`${_apiUrl}/demote/${id}`)
+}
