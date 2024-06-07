@@ -19,6 +19,7 @@ export default function UserProfileDetails() {
   const saveImgClicked = () => {
     updateImg(userProfile.id, image).then(() => {getProfileWithRolesById(id).then(setUserProfile)})
   }
+
   return (
     <Card className="w-25 m-auto mt-3 shadow">
       <CardText className="fs-3 m-auto fw-bold">
@@ -32,11 +33,12 @@ export default function UserProfileDetails() {
             </CardText>
           </div>
         </div>
-       <div className="ms-1">
-      <img alt="user profile image" className="w-25 m-auto"
-         src={userProfile.imageBlob ? `data:image/jpeg;base64,${userProfile.imageBlob}` : (userProfile.imageLocation || defaultPic)} style={{ borderRadius: "50%"}}/>
-      <Input type="file" className="w-50 mt-2" onChange={(e) => {setImage(e.target.files[0])}}/>
-      <Button onClick={saveImgClicked}>Save Image</Button>
+      <div className="ms-1">
+        <img alt="user profile image" className="w-25 m-auto"
+          src={userProfile.imageBlob ? `data:image/jpeg;base64,${userProfile.imageBlob}` : (userProfile.imageLocation || defaultPic)} style={{ borderRadius: "50%"}}
+        />
+        <Input type="file" className="w-50 mt-2" onChange={(e) => {setImage(e.target.files[0])}}/>
+        <Button onClick={saveImgClicked}>Save Image</Button>
       </div>
       <CardBody className="m-auto ">
         <Label className="fw-bold fs-3">FullName:</Label>
@@ -47,15 +49,14 @@ export default function UserProfileDetails() {
         <CardText className="fs-3">
           {userProfile.email}
         </CardText>
-        {userProfile.roles.length > 0 ? (
+        {userProfile.roles.length > 0 && (
           <>
-        <Label className="fw-bold fs-3">Roles:</Label>
-        <CardText className="fs-3">
-          {userProfile.roles}
-        </CardText>
+            <Label className="fw-bold fs-3">Roles:</Label>
+            <CardText className="fs-3">
+              {userProfile.roles}
+            </CardText>
           </>
-
-        ) : (null)}
+        )}
       </CardBody>
     </Card>
   );

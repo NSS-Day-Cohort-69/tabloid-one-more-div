@@ -166,7 +166,7 @@ public class UserProfileController : ControllerBase
         foundUser.ImageBlob = file;
 
         _dbContext.SaveChanges();
-        return NoContent();
 
+        return NoContent();
     }
 }
