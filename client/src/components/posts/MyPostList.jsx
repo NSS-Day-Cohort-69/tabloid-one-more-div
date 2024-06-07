@@ -4,18 +4,28 @@ import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay, CardSubtitle, C
 import { deletePost, getMyPosts, publishPost, unpublishPost } from "../../managers/postManager.js"
 import ConfirmDeleteModal from "../modals/ConfirmDeleteModal.jsx"
 import { useNavigate } from "react-router-dom"
+import PostTagsModal from "../modals/PostTagsModal.jsx"
+import { getAllTags } from "../../managers/tagManager.js"
 
 export const MyPostList = ({ loggedInUser }) => {
     const [posts, setPosts] = useState(null)
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [isTagsModalOpen, setIsTagsModalOpen] = useState(false)
     const [postToDelete, setPostToDelete] = useState(0)
+    const [postToUpdateTags, setPostToUpdateTags] = useState(null)
+    const [tags, setTags] = useState([])
     
     const navigate = useNavigate()
 
     useEffect(() => {
         getMyPosts(loggedInUser.id).then(setPosts)
+        getAllTags().then(setTags)
     }, [])
 
+    const refreshPosts = () => {
+        getMyPosts(loggedInUser.id).then(setPosts)
+    }
+    
     const handleDeleteModal = (postId) => {
         setPostToDelete(postId)
         toggleModal()
@@ -28,8 +38,17 @@ export const MyPostList = ({ loggedInUser }) => {
         })
     }
 
-    const toggleModal = () => {
-        setIsModalOpen(!isModalOpen)
+    const toggleDeleteModal = () => {
+        setIsDeleteModalOpen(!isDeleteModalOpen)
+    }
+
+    const handleTagsModal = (post) => {
+        setPostToUpdateTags(post)
+        toggleTagsModal()
+    }
+
+    const toggleTagsModal = () => {
+        setIsTagsModalOpen(!isTagsModalOpen)
     }
 
     const handlePublish = (postId) => {
@@ -45,7 +64,11 @@ export const MyPostList = ({ loggedInUser }) => {
     }
 
     if (posts == null) {
-        return <Spinner/>
+        return (
+            <PageContainer>
+                <Spinner/>
+            </PageContainer>
+        )
     }
     
     return (
@@ -107,7 +130,7 @@ export const MyPostList = ({ loggedInUser }) => {
                                         Unpublish
                                     </Button>
                                 )}
-                                <Button>
+                                <Button onClick={() => handleTagsModal(p)}>
                                     Manage Tags
                                 </Button>
                                 <Button onClick={() => navigate(`/posts/${p.id}/edit`)}>
@@ -121,9 +144,18 @@ export const MyPostList = ({ loggedInUser }) => {
                     </Card>
                 )
             })}
+            {postToUpdateTags && (
+                <PostTagsModal
+                    refresh = {refreshPosts}
+                    isModalOpen={isTagsModalOpen}
+                    toggleModal={toggleTagsModal}
+                    allTags={tags}
+                    post={postToUpdateTags}
+                />
+            )}
             <ConfirmDeleteModal 
-                isOpen={isModalOpen}
-                toggle={toggleModal}
+                isOpen={isDeleteModalOpen}
+                toggle={toggleDeleteModal}
                 confirmDelete={handleDelete}
                 typeName={"Post"}
             />
