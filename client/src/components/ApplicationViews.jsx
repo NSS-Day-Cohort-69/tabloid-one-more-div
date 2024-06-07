@@ -14,6 +14,8 @@ import { CommentList } from "./comments/CommentList.jsx";
 import PostForm from "./posts/PostForm.jsx";
 import ApprovePost from "./posts/ApprovePost.jsx";
 import HomePagePosts from "./posts/HomePagePostList.jsx";
+import ReactionList from "./reactions/ReactionList.jsx";
+import CreateReaction from "./reactions/CreateReaction.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -156,6 +158,24 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               }
             />
           </Route>
+        </Route>
+        <Route path="reactions">
+          <Route
+            index
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                <ReactionList/>
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path="create"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                <CreateReaction/>
+              </AuthorizedRoute>
+            }
+          />
         </Route>
         <Route
           path="login"
