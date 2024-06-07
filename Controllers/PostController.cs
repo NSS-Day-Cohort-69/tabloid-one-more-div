@@ -401,8 +401,23 @@ public class PostController : ControllerBase
 
         postToApprove.IsApproved = true;
         _dbContext.SaveChanges();
+        
         return NoContent();
+    }
 
+    [HttpPut("{id}/unapprove")]
+    public IActionResult Unapprove(int id)
+    {
+        Post postToUnapprove = _dbContext.Posts.FirstOrDefault(p => p.Id == id);
+        if (postToUnapprove == null)
+        {
+            return NotFound();
+        }
+
+        postToUnapprove.IsApproved = false;
+        _dbContext.SaveChanges();
+        
+        return NoContent();
     }
 
     [HttpGet("{id}/subscribedPosts")]
