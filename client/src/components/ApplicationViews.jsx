@@ -102,6 +102,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                   </AuthorizedRoute>
                 }
               />
+            <Route path=":commentid">
+              <Route
+                path="edit"
+                element={
+                  <AuthorizedRoute loggedInUser={loggedInUser}>
+                    <CreateCommentForm loggedInUser={loggedInUser}/>
+                  </AuthorizedRoute>
+                }
+              />
+            </Route>
             </Route>
             <Route 
               path="edit"

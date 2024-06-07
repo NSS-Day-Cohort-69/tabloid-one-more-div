@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { deleteComment, getAllComments } from "../../managers/commentManager";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   ButtonToolbar,
@@ -17,6 +17,8 @@ export const CommentList = ({ loggedInUser }) => {
   const [post, setPost] = useState({});
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getApprovedAndPublishedPostById(parseInt(id)).then(setPost);
@@ -47,7 +49,7 @@ export const CommentList = ({ loggedInUser }) => {
           {c.userProfileId === loggedInUser.id && (
             <CardFooter>
               <ButtonToolbar className="gap-2">
-                <Button>Edit</Button>
+                <Button onClick={() => navigate(`${c.id}/edit`)}>Edit</Button>
                 <Button onClick={() => removeComment(c.id)}>Delete</Button>
               </ButtonToolbar>
             </CardFooter>
