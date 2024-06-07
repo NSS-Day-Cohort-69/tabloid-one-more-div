@@ -5,47 +5,47 @@ import { Link } from "react-router-dom";
 
 export default function ReactivateUser()
 { 
-    const [userprofiles, setUserProfiles] = useState([]);
+  const [userprofiles, setUserProfiles] = useState([]);
 
-    const getUserProfiles = () => {
-      getProfiles().then(setUserProfiles);
-    };
+  const getUserProfiles = () => {
+    getProfiles().then(setUserProfiles);
+  };
 
-    useEffect(() => {
-      getUserProfiles();
-    }, []);
+  useEffect(() => {
+    getUserProfiles();
+  }, []);
   
-    const handleIsActiveChange = (id) => {
-      changeIsActiveStatus(id).then(() => {
-        getProfiles().then(setUserProfiles)
-        })
-    }
+  const handleIsActiveChange = (id) => {
+    changeIsActiveStatus(id).then(() => {
+      getUserProfiles();
+    })
+  }
     
-    return (
-      <>
-        <h1 className="text-center mt-3 mb-3">Deactivated User Profiles</h1>
-        {userprofiles.filter(p => !p.isActive).map((p) => (
-          <Card className="w-50 mx-auto md-2 mt-2 " key={p.id}>
-            <CardBody className="d-flex align-items-center justify-content-around flex-column">
-              {p.userName}
-              <Link
-                style={{ textDecoration: "none", color: "inherit" }}
-                to={`/userprofiles/${p.id}`}
-              >
-                <CardTitle className="m-0" style={{ fontSize: "25px" }}>
-                  {p.fullName}{" "}
-                </CardTitle>
-              </Link>
-              {p.roles.map((p) => p)}
-              <div className="d-flex gap-2">
-                <Button style={{ paddingLeft: "37px", paddingRight: "37px" }}>
-                  Edit
-                </Button>
-                <Button onClick={() => {handleIsActiveChange(p.id)}}>Activate</Button>
-              </div>
-            </CardBody>
-          </Card>
-        ))}
-      </>
-    );
+  return (
+    <>
+      <h1 className="text-center mt-3 mb-3">Deactivated User Profiles</h1>
+      {userprofiles.filter(p => !p.isActive).map((p) => (
+        <Card className="w-50 mx-auto md-2 mt-2 " key={p.id}>
+          <CardBody className="d-flex align-items-center justify-content-around flex-column">
+            {p.userName}
+            <Link
+              style={{ textDecoration: "none", color: "inherit" }}
+              to={`/userprofiles/${p.id}`}
+            >
+              <CardTitle className="m-0" style={{ fontSize: "25px" }}>
+                {p.fullName}{" "}
+              </CardTitle>
+            </Link>
+            {p.roles.map((p) => p)}
+            <div className="d-flex gap-2">
+              <Button style={{ paddingLeft: "37px", paddingRight: "37px" }}>
+                Edit
+              </Button>
+              <Button onClick={() => {handleIsActiveChange(p.id)}}>Activate</Button>
+            </div>
+          </CardBody>
+        </Card>
+      ))}
+    </>
+  );
 }
