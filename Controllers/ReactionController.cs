@@ -41,11 +41,10 @@ public class ReactionController : ControllerBase
             Name = newReaction.Name,
             ReactionImage = newReaction.ReactionImage
         };
-        
+
         _dbContext.Reactions.Add(reactionToCreate);
         _dbContext.SaveChanges();
         
         return Created($"/api/reaction/{reactionToCreate.Id}", reactionToCreate);
     }
-
 }

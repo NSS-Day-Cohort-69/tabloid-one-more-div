@@ -12,10 +12,12 @@ export default function CreateReaction() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const reaction = {
             name: name,
             reactionImage: reactionImage
         };
+        
         createReaction(reaction).then(() => {navigate("/reactions")})
     }
 
