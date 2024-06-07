@@ -8,7 +8,6 @@ using Tabloid.Models.DTOs;
 
 namespace Tabloid.Controllers;
 
-
 [ApiController]
 [Route("api/[controller]")]
 public class ReactionController : ControllerBase
@@ -42,8 +41,10 @@ public class ReactionController : ControllerBase
             Name = newReaction.Name,
             ReactionImage = newReaction.ReactionImage
         };
+        
         _dbContext.Reactions.Add(reactionToCreate);
         _dbContext.SaveChanges();
+        
         return Created($"/api/reaction/{reactionToCreate.Id}", reactionToCreate);
     }
 

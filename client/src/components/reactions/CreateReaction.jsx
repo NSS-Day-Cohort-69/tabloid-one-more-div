@@ -30,25 +30,25 @@ export default function CreateReaction() {
                     >
                         <FormGroup>
                             <Label className="fw-bold">Reaction Name</Label>
-                                <Input
-                                    type="text"
-                                    value={name}
-                                    placeholder="Enter Name For The Reaction"
-                                    onChange={(e) => {
-                                    setName(e.target.value);
-                                    }}
-                                />
+                            <Input
+                                type="text"
+                                value={name}
+                                placeholder="Enter Name For The Reaction"
+                                onChange={(e) => {
+                                setName(e.target.value);
+                                }}
+                            />
                         </FormGroup> 
                         <FormGroup>
                             <Label className="fw-bold">Reaction Image</Label>
-                                <Input
-                                    type="text"
-                                    value={reactionImage}
-                                    placeholder="Enter Reaction Image"
-                                    onChange={(e) => {
-                                    setReactionImage(e.target.value);
-                                    }}
-                                />
+                            <Input
+                                 type="text"
+                                value={reactionImage}
+                                placeholder="Enter Reaction Image"
+                                onChange={(e) => {
+                                setReactionImage(e.target.value);
+                                }}
+                            />
                         </FormGroup>
                         <ButtonToolbar className="d-flex justify-content-end gap-2">
                             <Button type="submit">Create</Button>
@@ -58,5 +58,4 @@ export default function CreateReaction() {
             </Card>
         </PageContainer>
     )
-
 }

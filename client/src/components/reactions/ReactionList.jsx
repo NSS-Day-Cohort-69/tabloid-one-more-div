@@ -19,15 +19,15 @@ export default function ReactionList() {
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
                         <Button color="success" onClick={() => navigate("/reactions/create")}>Create a Reaction</Button>
                     </div>
-                {reactions.map((r) => (
-                    <Card key={r.id} className="mt-3 m-auto" style={{width: '8rem'}}>
-                        <CardBody className="d-flex align-items-center justify-content-center flex-direction-column">
-                            <CardTitle className="d-flex mt-1 fw-bold">
-                                {r.name} {r.reactionImage}
-                            </CardTitle>
-                        </CardBody>
-                    </Card>
-                ))}
+                    {reactions.map((r) => (
+                        <Card key={r.id} className="mt-3 m-auto" style={{width: '8rem'}}>
+                            <CardBody className="d-flex align-items-center justify-content-center flex-direction-column">
+                                <CardTitle className="d-flex mt-1 fw-bold">
+                                    {r.name} {r.reactionImage}
+                                </CardTitle>
+                            </CardBody>
+                        </Card>
+                    ))}
                 </div>
         </>
     )
