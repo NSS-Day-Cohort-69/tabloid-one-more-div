@@ -16,6 +16,7 @@ import ApprovePost from "./posts/ApprovePost.jsx";
 import HomePagePosts from "./posts/HomePagePostList.jsx";
 import ReactionList from "./reactions/ReactionList.jsx";
 import CreateReaction from "./reactions/CreateReaction.jsx";
+import ReactivateUser from "./userprofiles/ReactivateUser.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -43,6 +44,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
                 <UserProfileDetails />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path="reactivate"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <ReactivateUser/>
               </AuthorizedRoute>
             }
           />
