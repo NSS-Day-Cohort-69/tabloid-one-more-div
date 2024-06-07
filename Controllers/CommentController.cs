@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -52,4 +53,51 @@ public class CommentController : ControllerBase
         return Ok(commentDTOs);
     }
 
+    [HttpPost]
+    [Authorize]
+    public IActionResult CommentCreate(CommentCreateDTO newComment)
+    {
+
+        Post post = _dbContext.Posts.SingleOrDefault(p => p.Id == newComment.PostId);
+        if (post == null)
+        {
+            return NotFound($"Post with ID {newComment.PostId} not found");
+        }
+
+        UserProfile userProfile = _dbContext.UserProfiles.SingleOrDefault(up => up.Id == newComment.UserProfileId);
+        if (userProfile == null)
+        {
+            return NotFound($"User with ID {newComment.UserProfileId} not found");
+        }
+
+        Comment commentToCreate = new Comment()
+        {
+            Content = newComment.Content,
+            Subject = newComment.Subject,
+            PostId = newComment.PostId,
+            UserProfileId = newComment.UserProfileId,
+            DateCreated = DateTime.Now
+        };
+
+        _dbContext.Comments.Add(commentToCreate);
+        _dbContext.SaveChanges();
+
+        return Created($"/api/comment/{commentToCreate.Id}", commentToCreate);
+
+    }
+
+    [HttpDelete("{id}")]
+    // [Authorize]
+    public IActionResult CommentDelete(int id)
+    {
+        Comment foundComment = _dbContext.Comments.SingleOrDefault(c => c.Id == id);
+        if (foundComment == null) 
+        {
+            return NotFound();
+        }
+        _dbContext.Comments.Remove(foundComment);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }

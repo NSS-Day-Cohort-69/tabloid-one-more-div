@@ -179,7 +179,7 @@ export const PostDetails = ({ loggedInUser }) => {
                                 }
                             </div>
                             <Button onClick={() => navigate(`comments`)}>{`${post.commentsCount} Comments`}</Button>
-                            <Button>Create A Comment</Button>
+                            <Button onClick={() => navigate("comments/create")}>Create A Comment</Button>
                             {loggedInUser.id == post.userProfileId && (
                                 <>
                                     <Button onClick={toggleModal}>Manage Tags</Button>
