@@ -18,6 +18,7 @@ import ReactionList from "./reactions/ReactionList.jsx";
 import CreateReaction from "./reactions/CreateReaction.jsx";
 import ReactivateUser from "./userprofiles/ReactivateUser.jsx";
 import CreateCommentForm from "./comments/CreateCommentForm.jsx";
+import UserProfileTypeChange from "./userprofiles/UserProfileTypeChange.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -40,14 +41,23 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
-          <Route
-            path=":id"
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
-                <UserProfileDetails />
-              </AuthorizedRoute>
-            }
-          />
+          <Route path=":id">
+            <Route
+              index
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                  <UserProfileDetails />
+                </AuthorizedRoute>
+              }
+            />
+            <Route
+              path="updateType"
+              element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <UserProfileTypeChange loggedInUser={loggedInUser}/>
+              </AuthorizedRoute>}
+            />
+          </Route>
           <Route
             path="reactivate"
             element={
