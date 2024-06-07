@@ -26,6 +26,7 @@ public class UserProfileForUserProfileDetailsDTO
     [DataType(DataType.Url)]
     [MaxLength(255)]
     public string ImageLocation { get; set; }
+    public byte[] ImageBlob { get; set; }
 
     [NotMapped]
     public List<string> Roles { get; set; }

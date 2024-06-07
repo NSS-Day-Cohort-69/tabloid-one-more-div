@@ -23,3 +23,18 @@ export const promoteUser = (id) => {
 export const demoteUser = (id) => {
   return fetch(`${_apiUrl}/demote/${id}`, {method: "POST"})
 }
+
+export const updateImg = (id, image) => {
+  return fetch(`${_apiUrl}/${id}/image`,{
+    method: "PUT",
+    body: createFormFromImg(image)
+  })
+}
+
+const createFormFromImg = (image) => {
+  const formData = new FormData()
+  formData.append("formFile", image)
+  formData.append("fileName", image.name)
+
+  return formData
+}
