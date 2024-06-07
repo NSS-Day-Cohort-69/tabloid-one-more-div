@@ -12,6 +12,10 @@ export const getMyPosts = (id) => {
     return fetch(`${_apiUrl}/myPosts/${id}`).then(res => res.json())
 }
 
+export const getPostForEdit = (id) => {
+    return fetch(`${_apiUrl}/${id}/forEdit`).then(res => res.json())
+}
+
 export const createPost = (post) => {
     const postOptions = {
         method: "POST",
