@@ -64,10 +64,55 @@ public class PostController : ControllerBase
         return Ok(postDTOs);
     }
 
+    [HttpGet("{id}/myPosts")]
+    public IActionResult GetMy(int id)
+    {
+        List<PostForMyPostsDTO> postDTOs = _dbContext.Posts
+            .Where(p => p.UserProfileId == id)
+            .OrderByDescending(p => p.PublicationDate == null ? p.DateCreated : p.PublicationDate)
+            .Include(p => p.UserProfile)
+            .Include(p => p.Category)
+            .Include(p => p.PostTags)
+            .ThenInclude(pt => pt.Tag)
+            .Select(p => new PostForMyPostsDTO()
+            {
+                Id = p.Id,
+                UserProfileId = p.UserProfileId,
+                CategoryId = p.CategoryId,
+                IsApproved = p.IsApproved,
+                Title = p.Title,
+                Content = p.Content,
+                HeaderImageURL = p.HeaderImageURL,
+                DateCreated = p.DateCreated,
+                PublicationDate = p.PublicationDate,
+                EstimatedReadTime = p.EstimatedReadTime,
+                UserProfile = new UserProfileForPostDTO()
+                {
+                    Id = p.UserProfile.Id,
+                    FirstName = p.UserProfile.FirstName,
+                    LastName = p.UserProfile.LastName,
+                    ImageLocation = p.UserProfile.ImageLocation,
+                    IsActive = p.UserProfile.IsActive
+                },
+                Category = p.Category == null ? null : new CategoryNoNavDTO()
+                {
+                    Id = p.Category.Id,
+                    Name = p.Category.Name
+                },
+                Tags = p.PostTags.Select(pt => new TagNoNavDTO()
+                {
+                    Id = pt.Tag.Id,
+                    Name = pt.Tag.Name
+                }).ToList()
+            })
+            .ToList();
+
+        return Ok(postDTOs);
+    }
+
     [HttpGet("{id}")]
     public IActionResult GetSingleApprovedAndPublished(int id)
     {
-
         List<Reaction> reactions = _dbContext.Reactions.ToList();
 
         Post foundPost = _dbContext.Posts
@@ -139,6 +184,31 @@ public class PostController : ControllerBase
                 }).ToList()
             }).ToList(),
             CommentsCount = foundPost.Comments.Count()
+        };
+
+        return Ok(postDTO);
+    }
+
+    [HttpGet("{id}/forEdit")]
+    public IActionResult GetSingleForEdit(int id)
+    {
+        Post foundPost = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+
+        if (foundPost == null)
+        {
+            return NotFound();
+        }
+
+        PostForEditDTO postDTO = new PostForEditDTO()
+        {
+            Id = foundPost.Id,
+            UserProfileId = foundPost.UserProfileId,
+            CategoryId = foundPost.CategoryId,
+            Title = foundPost.Title,
+            Content = foundPost.Content,
+            HeaderImageURL = foundPost.HeaderImageURL,
+            IsApproved = foundPost.IsApproved,
+            PublicationDate = foundPost.PublicationDate != null ? foundPost.PublicationDate : foundPost.DateCreated
         };
 
         return Ok(postDTO);
@@ -232,6 +302,38 @@ public class PostController : ControllerBase
         postToUpdate.Content = update.Content;
         postToUpdate.CategoryId = update.CategoryId;
         postToUpdate.HeaderImageURL = update.HeaderImageURL == null ? null : update.HeaderImageURL;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/publish")]
+    public IActionResult Publish(int id)
+    {
+        Post postToPublish = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        if (postToPublish == null)
+        {
+            return NotFound();
+        }
+
+        postToPublish.PublicationDate = DateTime.Now;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/unpublish")]
+    public IActionResult Unpublish(int id)
+    {
+        Post postToPublish = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        if (postToPublish == null)
+        {
+            return NotFound();
+        }
+
+        postToPublish.PublicationDate = DateTime.MaxValue;
 
         _dbContext.SaveChanges();
 

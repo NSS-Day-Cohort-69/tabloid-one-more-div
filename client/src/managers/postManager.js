@@ -8,6 +8,14 @@ export const getApprovedAndPublishedPostById = (id) => {
     return fetch(`${_apiUrl}/${id}`).then(res => res.json())
 }
 
+export const getMyPosts = (id) => {
+    return fetch(`${_apiUrl}/${id}/myPosts`).then(res => res.json())
+}
+
+export const getPostForEdit = (id) => {
+    return fetch(`${_apiUrl}/${id}/forEdit`).then(res => res.json())
+}
+
 export const createPost = (post) => {
     const postOptions = {
         method: "POST",
@@ -36,6 +44,18 @@ export const updatePost = (postId, postUpdate) => {
     }
 
     return fetch(`${_apiUrl}/${postId}`, putOptions)
+}
+
+export const publishPost = (postId) => {
+    const putOptions = {method: "PUT"}
+
+    return fetch(`${_apiUrl}/${postId}/publish`, putOptions)
+}
+
+export const unpublishPost = (postId) => {
+    const putOptions = {method: "PUT"}
+
+    return fetch(`${_apiUrl}/${postId}/unpublish`, putOptions)
 }
 
 export const getUnapprovedPosts = () => {

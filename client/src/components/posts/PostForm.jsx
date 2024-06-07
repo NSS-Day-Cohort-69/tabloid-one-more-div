@@ -3,7 +3,7 @@ import PageContainer from "../PageContainer.jsx"
 import { useEffect, useState } from "react"
 import { getAllCategories } from "../../managers/categoryManager.js"
 import { useNavigate, useParams } from "react-router-dom"
-import { createPost, getApprovedAndPublishedPostById, updatePost } from "../../managers/postManager.js"
+import { createPost, getPostForEdit, updatePost } from "../../managers/postManager.js"
 
 export const PostForm = ({ loggedInUser }) => {
     const [title, setTitle] = useState("")
@@ -13,6 +13,7 @@ export const PostForm = ({ loggedInUser }) => {
     const [date, setDate] = useState("")
     const [includeDate, setIncludeDate] = useState(false)
     const [categories, setCategories] = useState([])
+    const [isPublishedAndApproved, setIsPublishedAndApproved] = useState(false)
 
     const {id} = useParams()
 
@@ -24,7 +25,7 @@ export const PostForm = ({ loggedInUser }) => {
 
     useEffect(() => {
         if (id) {
-            getApprovedAndPublishedPostById(id).then(post => {
+            getPostForEdit(id).then(post => {
                 if (post.userProfileId != loggedInUser.id) {
                     navigate(`/posts/${id}`)
                 }
@@ -33,6 +34,10 @@ export const PostForm = ({ loggedInUser }) => {
                 setCategoryId(post.categoryId == null ? 0 : post.categoryId)
                 setHeaderImageURL(post.headerImageURL == null ? "" : post.headerImageURL)
                 setContent(post.content)
+
+                if (Date.parse(post.publicationDate) < Date.now() && post.isApproved) {
+                    setIsPublishedAndApproved(true)
+                }
             })
         }
     }, [id])
@@ -53,8 +58,10 @@ export const PostForm = ({ loggedInUser }) => {
     }
 
     const handleCancel = () => {
-        if (id) {
+        if (id && isPublishedAndApproved) {
             navigate(`/posts/${id}`)
+        } else if (id) {
+            navigate("/posts/myPosts")
         } else {
             navigate("/posts")
         }
@@ -84,7 +91,12 @@ export const PostForm = ({ loggedInUser }) => {
         }
 
         updatePost(id, postUpdate).then(() => {
-            navigate(`/posts/${id}`)
+            if (isPublishedAndApproved) {
+                navigate(`/posts/${id}`)
+                return
+            }
+
+            navigate("/posts/myPosts")
         })
     }
 
