@@ -66,6 +66,7 @@ public class UserProfileController : ControllerBase
             IdentityUserId = up.IdentityUserId,
             CreateDateTime = up.CreateDateTime,
             ImageLocation = up.ImageLocation,
+            ImageBlob = up.ImageBlob,
             Roles = _dbContext.UserRoles
             .Where(ur => ur.UserId == up.IdentityUserId)
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
@@ -139,6 +140,30 @@ public class UserProfileController : ControllerBase
         }
 
         foundUser.IsActive = !foundUser.IsActive;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/image")]
+    public IActionResult UpdateImg(int id, [FromForm] UserProfileImgUpdateDTO img)
+    {
+        UserProfile foundUser = _dbContext.UserProfiles.SingleOrDefault(up => up.Id == id);
+
+        if (foundUser == null || img.FormFile.Length == 0)
+        {
+            return BadRequest();
+        }
+
+        byte[] file;
+        using (var memoryStream = new MemoryStream())
+        {
+            img.FormFile.CopyTo(memoryStream);
+            file = memoryStream.ToArray();
+        }
+
+        foundUser.ImageBlob = file;
 
         _dbContext.SaveChanges();
 

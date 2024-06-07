@@ -17,6 +17,7 @@ import HomePagePosts from "./posts/HomePagePostList.jsx";
 import ReactionList from "./reactions/ReactionList.jsx";
 import CreateReaction from "./reactions/CreateReaction.jsx";
 import ReactivateUser from "./userprofiles/ReactivateUser.jsx";
+import CreateCommentForm from "./comments/CreateCommentForm.jsx";
 import UserProfileTypeChange from "./userprofiles/UserProfileTypeChange.jsx";
 import MyPostList from "./posts/MyPostList.jsx";
 
@@ -94,6 +95,24 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                   </AuthorizedRoute>
                 }
               />
+              <Route
+                path="create"
+                element={
+                  <AuthorizedRoute loggedInUser={loggedInUser}>
+                    <CreateCommentForm loggedInUser={loggedInUser} />
+                  </AuthorizedRoute>
+                }
+              />
+            <Route path=":commentid">
+              <Route
+                path="edit"
+                element={
+                  <AuthorizedRoute loggedInUser={loggedInUser}>
+                    <CreateCommentForm loggedInUser={loggedInUser}/>
+                  </AuthorizedRoute>
+                }
+              />
+            </Route>
             </Route>
             <Route 
               path="edit"
