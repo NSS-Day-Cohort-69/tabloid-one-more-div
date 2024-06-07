@@ -300,6 +300,22 @@ public class PostController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("{id}/unpublish")]
+    public IActionResult Unpublish(int id)
+    {
+        Post postToPublish = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+        if (postToPublish == null)
+        {
+            return NotFound();
+        }
+
+        postToPublish.PublicationDate = DateTime.MaxValue;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
     [HttpGet("unapproved")]
     public IActionResult GetUnapproved()
     {
