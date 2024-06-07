@@ -9,7 +9,7 @@ export default function UserProfileTypeChange({loggedInUser})
     const [profile,setProfile]=useState({})
 
     const {id} = useParams()
-    
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -18,15 +18,13 @@ export default function UserProfileTypeChange({loggedInUser})
 
     const promoteClicked = (userId) => {
         promoteUser(userId).then(() => {
-            getProfileWithRolesById(id)
-            .then(setProfile)
+            getProfileWithRolesById(id).then(setProfile)
         })
     }
 
     const demoteClicked = (userId) => {
         demoteUser(userId).then(() => {
-            getProfileWithRolesById(id)
-            .then(setProfile)
+            getProfileWithRolesById(id).then(setProfile)
         })
     }
     return(
@@ -39,28 +37,30 @@ export default function UserProfileTypeChange({loggedInUser})
                         {p}
                         </div>
                     ))}
-                <ButtonToolbar className="gap-2">
-                    {loggedInUser.id != profile.id ? (
-                        <>
-                        {profile.roles?.includes("Admin") ? (
-                        <Button 
-                            onClick={() => {
-                            demoteClicked(profile.identityUserId)
-                            }}>
-                            Demote
-                        </Button>
-                        ) : (
-                        <Button 
-                            onClick={() => {
-                            promoteClicked(profile.identityUserId)
-                            }}>
-                            Promote
-                        </Button>
-                        )}
-                        </>
-                    ) : (null)}
-                    <Button onClick={() => {navigate("/userprofiles")}}>Cancel</Button>
-                </ButtonToolbar>
+                    <ButtonToolbar className="gap-2">
+                        {loggedInUser.id != profile.id ? (
+                            <>
+                                {profile.roles?.includes("Admin") ? (
+                                    <Button 
+                                        onClick={() => {
+                                            demoteClicked(profile.identityUserId)
+                                        }}
+                                    >
+                                        Demote
+                                    </Button>
+                                ) : (
+                                    <Button 
+                                        onClick={() => {
+                                            promoteClicked(profile.identityUserId)
+                                        }}
+                                    >
+                                        Promote
+                                    </Button>
+                                )}
+                            </>
+                        ) : (null)}
+                        <Button onClick={() => {navigate("/userprofiles")}}>Cancel</Button>
+                    </ButtonToolbar>
                 </FormGroup>
             </Form>
         </PageContainer>
