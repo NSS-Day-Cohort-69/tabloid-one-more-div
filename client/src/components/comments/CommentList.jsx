@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllComments } from "../../managers/commentManager";
+import { deleteComment, getAllComments } from "../../managers/commentManager";
 import { useParams } from "react-router-dom";
 import {
   Button,
@@ -19,12 +19,19 @@ export const CommentList = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    getApprovedAndPublishedPostById(parseInt(id)).then((p) => setPost(p));
+    getApprovedAndPublishedPostById(parseInt(id)).then(setPost);
   }, [id]);
 
   useEffect(() => {
-    getAllComments(parseInt(id)).then((c) => setComments(c));
+    getAllComments(parseInt(id)).then(setComments);
   }, [id]);
+
+  const removeComment = (postId) => {
+    deleteComment(postId).then(() => {
+      getAllComments(parseInt(id)).then(setComments);
+    });
+  };
+
   return (
     <PageContainer>
       <h1>{post.title}</h1>
@@ -41,7 +48,7 @@ export const CommentList = () => {
             <CardFooter>
               <ButtonToolbar className="gap-2">
                 <Button>Edit</Button>
-                <Button>Delete</Button>
+                <Button onClick={() => removeComment(c.id)}>Delete</Button>
               </ButtonToolbar>
             </CardFooter>
           ) : null}
