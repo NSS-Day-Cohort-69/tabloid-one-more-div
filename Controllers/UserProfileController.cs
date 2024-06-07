@@ -66,6 +66,7 @@ public class UserProfileController : ControllerBase
             IdentityUserId = up.IdentityUserId,
             CreateDateTime = up.CreateDateTime,
             ImageLocation = up.ImageLocation,
+            ImageBlob = up.ImageBlob,
             Roles = _dbContext.UserRoles
             .Where(ur => ur.UserId == up.IdentityUserId)
             .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
