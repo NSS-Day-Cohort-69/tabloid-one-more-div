@@ -113,7 +113,6 @@ public class PostController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetSingleApprovedAndPublished(int id)
     {
-
         List<Reaction> reactions = _dbContext.Reactions.ToList();
 
         Post foundPost = _dbContext.Posts
@@ -185,6 +184,31 @@ public class PostController : ControllerBase
                 }).ToList()
             }).ToList(),
             CommentsCount = foundPost.Comments.Count()
+        };
+
+        return Ok(postDTO);
+    }
+
+    [HttpGet("{id}/forEdit")]
+    public IActionResult GetSingleForEdit(int id)
+    {
+        Post foundPost = _dbContext.Posts.SingleOrDefault(p => p.Id == id);
+
+        if (foundPost == null)
+        {
+            return NotFound();
+        }
+
+        PostForEditDTO postDTO = new PostForEditDTO()
+        {
+            Id = foundPost.Id,
+            UserProfileId = foundPost.UserProfileId,
+            CategoryId = foundPost.CategoryId,
+            Title = foundPost.Title,
+            Content = foundPost.Content,
+            HeaderImageURL = foundPost.HeaderImageURL,
+            IsApproved = foundPost.IsApproved,
+            PublicationDate = foundPost.PublicationDate != null ? foundPost.PublicationDate : foundPost.DateCreated
         };
 
         return Ok(postDTO);
