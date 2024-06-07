@@ -144,4 +144,28 @@ public class UserProfileController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPut("{id}/image")]
+    public IActionResult UpdateImg(int id, [FromForm] UserProfileImgUpdateDTO img)
+    {
+        UserProfile foundUser = _dbContext.UserProfiles.SingleOrDefault(up => up.Id == id);
+
+        if (foundUser == null || img.FormFile.Length == 0)
+        {
+            return BadRequest();
+        }
+
+        byte[] file;
+        using (var memoryStream = new MemoryStream())
+        {
+            img.FormFile.CopyTo(memoryStream);
+            file = memoryStream.ToArray();
+        }
+
+        foundUser.ImageBlob = file;
+
+        _dbContext.SaveChanges();
+        return NoContent();
+
+    }
 }
