@@ -18,6 +18,7 @@ import ReactionList from "./reactions/ReactionList.jsx";
 import CreateReaction from "./reactions/CreateReaction.jsx";
 import ReactivateUser from "./userprofiles/ReactivateUser.jsx";
 import UserProfileTypeChange from "./userprofiles/UserProfileTypeChange.jsx";
+import MyPostList from "./posts/MyPostList.jsx";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -118,6 +119,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
                 <PostForm loggedInUser={loggedInUser} />
+              </AuthorizedRoute>
+            }
+          />
+          <Route 
+            path="myPosts"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <MyPostList loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }
           />
