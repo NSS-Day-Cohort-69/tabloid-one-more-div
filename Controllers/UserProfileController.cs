@@ -129,7 +129,7 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpPut]
-    // [Authorize("Admin")]
+    [Authorize("Admin")]
     public IActionResult ActivateOrDeactivate(int id)
     {
         UserProfile foundUser = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
@@ -138,14 +138,7 @@ public class UserProfileController : ControllerBase
             return NotFound();
         }
 
-        if (foundUser.IsActive)
-        {
-            foundUser.IsActive = false;
-        }
-        else
-        {
-            foundUser.IsActive = true;
-        }
+        foundUser.IsActive = !foundUser.IsActive;
 
         _dbContext.SaveChanges();
 
