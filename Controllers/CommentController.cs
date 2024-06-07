@@ -87,7 +87,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult CommentDelete(int id)
     {
         Comment foundComment = _dbContext.Comments.SingleOrDefault(c => c.Id == id);
@@ -100,4 +100,51 @@ public class CommentController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public IActionResult CommentEdit(int id, CommentUpdateDTO updatedComment)
+    {
+        Comment comment = _dbContext.Comments.SingleOrDefault(c => c.Id == id);
+
+        if(comment == null)
+        {
+            return NotFound();
+        }
+
+        comment.Content = updatedComment.Content;
+        comment.Subject = updatedComment.Subject;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult GetCommentById(int id)
+    {
+        return Ok(_dbContext.Comments
+        .Where(c => c.Id == id)
+        .Include(c => c.UserProfile)
+            .ThenInclude(up => up.IdentityUser)
+        .Select(c => new CommentForPostDTO
+        {
+            Id = c.Id, 
+            Content = c.Content, 
+            PostId = c.PostId, 
+            UserProfile = new UserProfileForCommentDTO 
+            {
+                Id = c.UserProfile.Id, 
+                FirstName = c.UserProfile.FirstName, 
+                LastName = c.UserProfile.LastName,
+                UserName = c.UserProfile.IdentityUser.UserName
+            },
+            UserProfileId = c.UserProfileId,
+            Subject = c.Subject,
+            DateCreated = c.DateCreated
+            
+        }).SingleOrDefault());
+    }
+
 }
