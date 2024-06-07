@@ -12,7 +12,7 @@ import {
 import { getApprovedAndPublishedPostById } from "../../managers/postManager";
 import PageContainer from "../PageContainer";
 
-export const CommentList = () => {
+export const CommentList = ({ loggedInUser }) => {
   const [comments, setComments] = useState([]);
   const [post, setPost] = useState({});
 
@@ -44,14 +44,14 @@ export const CommentList = () => {
             <p>{c.subject}</p>
             <p>{c.content}</p>
           </CardBody>
-          {c.userProfileId === post.userProfileId ? (
+          {c.userProfileId === loggedInUser.id && (
             <CardFooter>
               <ButtonToolbar className="gap-2">
                 <Button>Edit</Button>
                 <Button onClick={() => removeComment(c.id)}>Delete</Button>
               </ButtonToolbar>
             </CardFooter>
-          ) : null}
+          )}
         </Card>
       ))}
     </PageContainer>
