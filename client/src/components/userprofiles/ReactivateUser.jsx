@@ -4,13 +4,17 @@ import { Button, Card, CardBody, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 
 export default function ReactivateUser()
-{  const [userprofiles, setUserProfiles] = useState([]);
+{ 
+    const [userprofiles, setUserProfiles] = useState([]);
 
     const getUserProfiles = () => {
       getProfiles().then(setUserProfiles);
     };
+
+
     useEffect(() => {
       getUserProfiles();
+
     }, []);
   
     const handleIsActiveChange = (id) => {

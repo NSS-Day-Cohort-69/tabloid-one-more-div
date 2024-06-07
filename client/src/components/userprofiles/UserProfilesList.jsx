@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { changeIsActiveStatus, getProfiles } from "../../managers/userProfileManager";
-import { Button, ButtonToolbar, Card, CardBody, CardTitle } from "reactstrap";
+import { Button, Card, CardBody, CardTitle } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function UserProfileList() {
@@ -11,21 +11,22 @@ export default function UserProfileList() {
   const getUserProfiles = () => {
     getProfiles().then(setUserProfiles);
   };
+
   useEffect(() => {
     getUserProfiles();
   }, []);
 
   const handleIsActiveChange = (id) => {
-    changeIsActiveStatus(id).then(() =>{getProfiles().then(setUserProfiles)})
+    changeIsActiveStatus(id)
+    .then(() =>{getProfiles().then(setUserProfiles)})
   }
   
   return (
     <>
       <h1 className="text-center mt-3 mb-3">User Profiles</h1>
       <div className="d-flex justify-content-end" style={{ width: "90%" }}>
-        <Button onClick={() => {navigate("userprofile/reactivate")}}>View Deactivated</Button>
+        <Button onClick={() => {navigate("reactivate")}}>View Deactivated</Button>
       </div>
-
       {userprofiles.filter(p => p.isActive).map((p) => (
         <Card className="w-50 mx-auto md-2 mt-2 " key={p.id}>
           <CardBody className="d-flex align-items-center justify-content-around flex-column">

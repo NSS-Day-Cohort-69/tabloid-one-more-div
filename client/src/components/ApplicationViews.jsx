@@ -46,13 +46,13 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             }
           />
           <Route
-          path=":id/reactivate"
-          element={
-            <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ReactivateUser/>
-            </AuthorizedRoute>
-          }
-        />
+            path="reactivate"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <ReactivateUser/>
+              </AuthorizedRoute>
+            }
+          />
         </Route>
         <Route path="posts">
           <Route
