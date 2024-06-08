@@ -63,12 +63,11 @@ export const getUnapprovedPosts = () => {
 }
 
 export const approvePost = (postId) => {
-    return fetch(`${_apiUrl}/${postId}/approve`,{
-        method: "PUT",
-        headers: {
-            "Content-Type":"application.json"
-        }
-    })
+    return fetch(`${_apiUrl}/${postId}/approve`, {method: "PUT"})
+}
+
+export const unapprovePost = (postId) => {
+    return fetch(`${_apiUrl}/${postId}/unapprove`, {method: "PUT"})
 }
 
 export const getUnapprovedCount = () => {
